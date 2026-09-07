@@ -1,0 +1,86 @@
+{
+	"$schema": "https://json.schemastore.org/package.json",
+	"name": "gencore-slate",
+	"version": "0.1.0",
+	"private": true,
+	"description": "GENCORE.SLATE — a portable, Windows-only suite of AI-native desktop applications built with Rust, Tauri, and React.",
+	"license": "LicenseRef-Proprietary",
+	"author": "Dustin Angeletti <DUSTIN@angeletti.space>",
+	"type": "module",
+	"packageManager": "bun@1.4.2",
+	"engines": {
+		"bun": ">=1.4.2"
+	},
+	"workspaces": [
+		"packages/*",
+		"tauri/*"
+	],
+	"scripts": {
+		"dev": "bun run scripts/bun-dev.ts",
+		"dev:launcher": "bun run scripts/bun-dev.ts slate-launcher",
+		"dev:terminal": "bun run scripts/bun-dev.ts slate-terminal",
+		"dev:explorer": "bun run scripts/bun-dev.ts slate-explorer",
+		"gallery": "moon run slate-ui-kit:gallery",
+
+		"build": "moon run :build",
+		"check": "moon check --all",
+		"ci": "moon ci",
+
+		"lint": "biome check .",
+		"lint:fix": "biome check --write .",
+		"format": "biome format --write . && cargo fmt --all",
+		"format:check": "biome format . && cargo fmt --all -- --check",
+		"typecheck": "moon run :typecheck",
+		"lint:rust": "cargo lint",
+		"lint:deps": "knip",
+		"lint:spelling": "cspell lint --no-progress --show-suggestions \"**/*.{ts,tsx,rs,md,json,toml,yml}\"",
+
+		"test": "moon run :test",
+		"test:ts": "bun test",
+		"test:rust": "cargo test-all",
+		"test:e2e": "bun run scripts/bun-e2e.ts",
+		"coverage": "cargo cov",
+
+		"package": "bun run scripts/bun-package.ts",
+		"package:release": "bun run scripts/bun-package.ts --release",
+		"webview2:fetch": "bun run scripts/bun-webview2.ts",
+
+		"agents:sync": "bun run scripts/sync-agents.ts",
+		"agents:check": "bun run scripts/sync-agents.ts --check",
+
+		"changeset": "changeset",
+		"version": "changeset version && bun run scripts/bun-version.ts && bun install --lockfile-only",
+		"audit": "bun audit --audit-level=moderate && cargo deny check",
+
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.12",
+		"@changesets/cli": "3.0.2",
+		"@commitlint/cli": "21.2.2",
+		"@commitlint/config-conventional": "21.2.2",
+		"@tauri-apps/cli": "2.11.4",
+		"@types/bun": "1.4.1",
+		"cspell": "10.2.2",
+		"husky": "9.1.7",
+		"knip": "6.34.0",
+		"lint-staged": "17.5.0",
+		"typescript": "7.0.2"
+	},
+	"trustedDependencies": [
+		"@biomejs/biome",
+		"@tauri-apps/cli",
+		"esbuild"
+	],
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx,json,jsonc,css}": [
+			"biome check --write --no-errors-on-unmatched"
+		],
+		"*.rs": [
+			"rustfmt --edition 2024"
+		],
+		"*.{md,yml,yaml,toml}": [
+			"cspell lint --no-progress --no-must-find-files"
+		]
+	}
+}

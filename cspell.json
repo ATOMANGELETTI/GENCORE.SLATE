@@ -1,0 +1,73 @@
+{
+	"$schema": "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/cspell.schema.json",
+	"version": "0.2",
+	"language": "en",
+	"caseSensitive": false,
+	"useGitignore": true,
+	"ignorePaths": [
+		"bun.lock",
+		"Cargo.lock",
+		"**/target/**",
+		"**/dist/**",
+		"**/node_modules/**",
+		"**/.moon/cache/**",
+		"**/*.svg",
+		"installDir/**",
+		".moon/templates/**"
+	],
+	"dictionaryDefinitions": [
+		{
+			"name": "slate-project",
+			"path": "./.agents/templates/project.dictionary.txt",
+			"addWords": true
+		}
+	],
+	"dictionaries": ["slate-project", "typescript", "node", "rust", "html", "css", "softwareTerms"],
+	"words": [
+		"antigravity",
+		"appdata",
+		"biomejs",
+		"bunfig",
+		"bunx",
+		"camino",
+		"changeset",
+		"changesets",
+		"clippy",
+		"codegen",
+		"commitlint",
+		"conpty",
+		"cspell",
+		"cyclonedx",
+		"dwmapi",
+		"gencore",
+		"gitleaks",
+		"knip",
+		"lcov",
+		"llvm",
+		"moonrepo",
+		"msvc",
+		"nextest",
+		"portapps",
+		"proto",
+		"refinery",
+		"rusqlite",
+		"rustfmt",
+		"rustsec",
+		"rustup",
+		"specta",
+		"tauri",
+		"tsbuildinfo",
+		"vibrancy",
+		"webview",
+		"webview2",
+		"winapi",
+		"zustand"
+	],
+	"ignoreRegExpList": ["/0x[0-9a-fA-F]+/", "/#[0-9a-fA-F]{3,8}\b/"],
+	"overrides": [
+		{
+			"filename": "**/*.rs",
+			"dictionaries": ["rust"]
+		}
+	]
+}

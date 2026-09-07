@@ -1,0 +1,70 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/project.json
+id: '{{ id }}'
+layer: 'application'
+language: 'typescript'
+stack: 'frontend'
+tags: ['tauri-app']
+
+project:
+  name: '{{ title }}'
+  description: 'Launches the suite's applications and installed portable apps.'
+  owner: 'ATOMANGELETTI'
+
+dependsOn:
+  - 'slate-ui-kit'
+  - 'slate-ipc'
+  - 'slate-tokens'
+  - 'slate-bindings'
+  - 'slate-utils'
+  - 'slate-icons'
+
+tasks:
+  dev:
+    command: 'tauri dev'
+    toolchain: 'bun'
+    preset: 'server'
+
+  dev-web:
+    command: 'vite'
+    toolchain: 'bun'
+    preset: 'server'
+
+  build-web:
+    command: 'vite build'
+    inputs:
+      - 'src/**/*'
+      - 'index.html'
+      - 'vite.config.ts'
+    outputs:
+      - 'dist'
+    toolchain: 'bun'
+
+  # --no-bundle: the suite ships as a portable zip assembled by
+  # scripts/bun-package.ts, never as an installer.
+  build:
+    deps:
+      - '~:build-web'
+    command: 'tauri build --no-bundle'
+    inputs:
+      - 'src/**/*'
+      - 'src-tauri/**/*'
+      - '/crates/**/*'
+      - '/Cargo.toml'
+    toolchain: 'bun'
+    options:
+      # Cargo's own incremental cache is authoritative for the Rust half.
+      cache: false
+
+  typecheck:
+    command: 'tsc --build --pretty'
+    inputs:
+      - 'src/**/*'
+      - 'tsconfig.json'
+    toolchain: 'bun'
+
+  test:
+    command: 'bun test tests/unit'
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+    toolchain: 'bun'

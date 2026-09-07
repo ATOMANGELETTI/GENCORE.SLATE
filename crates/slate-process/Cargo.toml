@@ -1,0 +1,25 @@
+[package]
+name = "slate-process"
+description = "Child-process spawning and supervision with portable environment injection."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+slate-core.workspace = true
+slate-paths.workspace = true
+camino.workspace = true
+parking_lot.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+slate-testing.workspace = true
+
+[lints]
+workspace = true

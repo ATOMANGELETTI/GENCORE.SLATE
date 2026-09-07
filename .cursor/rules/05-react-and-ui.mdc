@@ -1,0 +1,101 @@
+---
+description: Component structure, state management, and how application code consumes the shared UI kit.
+globs: **/*.tsx,packages/slate-ui-kit/**/*,tauri/*/src/**/*
+alwaysApply: false
+---
+
+<!--
+  GENERATED FILE — DO NOT EDIT.
+
+  Source: .agents/rules/
+  Regenerate: bun run agents:sync
+
+  Edits here are overwritten by the next sync and rejected by CI
+  (`bun run agents:check`). Change the rule in .agents/ instead.
+-->
+
+# React and application UI
+
+React 19. Function components only. No class components, no `forwardRef`
+ceremony — in React 19 `ref` is an ordinary prop.
+
+## The shared kit is not optional
+
+Applications compose `@slate/ui-kit`; they do not build their own primitives.
+If an app needs a button, a dialog, a menu, or a scroll area, it imports one.
+If the kit lacks something, add it to the kit — that is what makes three apps
+look like one product.
+
+An app may define components, but only ones that are genuinely specific to it
+(`app-grid.component.tsx` in the Launcher). The moment a second app wants it,
+it moves to the kit.
+
+## Component structure
+
+```tsx
+// button.component.tsx
+type ButtonProps = {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+} & React.ComponentPropsWithRef<'button'>;
+
+export function Button({ variant = 'default', size = 'md', className, ...props }: ButtonProps) {
+  return <button className={cn(buttonVariants({ variant, size }), className)} {...props} />;
+}
+```
+
+- Props type declared immediately above the component, named `<Component>Props`.
+- Variants live in a sibling `*.variants.ts` using `cva`, never as branching
+  inside the component body.
+- Every component spreads the rest of the native props and merges `className`
+  through `cn()`. A component that swallows `className` cannot be composed.
+- One exported component per file.
+
+## State
+
+| Scope                        | Use                                            |
+| ---------------------------- | ---------------------------------------------- |
+| One component                | `useState` / `useReducer`                      |
+| A subtree                    | Context, created in `app/app.providers.tsx`    |
+| Whole application            | A Zustand store in `state/*.store.ts`          |
+| Owned by the Rust backend    | An IPC command plus an event subscription      |
+
+Never mirror backend state into a store "for convenience" — that creates two
+sources of truth that drift. Read it through `@slate/ipc` and subscribe to the
+event that invalidates it.
+
+Zustand stores expose actions, not setters:
+
+```ts
+// good
+useWindowStore.getState().maximize();
+// bad
+useWindowStore.setState({ isMaximized: true });
+```
+
+## Effects
+
+`useEffect` is for synchronising with something outside React — a Tauri event
+listener, a media query, a resize observer. It is not for deriving state.
+Derived values are computed during render.
+
+Every effect that subscribes must return a cleanup that unsubscribes. A Tauri
+`listen()` returns an unlisten function; dropping it leaks a listener for the
+lifetime of the window.
+
+## Accessibility
+
+Not negotiable, and largely free because Radix does the work:
+
+- Interactive elements are real `<button>`/`<a>` elements, or Radix primitives.
+- Every icon-only control has an accessible name.
+- Focus is always visible; the focus ring is a design token, never removed.
+- Dialogs and menus trap focus and restore it on close — use Radix, do not
+  hand-roll this.
+- Respect `prefers-reduced-motion`; the kit's motion tokens already do.
+
+## Performance
+
+Do not reach for `memo`, `useMemo`, or `useCallback` by default. Measure first.
+The React 19 compiler handles most of what hand-memoisation used to. Premature
+memoisation adds allocation and hides bugs behind stale dependency arrays.

@@ -1,0 +1,16 @@
+{
+	"extends": "@slate/config-typescript/react-library.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"outDir": "dist/types",
+		"tsBuildInfoFile": "dist/types/.tsbuildinfo"
+	},
+	"include": [
+		"src/**/*",
+		"tests/**/*"
+	],
+	"exclude": [
+		"dist",
+		"node_modules"
+	]
+}

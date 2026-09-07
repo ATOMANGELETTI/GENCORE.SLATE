@@ -1,0 +1,18 @@
+# Project dictionary for cspell.
+# Words specific to GENCORE.SLATE that are not in any standard dictionary.
+# Keep sorted. One word per line.
+appinfo
+appdata
+devtools
+dpiaware
+gencore
+installdir
+launcherctl
+portapps
+slate
+slatepaths
+statusbar
+titlebar
+traylet
+unlisten
+webviews

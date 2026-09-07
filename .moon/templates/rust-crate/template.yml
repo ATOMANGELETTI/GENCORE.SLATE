@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/template.json
+#
+# Scaffolds a library crate.
+#
+#   moon generate rust-crate
+#
+# After generating, add the crate to [workspace.dependencies] in the root
+# Cargo.toml so other crates can depend on it, and add its commit scope to
+# commitlint.config.ts. See .agents/workflows/add-crate.md.
+
+title: 'Rust crate'
+description: 'A workspace library crate with its error type and a tests directory.'
+destination: 'crates/[name]'
+
+variables:
+  name:
+    type: 'string'
+    required: true
+    prompt: 'Crate name (kebab-case, e.g. slate-search)'
+
+  description:
+    type: 'string'
+    required: true
+    prompt: 'One line describing what this crate owns'

@@ -1,0 +1,16 @@
+{
+	"$schema": "https://unpkg.com/@changesets/config@3/schema.json",
+	"//": "GENCORE.SLATE ships as ONE product with ONE version number. Every package is in the fixed group, so any release bumps them all in lockstep, and scripts/bun-version.ts then mirrors that version into the Cargo workspace and all three tauri.conf.json files. Nothing is ever published to a registry.",
+	"changelog": ["@changesets/changelog-github", { "repo": "ATOMANGELETTI/GENCORE.SLATE" }],
+	"commit": false,
+	"access": "restricted",
+	"baseBranch": "main",
+	"updateInternalDependencies": "patch",
+	"fixed": [["@slate/*", "slate-launcher", "slate-terminal", "slate-explorer", "gencore-slate"]],
+	"linked": [],
+	"ignore": [],
+	"privatePackages": {
+		"version": true,
+		"tag": false
+	}
+}

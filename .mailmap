@@ -1,0 +1,6 @@
+# Canonicalise author identities so `git shortlog -sne` and CODEOWNERS stay
+# accurate even when a contributor commits from more than one machine.
+#
+# Format: Proper Name <proper@email> Commit Name <commit@email>
+Dustin Angeletti <DUSTIN@angeletti.space> ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>
+Dustin Angeletti <DUSTIN@angeletti.space> <dustin@angeletti.space>

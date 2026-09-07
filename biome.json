@@ -1,0 +1,159 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.12/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true,
+		"defaultBranch": "main"
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": [
+			"**",
+			"!**/dist",
+			"!**/target",
+			"!**/node_modules",
+			"!**/.moon/cache",
+			"!**/src-tauri/gen",
+			"!**/coverage",
+			"!installDir",
+			"!bun.lock",
+			"!Cargo.lock",
+			"!**/*.css",
+			"!.moon/templates",
+			"!**/tsconfig.json"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"formatWithErrors": false,
+		"indentStyle": "tab",
+		"indentWidth": 2,
+		"lineWidth": 100,
+		"lineEnding": "lf",
+		"attributePosition": "auto"
+	},
+	"assist": {
+		"enabled": true,
+		"actions": {
+			"source": {
+				"organizeImports": "on",
+				"useSortedKeys": "off"
+			}
+		}
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended",
+			"correctness": {
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error",
+				"noUnusedFunctionParameters": "error",
+				"useExhaustiveDependencies": "error"
+			},
+			"style": {
+				"noNonNullAssertion": "error",
+				"useConst": "error",
+				"useNamingConvention": "off",
+				"noParameterAssign": "error",
+				"useImportType": "error",
+				"useExportType": "error",
+				"noDefaultExport": "error"
+			},
+			"suspicious": {
+				"noExplicitAny": "error",
+				"noConsole": {
+					"level": "error",
+					"options": {
+						"allow": ["error", "warn"]
+					}
+				},
+				"noDebugger": "error",
+				"noArrayIndexKey": "error"
+			},
+			"complexity": {
+				"noExcessiveCognitiveComplexity": {
+					"level": "warn",
+					"options": {
+						"maxAllowedComplexity": 15
+					}
+				},
+				"noUselessFragments": "error"
+			},
+			"a11y": {
+				"preset": "recommended"
+			},
+			"performance": {
+				"noBarrelFile": "off",
+				"noReExportAll": "off"
+			},
+			"nursery": {
+				"preset": "none"
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "double",
+			"semicolons": "always",
+			"trailingCommas": "all",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"bracketSameLine": false,
+			"quoteProperties": "asNeeded"
+		},
+		"globals": ["Bun"]
+	},
+	"json": {
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "tab",
+			"trailingCommas": "none"
+		},
+		"parser": {
+			"allowComments": true,
+			"allowTrailingCommas": false
+		}
+	},
+	"css": {
+		"formatter": {
+			"enabled": true,
+			"indentStyle": "tab",
+			"quoteStyle": "double"
+		},
+		"linter": {
+			"enabled": true
+		}
+	},
+	"overrides": [
+		{
+			"includes": ["**/*.config.ts", "**/vite.config.ts", "**/*.d.ts", "scripts/**"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noDefaultExport": "off"
+					},
+					"suspicious": {
+						"noConsole": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["**/tests/**"],
+			"linter": {
+				"rules": {
+					"style": {
+						"noNonNullAssertion": "off"
+					},
+					"suspicious": {
+						"noExplicitAny": "off",
+						"noConsole": "off"
+					}
+				}
+			}
+		}
+	]
+}

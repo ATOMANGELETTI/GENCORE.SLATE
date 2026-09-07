@@ -1,0 +1,38 @@
+{
+	"name": "@slate/ui-kit",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "Every shared component in the suite. Deliberately free of any Tauri dependency so it renders in a browser.",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"scripts": {
+		"gallery": "vite --config gallery/vite.config.ts"
+	},
+	"dependencies": {
+		"@slate/icons": "0.1.0",
+		"@slate/tokens": "0.1.0",
+		"class-variance-authority": "0.7.1",
+		"clsx": "2.1.1",
+		"radix-ui": "1.6.7",
+		"tailwind-merge": "3.6.0"
+	},
+	"peerDependencies": {
+		"react": "19.2.8",
+		"react-dom": "19.2.8"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0",
+		"@slate/testing": "0.1.0",
+		"@tailwindcss/vite": "4.3.3",
+		"@types/react": "19.2.18",
+		"@types/react-dom": "19.2.7",
+		"@vitejs/plugin-react": "6.1.1",
+		"react": "19.2.8",
+		"react-dom": "19.2.8",
+		"tailwindcss": "4.3.3",
+		"vite": "8.2.2"
+	}
+}

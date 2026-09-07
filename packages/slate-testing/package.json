@@ -1,0 +1,29 @@
+{
+	"name": "@slate/testing",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "Bun test setup, DOM environment, and render helpers.",
+	"exports": {
+		".": "./src/index.ts",
+		"./setup": "./src/setup/bun.setup.ts"
+	},
+	"dependencies": {
+		"@slate/bindings": "0.1.0",
+		"@testing-library/dom": "10.4.1",
+		"@testing-library/react": "16.3.3",
+		"@happy-dom/global-registrator": "20.14.0",
+		"happy-dom": "20.14.0"
+	},
+	"peerDependencies": {
+		"react": "19.2.8",
+		"react-dom": "19.2.8"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0",
+		"@types/react": "19.2.18",
+		"react": "19.2.8",
+		"react-dom": "19.2.8"
+	}
+}

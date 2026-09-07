@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/template.json
+#
+# Scaffolds a new application under tauri/.
+#
+#   moon generate tauri-app
+#
+# The files in this template are derived from the real `slate-launcher`, so the
+# structure they produce is the structure the shipped applications actually
+# have rather than one that has quietly drifted from them. Regenerate the
+# template if the applications change shape.
+#
+# ── After generating ──────────────────────────────────────────────────────────
+#
+# Three things the template cannot do for you, in order:
+#
+#   1. Add a variant to `KnownApp` in `crates/slate-core/src/id.rs`. The
+#      generated `src-tauri/src/lib.rs` refers to it and will not compile until
+#      it exists.
+#   2. Add the application to `SUITE_APPS` in `scripts/lib/install-layout.ts`,
+#      or it will never reach the portable tree.
+#   3. Add its commit scope to `commitlint.config.ts`.
+#
+# The full procedure, including capabilities and verification, is in
+# `.agents/workflows/add-app.md`.
+
+title: 'Tauri application'
+description: 'A new SLATE application: frontend, src-tauri backend, and Moon project.'
+destination: 'tauri/[id]'
+
+variables:
+  id:
+    type: 'string'
+    required: true
+    prompt: 'Application id (kebab-case, e.g. slate-notes)'
+
+  title:
+    type: 'string'
+    required: true
+    prompt: 'Display name, also the KnownApp variant (PascalCase, e.g. Notes)'
+
+  short_id:
+    type: 'string'
+    required: true
+    prompt: 'Bundle identifier suffix (lower-case, e.g. notes)'
+
+  port:
+    type: 'number'
+    required: true
+    default: 1423
+    prompt: 'Development server port (each application needs its own)'
+
+  icon:
+    type: 'string'
+    default: 'LayoutIcon'
+    prompt: 'Icon export from @slate/icons'

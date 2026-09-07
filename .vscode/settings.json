@@ -1,0 +1,67 @@
+{
+	"//": "Workspace settings. Formatting and linting must match CI exactly — Biome for everything web, rustfmt for Rust.",
+
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.biome": "explicit"
+	},
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"editor.rulers": [100],
+	"files.eol": "\n",
+	"files.trimTrailingWhitespace": true,
+	"files.insertFinalNewline": true,
+
+	"[typescript]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[typescriptreact]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[javascript]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[json]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[jsonc]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[css]": { "editor.defaultFormatter": "biomejs.biome" },
+	"[rust]": {
+		"editor.defaultFormatter": "rust-lang.rust-analyzer",
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4
+	},
+	"[toml]": {
+		"editor.defaultFormatter": "tamasfe.even-better-toml",
+		"editor.insertSpaces": true,
+		"editor.tabSize": 4
+	},
+
+	"typescript.tsdk": "node_modules/typescript/lib",
+	"typescript.enablePromptUseWorkspaceTsdk": true,
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+
+	"rust-analyzer.check.command": "clippy",
+	"rust-analyzer.check.extraArgs": ["--all-targets", "--all-features"],
+	"rust-analyzer.cargo.features": "all",
+	"rust-analyzer.linkedProjects": ["Cargo.toml"],
+	"rust-analyzer.imports.granularity.group": "module",
+	"rust-analyzer.rustfmt.extraArgs": ["+1.98.0"],
+
+	"tailwindCSS.experimental.classRegex": [
+		["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+		["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+	],
+	"tailwindCSS.includeLanguages": { "typescriptreact": "javascript" },
+
+	"search.exclude": {
+		"**/target": true,
+		"**/dist": true,
+		"**/node_modules": true,
+		"**/.moon/cache": true,
+		"bun.lock": true,
+		"Cargo.lock": true
+	},
+	"files.watcherExclude": {
+		"**/target/**": true,
+		"**/dist/**": true,
+		"**/.moon/cache/**": true
+	},
+
+	"cSpell.enabled": true,
+	"npm.packageManager": "bun",
+	"terminal.integrated.defaultProfile.windows": "PowerShell"
+}

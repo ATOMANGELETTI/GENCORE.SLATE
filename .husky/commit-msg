@@ -1,0 +1,2 @@
+# Conventional Commits, with the scope list from commitlint.config.ts.
+bunx commitlint --edit "$1"

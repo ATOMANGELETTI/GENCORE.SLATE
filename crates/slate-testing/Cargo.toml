@@ -1,0 +1,17 @@
+[package]
+name = "slate-testing"
+description = "Test fixtures — chiefly a temporary portable root that mirrors the shipped layout."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+camino.workspace = true
+tempfile.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,55 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/project.json
+id: 'slate-tokens'
+layer: 'library'
+language: 'typescript'
+stack: 'frontend'
+tags: ['ts-lib']
+
+project:
+  name: 'slate-tokens'
+  description: 'Design tokens and the generated stylesheet.'
+  owner: 'ATOMANGELETTI'
+
+dependsOn: []
+
+tasks:
+  # Regenerates src/generated/tokens.css from the token definitions.
+  build:
+    command: 'bun run scripts/build-tokens.ts'
+    inputs:
+      - 'src/tokens/**/*'
+      - 'src/generate/**/*'
+      - 'scripts/build-tokens.ts'
+    outputs:
+      - 'src/generated/tokens.css'
+    toolchain: 'bun'
+
+  # Fails when the committed stylesheet no longer matches its source. Run in CI
+  # for the same reason as agents-check: a stale generated file is worse than
+  # none, because everything downstream silently uses old values.
+  check:
+    command: 'bun run scripts/build-tokens.ts --check'
+    inputs:
+      - 'src/tokens/**/*'
+      - 'src/generate/**/*'
+      - 'src/generated/tokens.css'
+    toolchain: 'bun'
+
+  typecheck:
+    command: 'bunx tsc --build --pretty'
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+      - 'tsconfig.json'
+    toolchain: 'bun'
+
+  test:
+    deps:
+      - '~:build'
+    command: 'bun test $projectSource/tests'
+    options:
+      runFromWorkspaceRoot: true
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+    toolchain: 'bun'

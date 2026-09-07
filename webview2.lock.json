@@ -1,0 +1,6 @@
+{
+	"//": "Pins the WebView2 fixed-version runtime that ships inside the suite. Microsoft publishes no stable direct URL for this archive, so it is downloaded once by hand and verified against the checksum below. Fill in `sha256` the first time you fetch it — an empty value skips verification and is reported by `bun run scripts/bun-webview2.ts --status`. See docs/webview2.md and ADR 0005.",
+	"version": "131.0.2903.86",
+	"sha256": "",
+	"source": "https://developer.microsoft.com/microsoft-edge/webview2/ (Fixed Version, x64)"
+}

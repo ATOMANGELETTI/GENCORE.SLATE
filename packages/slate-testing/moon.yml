@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/project.json
+id: 'slate-testing'
+layer: 'library'
+language: 'typescript'
+stack: 'frontend'
+tags: ['ts-lib']
+
+project:
+  name: 'slate-testing'
+  description: 'Test setup, fixtures, and render helpers.'
+  owner: 'ATOMANGELETTI'
+
+dependsOn: ['slate-ui-kit']
+
+tasks:
+  typecheck:
+    command: 'bunx tsc --build --pretty'
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+      - 'tsconfig.json'
+    toolchain: 'bun'
+
+
+  # Libraries are consumed as source by Vite, so there is nothing to bundle;
+  # "building" one means proving it typechecks.
+  build:
+    deps:
+      - '~:typecheck'
+    command: 'noop'
+    toolchain: 'bun'

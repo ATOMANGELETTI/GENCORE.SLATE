@@ -1,0 +1,22 @@
+[package]
+name = "slate-ipc"
+description = "Cross-application IPC: wire protocol, framing, and the named-pipe client."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+slate-core.workspace = true
+camino.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,75 @@
+name: Bug report
+description: Something does not work as it should
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For a **security** problem, please use the Security tab instead — see
+        `.github/SECURITY.md`.
+
+  - type: input
+    id: version
+    attributes:
+      label: Suite version
+      description: Shown in the status bar, or in the `.slate-root` file.
+      placeholder: 0.1.0
+    validations:
+      required: true
+
+  - type: dropdown
+    id: app
+    attributes:
+      label: Which application?
+      options:
+        - Launcher
+        - Terminal
+        - Explorer
+        - Packaging or build
+        - More than one
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you expected, and what happened instead.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      placeholder: |
+        1. Extract the zip to ...
+        2. Run Slate.exe
+        3. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: |
+        From `appdata/logs/` inside your install. Paths recorded there are
+        relative, so the log should not contain anything private — but please
+        check before pasting.
+      render: text
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windows version
+      placeholder: Windows 11 24H2
+
+  - type: checkboxes
+    id: portability
+    attributes:
+      label: Portability
+      description: These often matter more than they look.
+      options:
+        - label: The install was moved or copied from another location
+        - label: It is running from removable or network storage

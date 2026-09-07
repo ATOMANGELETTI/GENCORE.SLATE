@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/toolchain.json
+#
+# Toolchain plugins.
+#
+# Bun is pinned here as well as in `.tool-versions`: Moon runs tasks through
+# proto shims, which refuse to run when the pinned version is not one proto
+# manages. Rust is not pinned here because `rust-toolchain.toml` already is
+# authoritative and rustup honours it directly.
+#
+# Keep the Bun version in step with `.tool-versions` and package.json engines.
+
+bun:
+  # Pinned so Moon (through proto) provisions the same Bun everywhere, rather
+  # than depending on whatever happens to be on PATH. Keep in step with
+  # .tool-versions and the engines field in package.json.
+  version: '1.4.2'
+
+rust:
+  # Keeps rust-toolchain.toml authoritative and in sync across the workspace.
+  syncToolchainConfig: true
+
+typescript:
+  # Project references are generated from each project's dependsOn, so the
+  # root tsconfig.json solution file never has to be hand-maintained.
+  syncProjectReferences: true
+  syncProjectReferencesToPaths: true
+  includeProjectReferenceSources: false
+  includeSharedTypes: false
+  routeOutDirToCache: false

@@ -1,0 +1,33 @@
+{
+	"name": "{{ id }}",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "Launches the suite's applications and installed portable apps.",
+	"scripts": {
+		"dev": "tauri dev",
+		"build": "tauri build --no-bundle"
+	},
+	"dependencies": {
+		"@slate/bindings": "0.1.0",
+		"@slate/icons": "0.1.0",
+		"@slate/ipc": "0.1.0",
+		"@slate/tokens": "0.1.0",
+		"@slate/ui-kit": "0.1.0",
+		"@slate/utils": "0.1.0",
+		"react": "19.2.8",
+		"react-dom": "19.2.8",
+		"zustand": "5.0.15"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0",
+		"@slate/config-vite": "0.1.0",
+		"@slate/testing": "0.1.0",
+		"@tauri-apps/cli": "2.11.4",
+		"@types/react": "19.2.18",
+		"@types/react-dom": "19.2.7",
+		"typescript": "7.0.2",
+		"vite": "8.2.2"
+	}
+}

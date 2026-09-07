@@ -1,0 +1,120 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: Build and verify without publishing a release
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  release:
+    name: Build and publish the portable suite
+    runs-on: windows-latest
+    timeout-minutes: 90
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .tool-versions
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: slate-release
+
+      - run: bun install --frozen-lockfile
+
+      - name: Confirm the versions agree
+        # Catches a tag that does not match what the repository actually says.
+        run: bun run scripts/bun-version.ts --check
+
+      - name: Restore the WebView2 runtime
+        # Microsoft publishes no stable URL for the fixed-version archive, so it
+        # is held as a repository secret rather than downloaded at build time.
+        # See docs/webview2.md.
+        env:
+          WEBVIEW2_CAB_BASE64: ${{ secrets.WEBVIEW2_CAB_BASE64 }}
+        shell: pwsh
+        run: |
+          # The secret is read through env rather than an `if:` expression: the
+          # secrets context is not reliably available in step conditions, and a
+          # missing secret should skip this step, not fail the workflow.
+          if (-not $env:WEBVIEW2_CAB_BASE64) {
+            Write-Output "No WebView2 archive secret configured; the release build will fail at packaging."
+            exit 0
+          }
+          $bytes = [Convert]::FromBase64String($env:WEBVIEW2_CAB_BASE64)
+          [IO.File]::WriteAllBytes("$env:RUNNER_TEMP\webview2.cab", $bytes)
+          "SLATE_WEBVIEW2_CAB=$env:RUNNER_TEMP\webview2.cab" >> $env:GITHUB_ENV
+
+      - name: Extract the WebView2 runtime
+        if: env.SLATE_WEBVIEW2_CAB != ''
+        run: bun run webview2:fetch
+
+      - name: Quality gates
+        run: bun run check
+
+      - name: Package
+        run: bun run package:release
+
+      - name: Software bill of materials
+        run: |
+          cargo install cargo-cyclonedx --locked
+          cargo cyclonedx --format json --override-filename sbom-cargo
+          bun pm ls --all > dist/dependencies-bun.txt
+
+      - name: Verify the archive
+        shell: pwsh
+        run: |
+          $zip = Get-ChildItem dist\*.zip | Select-Object -First 1
+          $expected = (Get-Content "$($zip.FullName).sha256").Split(' ')[0]
+          $actual = (Get-FileHash $zip.FullName -Algorithm SHA256).Hash.ToLower()
+          if ($expected -ne $actual) { throw "checksum mismatch: $expected vs $actual" }
+          Write-Output "verified $($zip.Name)"
+
+      - name: Publish the release
+        if: startsWith(github.ref, 'refs/tags/') && inputs.dry-run != true
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*.zip
+            dist/*.sha256
+            dist/dependencies-bun.txt
+            sbom-cargo.json
+          generate_release_notes: true
+          body: |
+            ## Installing
+
+            Download the zip, extract it anywhere, and run `Slate.exe`.
+
+            The suite is fully portable: everything it writes stays inside the
+            extracted folder. Move or copy that folder and your settings, files,
+            and database travel with it.
+
+            **This build is not code-signed**, so Windows SmartScreen will warn
+            on first run. Choose *More info* then *Run anyway* if you trust the
+            source. Verify the download against the published SHA-256 first.
+
+      - name: Upload artefacts on a dry run
+        if: inputs.dry-run == true
+        uses: actions/upload-artifact@v4
+        with:
+          name: slate-portable-release
+          path: dist/*.zip
+          retention-days: 14

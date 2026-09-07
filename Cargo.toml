@@ -1,0 +1,145 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# GENCORE.SLATE — Cargo workspace
+#
+# Every crate in the suite lives here. Shared dependency versions are declared
+# once in [workspace.dependencies] and referenced by member crates with
+# `dep.workspace = true`, so a version can never drift between two crates.
+#
+# The `version` field is written by scripts/bun-version.ts during a release and
+# must not be edited by hand — see .agents/rules/12-ci-and-release.md.
+# ─────────────────────────────────────────────────────────────────────────────
+[workspace]
+resolver = "3"
+members = ["crates/*", "tauri/*/src-tauri"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98.0"
+authors = ["Dustin Angeletti <DUSTIN@angeletti.space>"]
+license = "LicenseRef-Proprietary"
+publish = false
+repository = "https://github.com/ATOMANGELETTI/GENCORE.SLATE"
+
+[workspace.dependencies]
+# ── Internal crates ──────────────────────────────────────────────────────────
+slate-core = { path = "crates/slate-core" }
+slate-paths = { path = "crates/slate-paths" }
+slate-config = { path = "crates/slate-config" }
+slate-db = { path = "crates/slate-db" }
+slate-ipc = { path = "crates/slate-ipc" }
+slate-broker = { path = "crates/slate-broker" }
+slate-runtime = { path = "crates/slate-runtime" }
+slate-process = { path = "crates/slate-process" }
+slate-testing = { path = "crates/slate-testing" }
+launcher-core = { path = "crates/launcher-core" }
+terminal-core = { path = "crates/terminal-core" }
+explorer-core = { path = "crates/explorer-core" }
+
+# ── Tauri ────────────────────────────────────────────────────────────────────
+# No `protocol-asset`: the asset protocol is disabled in every tauri.conf.json,
+# and enabling the feature without using it only widens the attack surface.
+tauri = { version = "2.11", features = [] }
+tauri-build = { version = "2.6", features = [] }
+tauri-plugin-opener = "2.5"
+tauri-plugin-log = "2.9"
+tauri-plugin-os = "2.3"
+tauri-plugin-window-state = "2.4"
+window-vibrancy = "0.8"
+
+# ── Serialisation & configuration ────────────────────────────────────────────
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+toml = "1.1"
+
+# ── Errors & diagnostics ─────────────────────────────────────────────────────
+thiserror = "2.0"
+anyhow = "1.0"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json", "time"] }
+tracing-appender = "0.2"
+
+# ── Storage ──────────────────────────────────────────────────────────────────
+rusqlite = { version = "0.40", features = ["bundled", "chrono", "serde_json"] }
+r2d2 = "0.8"
+r2d2_sqlite = "0.35"
+
+# ── Async & concurrency ──────────────────────────────────────────────────────
+tokio = { version = "1.53", features = ["rt-multi-thread", "macros", "net", "io-util", "sync", "time"] }
+parking_lot = "0.12"
+
+# ── Utilities ────────────────────────────────────────────────────────────────
+camino = { version = "1.2", features = ["serde1"] }
+uuid = { version = "1", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+sha2 = "0.10"
+
+# ── Windows platform ─────────────────────────────────────────────────────────
+windows-sys = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_System_Threading",
+    "Win32_System_Console",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Graphics_Dwm",
+] }
+
+# ── Test-only ────────────────────────────────────────────────────────────────
+tempfile = "3"
+pretty_assertions = "1"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Lints applied to every crate. Members opt in with `[lints] workspace = true`.
+# ─────────────────────────────────────────────────────────────────────────────
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+rust_2018_idioms = { level = "warn", priority = -1 }
+unreachable_pub = "warn"
+unused_qualifications = "warn"
+
+[workspace.lints.clippy]
+all = { level = "warn", priority = -1 }
+pedantic = { level = "warn", priority = -1 }
+# Panicking paths are forbidden in library code; tests may still panic.
+unwrap_used = "warn"
+expect_used = "warn"
+panic = "warn"
+todo = "warn"
+unimplemented = "warn"
+dbg_macro = "deny"
+print_stdout = "warn"
+print_stderr = "warn"
+disallowed_methods = "deny"
+disallowed_types = "deny"
+# Noise we accept.
+module_name_repetitions = "allow"
+must_use_candidate = "allow"
+missing_errors_doc = "allow"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Build profiles
+# ─────────────────────────────────────────────────────────────────────────────
+[profile.dev]
+# Dependencies are optimised even in debug builds: they change rarely and this
+# makes the Tauri dev loop dramatically faster.
+opt-level = 0
+debug = 1
+incremental = true
+
+[profile.dev.package."*"]
+opt-level = 2
+debug = false
+
+[profile.release]
+opt-level = "s"       # A portable suite optimises for size, not micro-benchmarks.
+lto = "fat"
+codegen-units = 1
+strip = "symbols"
+panic = "unwind"      # Tauri and wry rely on unwinding; do not set "abort".
+debug = false
+
+# Used by `bun run package` when a debuggable release build is needed.
+[profile.release-debug]
+inherits = "release"
+strip = "none"
+debug = 1

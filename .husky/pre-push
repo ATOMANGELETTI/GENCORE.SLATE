@@ -1,0 +1,10 @@
+# The cheap half of CI, so a broken push is caught here rather than five
+# minutes later in a workflow. The full suite still runs in CI.
+echo "▸ Checking generated agent documentation…"
+bun run agents:check || exit 1
+
+echo "▸ Checking versions agree…"
+bun run scripts/bun-version.ts --check || exit 1
+
+echo "▸ Typechecking and testing affected projects…"
+moon ci --base origin/main || exit 1

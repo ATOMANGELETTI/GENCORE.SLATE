@@ -1,0 +1,34 @@
+# Clippy configuration.
+#
+# The disallowed lists below are the compile-time half of the portability
+# guarantee described in .agents/rules/09-portability.md: an app must never
+# discover a path from the operating system, only from `slate-paths`.
+
+msrv = "1.98.0"
+avoid-breaking-exported-api = false
+too-many-arguments-threshold = 8
+type-complexity-threshold = 300
+
+disallowed-methods = [
+    { path = "std::env::temp_dir", reason = "not portable — use slate_paths::SlatePaths::temp_dir()" },
+    { path = "std::env::home_dir", reason = "not portable — the suite has no notion of a home directory" },
+    { path = "std::env::current_dir", reason = "the working directory is not guaranteed — resolve from slate_paths instead" },
+]
+
+disallowed-types = [
+    { path = "directories::BaseDirs", reason = "resolves OS-owned directories — use slate_paths::SlatePaths" },
+    { path = "directories::ProjectDirs", reason = "resolves OS-owned directories — use slate_paths::SlatePaths" },
+    { path = "directories::UserDirs", reason = "resolves OS-owned directories — use slate_paths::SlatePaths" },
+]
+
+# `expect`, `unwrap`, and `panic!` are denied in library code and expected in
+# tests: a test that cannot set up its fixture should fail loudly on the spot,
+# and threading Result through assertions buys nothing but noise.
+allow-expect-in-tests = true
+allow-unwrap-in-tests = true
+allow-panic-in-tests = true
+allow-dbg-in-tests = false
+
+# Product names that clippy's doc_markdown lint mistakes for code identifiers.
+# ".." keeps clippy's own default list in addition to these.
+doc-valid-idents = ["WebView2", "ConPTY", "PortableApps.com", "SQLite", "GENCORE.SLATE", ".."]

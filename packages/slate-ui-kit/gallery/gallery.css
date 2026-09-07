@@ -1,0 +1,5 @@
+@import '@slate/tokens/css';
+
+/* The kit's own sources must be visible to Tailwind for utilities to exist. */
+@source '../src';
+@source '.';

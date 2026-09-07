@@ -1,0 +1,34 @@
+GENCORE.SLATE
+Copyright (c) 2026 Dustin Angeletti. All rights reserved.
+
+PROPRIETARY AND CONFIDENTIAL
+
+This software and its source code, documentation, design assets, and all
+associated materials (collectively, the "Software") are the proprietary and
+confidential property of Dustin Angeletti (the "Owner").
+
+No licence, express or implied, is granted by this file. Without the prior
+written permission of the Owner, no person may:
+
+  1. copy, reproduce, or republish the Software in whole or in part;
+  2. distribute, sublicense, sell, lease, rent, or otherwise transfer the
+     Software or any derivative of it;
+  3. modify, adapt, translate, or create derivative works from the Software;
+  4. reverse engineer, decompile, or disassemble the Software, except to the
+     extent that such activity is expressly permitted by applicable law
+     notwithstanding this limitation;
+  5. remove, obscure, or alter any proprietary notice contained in the
+     Software; or
+  6. disclose the Software to any third party.
+
+Unauthorised copying of the Software, via any medium, is strictly prohibited.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+OWNER BE LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN
+ACTION OF CONTRACT, TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Third-party dependencies remain subject to their own licences. The permitted
+set is enforced by `deny.toml` and verified in continuous integration.
