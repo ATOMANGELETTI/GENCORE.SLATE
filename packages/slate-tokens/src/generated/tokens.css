@@ -1,0 +1,333 @@
+/*
+ * GENERATED FILE — DO NOT EDIT.
+ *
+ * Source: packages/slate-tokens/src/tokens/
+ * Regenerate: moon run slate-tokens:build
+ */
+
+@import "tailwindcss";
+
+/* ── Dark is the default theme (ADR 0010) ───────────────────────────── */
+:root {
+	--slate-bg-canvas: #0e0e10;
+	--slate-bg-surface: #161619;
+	--slate-bg-elevated: #1f1f23;
+	--slate-bg-inset: #00000040;
+	--slate-bg-overlay: #000000a6;
+	--slate-bg-hover: #ffffff0f;
+	--slate-bg-active: #ffffff1a;
+	--slate-bg-selected: #0a84ff26;
+	--slate-text-primary: #f5f5f7;
+	--slate-text-secondary: #a8a8b0;
+	--slate-text-tertiary: #79797f;
+	--slate-text-inverted: #0e0e10;
+	--slate-text-on-accent: #ffffff;
+	--slate-border-hairline: #ffffff14;
+	--slate-border-strong: #ffffff26;
+	--slate-border-focus: #0a84ff;
+	--slate-accent-default: #0a84ff;
+	--slate-accent-hover: #3395ff;
+	--slate-accent-muted: #0a84ff33;
+	--slate-status-success: #30d158;
+	--slate-status-warning: #ffd60a;
+	--slate-status-danger: #ff453a;
+	--slate-status-info: #0a84ff;
+	--slate-chrome-close: #ff5f57;
+	--slate-chrome-minimize: #febc2e;
+	--slate-chrome-zoom: #28c840;
+	--slate-chrome-inactive: #4a4a50;
+	--slate-chrome-glyph: #00000099;
+
+	--slate-space-0: 0px;
+	--slate-space-1: 4px;
+	--slate-space-2: 8px;
+	--slate-space-3: 12px;
+	--slate-space-4: 16px;
+	--slate-space-5: 20px;
+	--slate-space-6: 24px;
+	--slate-space-8: 32px;
+	--slate-space-10: 40px;
+	--slate-space-12: 48px;
+	--slate-space-16: 64px;
+	--slate-space-px: 1px;
+	--slate-space-0-5: 2px;
+	--slate-space-1-5: 6px;
+
+	--slate-radius-none: 0px;
+	--slate-radius-sm: 6px;
+	--slate-radius-md: 8px;
+	--slate-radius-lg: 10px;
+	--slate-radius-xl: 14px;
+	--slate-radius-2xl: 18px;
+	--slate-radius-full: 9999px;
+
+	--slate-font-sans: 'Inter Variable', 'Inter', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif;
+	--slate-font-mono: 'Geist Mono Variable', 'Geist Mono', 'Cascadia Code', 'Consolas', ui-monospace, monospace;
+	--slate-text-2xs: 10px;
+	--slate-text-xs: 11px;
+	--slate-text-sm: 12px;
+	--slate-text-base: 13px;
+	--slate-text-md: 14px;
+	--slate-text-lg: 16px;
+	--slate-text-xl: 20px;
+	--slate-text-2xl: 26px;
+	--slate-weight-regular: 400;
+	--slate-weight-medium: 500;
+	--slate-weight-semibold: 590;
+	--slate-weight-bold: 680;
+	--slate-leading-tight: 1.25;
+	--slate-leading-normal: 1.45;
+	--slate-leading-relaxed: 1.65;
+	--slate-tracking-tight: -0.01em;
+	--slate-tracking-normal: 0;
+	--slate-tracking-wide: 0.02em;
+
+	--slate-shadow-none: none;
+	--slate-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.08), 0 0 0 0.5px rgb(0 0 0 / 0.04);
+	--slate-shadow-md: 0 4px 12px rgb(0 0 0 / 0.10), 0 0 0 0.5px rgb(0 0 0 / 0.06);
+	--slate-shadow-lg: 0 12px 32px rgb(0 0 0 / 0.16), 0 0 0 0.5px rgb(0 0 0 / 0.08);
+	--slate-shadow-overlay: 0 24px 64px rgb(0 0 0 / 0.28), 0 0 0 0.5px rgb(0 0 0 / 0.10);
+	--slate-shadow-focus: 0 0 0 3px var(--slate-accent-muted);
+
+	--slate-duration-instant: 0ms;
+	--slate-duration-fast: 120ms;
+	--slate-duration-normal: 160ms;
+	--slate-duration-slow: 220ms;
+	--slate-duration-slower: 320ms;
+	--slate-ease-standard: cubic-bezier(0.32, 0.72, 0, 1);
+	--slate-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--slate-ease-in: cubic-bezier(0.4, 0, 1, 1);
+	--slate-ease-linear: linear;
+
+	--slate-chrome-titlebarHeight: 38px;
+	--slate-chrome-statusbarHeight: 24px;
+	--slate-chrome-trafficLightSize: 12px;
+	--slate-chrome-trafficLightGap: 8px;
+	--slate-chrome-sidebarWidth: 240px;
+	--slate-chrome-windowRadius: 10px;
+	--slate-layer-base: 0;
+	--slate-layer-raised: 10;
+	--slate-layer-sticky: 20;
+	--slate-layer-titlebar: 30;
+	--slate-layer-dropdown: 40;
+	--slate-layer-overlay: 50;
+	--slate-layer-modal: 60;
+	--slate-layer-toast: 70;
+	--slate-layer-tooltip: 80;
+}
+
+/* An explicit choice wins over the system preference in both directions. */
+[data-theme='light'] {
+	--slate-bg-canvas: #f4f4f5;
+	--slate-bg-surface: #ffffff;
+	--slate-bg-elevated: #ffffff;
+	--slate-bg-inset: #00000008;
+	--slate-bg-overlay: #00000040;
+	--slate-bg-hover: #0000000a;
+	--slate-bg-active: #00000014;
+	--slate-bg-selected: #007aff1f;
+	--slate-text-primary: #1d1d1f;
+	--slate-text-secondary: #54545a;
+	--slate-text-tertiary: #8e8e93;
+	--slate-text-inverted: #ffffff;
+	--slate-text-on-accent: #ffffff;
+	--slate-border-hairline: #0000001a;
+	--slate-border-strong: #00000029;
+	--slate-border-focus: #007aff;
+	--slate-accent-default: #007aff;
+	--slate-accent-hover: #0060df;
+	--slate-accent-muted: #007aff26;
+	--slate-status-success: #34c759;
+	--slate-status-warning: #ffcc00;
+	--slate-status-danger: #ff3b30;
+	--slate-status-info: #007aff;
+	--slate-chrome-close: #ff5f57;
+	--slate-chrome-minimize: #febc2e;
+	--slate-chrome-zoom: #28c840;
+	--slate-chrome-inactive: #d0d0d4;
+	--slate-chrome-glyph: #00000099;
+}
+
+@media (prefers-color-scheme: light) {
+	:root:not([data-theme='dark']) {
+		--slate-bg-canvas: #f4f4f5;
+		--slate-bg-surface: #ffffff;
+		--slate-bg-elevated: #ffffff;
+		--slate-bg-inset: #00000008;
+		--slate-bg-overlay: #00000040;
+		--slate-bg-hover: #0000000a;
+		--slate-bg-active: #00000014;
+		--slate-bg-selected: #007aff1f;
+		--slate-text-primary: #1d1d1f;
+		--slate-text-secondary: #54545a;
+		--slate-text-tertiary: #8e8e93;
+		--slate-text-inverted: #ffffff;
+		--slate-text-on-accent: #ffffff;
+		--slate-border-hairline: #0000001a;
+		--slate-border-strong: #00000029;
+		--slate-border-focus: #007aff;
+		--slate-accent-default: #007aff;
+		--slate-accent-hover: #0060df;
+		--slate-accent-muted: #007aff26;
+		--slate-status-success: #34c759;
+		--slate-status-warning: #ffcc00;
+		--slate-status-danger: #ff3b30;
+		--slate-status-info: #007aff;
+		--slate-chrome-close: #ff5f57;
+		--slate-chrome-minimize: #febc2e;
+		--slate-chrome-zoom: #28c840;
+		--slate-chrome-inactive: #d0d0d4;
+		--slate-chrome-glyph: #00000099;
+	}
+}
+
+/* ── Tailwind v4 utilities, mapped to the variables above ───────────── */
+@theme inline {
+	--color-bg-canvas: var(--slate-bg-canvas);
+	--color-bg-surface: var(--slate-bg-surface);
+	--color-bg-elevated: var(--slate-bg-elevated);
+	--color-bg-inset: var(--slate-bg-inset);
+	--color-bg-overlay: var(--slate-bg-overlay);
+	--color-bg-hover: var(--slate-bg-hover);
+	--color-bg-active: var(--slate-bg-active);
+	--color-bg-selected: var(--slate-bg-selected);
+	--color-text-primary: var(--slate-text-primary);
+	--color-text-secondary: var(--slate-text-secondary);
+	--color-text-tertiary: var(--slate-text-tertiary);
+	--color-text-inverted: var(--slate-text-inverted);
+	--color-text-on-accent: var(--slate-text-on-accent);
+	--color-border-hairline: var(--slate-border-hairline);
+	--color-border-strong: var(--slate-border-strong);
+	--color-border-focus: var(--slate-border-focus);
+	--color-accent-default: var(--slate-accent-default);
+	--color-accent-hover: var(--slate-accent-hover);
+	--color-accent-muted: var(--slate-accent-muted);
+	--color-status-success: var(--slate-status-success);
+	--color-status-warning: var(--slate-status-warning);
+	--color-status-danger: var(--slate-status-danger);
+	--color-status-info: var(--slate-status-info);
+	--color-chrome-close: var(--slate-chrome-close);
+	--color-chrome-minimize: var(--slate-chrome-minimize);
+	--color-chrome-zoom: var(--slate-chrome-zoom);
+	--color-chrome-inactive: var(--slate-chrome-inactive);
+	--color-chrome-glyph: var(--slate-chrome-glyph);
+	--spacing-0: var(--slate-space-0);
+	--spacing-1: var(--slate-space-1);
+	--spacing-2: var(--slate-space-2);
+	--spacing-3: var(--slate-space-3);
+	--spacing-4: var(--slate-space-4);
+	--spacing-5: var(--slate-space-5);
+	--spacing-6: var(--slate-space-6);
+	--spacing-8: var(--slate-space-8);
+	--spacing-10: var(--slate-space-10);
+	--spacing-12: var(--slate-space-12);
+	--spacing-16: var(--slate-space-16);
+	--spacing-px: var(--slate-space-px);
+	--spacing-0-5: var(--slate-space-0-5);
+	--spacing-1-5: var(--slate-space-1-5);
+	--radius-none: var(--slate-radius-none);
+	--radius-sm: var(--slate-radius-sm);
+	--radius-md: var(--slate-radius-md);
+	--radius-lg: var(--slate-radius-lg);
+	--radius-xl: var(--slate-radius-xl);
+	--radius-2xl: var(--slate-radius-2xl);
+	--radius-full: var(--slate-radius-full);
+	--text-2xs: var(--slate-text-2xs);
+	--text-xs: var(--slate-text-xs);
+	--text-sm: var(--slate-text-sm);
+	--text-base: var(--slate-text-base);
+	--text-md: var(--slate-text-md);
+	--text-lg: var(--slate-text-lg);
+	--text-xl: var(--slate-text-xl);
+	--text-2xl: var(--slate-text-2xl);
+	--font-sans: var(--slate-font-sans);
+	--font-mono: var(--slate-font-mono);
+	--shadow-none: var(--slate-shadow-none);
+	--shadow-sm: var(--slate-shadow-sm);
+	--shadow-md: var(--slate-shadow-md);
+	--shadow-lg: var(--slate-shadow-lg);
+	--shadow-overlay: var(--slate-shadow-overlay);
+	--shadow-focus: var(--slate-shadow-focus);
+	--ease-standard: var(--slate-ease-standard);
+	--ease-out: var(--slate-ease-out);
+	--ease-in: var(--slate-ease-in);
+	--ease-linear: var(--slate-ease-linear);
+}
+
+/* ── Base layer ─────────────────────────────────────────────────────── */
+@layer base {
+	* {
+		border-color: var(--slate-border-hairline);
+	}
+
+	html,
+	body,
+	#root {
+		height: 100%;
+		margin: 0;
+	}
+
+	body {
+		background-color: var(--slate-bg-canvas);
+		color: var(--slate-text-primary);
+		font-family: var(--slate-font-sans);
+		font-size: var(--slate-text-base);
+		line-height: var(--slate-leading-normal);
+		-webkit-font-smoothing: antialiased;
+		text-rendering: optimizeLegibility;
+	}
+
+	/* A desktop window is not a document: it must never rubber-band or
+	   offer text selection on chrome the way a web page does. */
+	body {
+		overflow: hidden;
+		overscroll-behavior: none;
+		cursor: default;
+		user-select: none;
+	}
+
+	input,
+	textarea,
+	[contenteditable],
+	[data-selectable] {
+		user-select: text;
+		cursor: text;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--slate-border-focus);
+		outline-offset: 2px;
+	}
+
+	::selection {
+		background-color: var(--slate-accent-muted);
+	}
+
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: var(--slate-border-strong);
+		border: 3px solid transparent;
+		border-radius: var(--slate-radius-full);
+		background-clip: content-box;
+	}
+
+	::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	/* Honour the accessibility setting rather than merely shortening. */
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+		}
+	}
+}

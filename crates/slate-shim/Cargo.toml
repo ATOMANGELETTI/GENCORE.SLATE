@@ -1,0 +1,21 @@
+[package]
+name = "slate-shim"
+description = "Slate.exe — the portable root's entry point. Locates and starts the Launcher."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[[bin]]
+name = "Slate"
+path = "src/main.rs"
+
+[dependencies]
+slate-core.workspace = true
+slate-paths.workspace = true
+
+[lints]
+workspace = true

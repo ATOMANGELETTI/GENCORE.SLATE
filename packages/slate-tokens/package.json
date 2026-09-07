@@ -1,0 +1,20 @@
+{
+	"name": "@slate/tokens",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "Design tokens: the single source of every colour, space, radius, and duration in the suite.",
+	"exports": {
+		".": "./src/index.ts",
+		"./css": "./src/generated/tokens.css"
+	},
+	"scripts": {
+		"build": "bun run scripts/build-tokens.ts",
+		"check": "bun run scripts/build-tokens.ts --check"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0",
+		"tailwindcss": "4.3.3"
+	}
+}

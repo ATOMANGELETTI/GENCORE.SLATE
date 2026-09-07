@@ -1,0 +1,14 @@
+{
+	"name": "@slate/utils",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "Small pure helpers used across the suite.",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0"
+	}
+}

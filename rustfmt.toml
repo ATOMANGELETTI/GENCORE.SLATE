@@ -1,0 +1,11 @@
+# Formatting is not a matter of taste in this repository — it is enforced.
+# Run `cargo fmt --all` or `moon run :format`.
+edition = "2024"
+style_edition = "2024"
+max_width = 100
+tab_spaces = 4
+newline_style = "Unix"
+use_field_init_shorthand = true
+use_try_shorthand = true
+reorder_imports = true
+reorder_modules = true

@@ -1,0 +1,22 @@
+{
+	"extends": "@slate/config-typescript/tauri-app.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": [
+			"bun",
+			"vite/client"
+		],
+		"outDir": "dist/types",
+		"tsBuildInfoFile": "dist/types/.tsbuildinfo"
+	},
+	"include": [
+		"src/**/*",
+		"tests/**/*",
+		"vite.config.ts"
+	],
+	"exclude": [
+		"dist",
+		"src-tauri",
+		"node_modules"
+	]
+}

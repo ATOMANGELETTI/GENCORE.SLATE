@@ -1,0 +1,26 @@
+# Cargo configuration shared by every developer, agent, and CI runner.
+
+[build]
+# One shared target directory for the whole workspace keeps incremental builds
+# warm across crates and stops Tauri from creating a second one under
+# tauri/*/src-tauri/target.
+target-dir = "target"
+
+[target.x86_64-pc-windows-msvc]
+rustflags = [
+    # Windows control-flow guard — cheap, meaningful exploit mitigation.
+    "-C", "control-flow-guard=yes",
+]
+
+[alias]
+lint = "clippy --workspace --all-targets --all-features -- -D warnings"
+lint-fix = "clippy --workspace --all-targets --all-features --fix --allow-dirty -- -D warnings"
+fmt-check = "fmt --all -- --check"
+test-all = "nextest run --workspace --all-features"
+cov = "llvm-cov nextest --workspace --all-features --lcov --output-path lcov.info"
+
+[net]
+git-fetch-with-cli = true
+
+[term]
+color = "always"

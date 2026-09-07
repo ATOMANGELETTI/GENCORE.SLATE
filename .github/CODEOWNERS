@@ -1,0 +1,10 @@
+# Every change is reviewed by the repository owner.
+*                       @ATOMANGELETTI
+
+# Areas where a mistake is expensive and easy to miss in review.
+/crates/slate-paths/    @ATOMANGELETTI
+/crates/slate-ipc/      @ATOMANGELETTI
+/scripts/               @ATOMANGELETTI
+/.github/workflows/     @ATOMANGELETTI
+/.agents/               @ATOMANGELETTI
+deny.toml               @ATOMANGELETTI

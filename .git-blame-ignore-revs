@@ -1,0 +1,11 @@
+# Revisions to skip when running `git blame`.
+#
+# Add the full 40-character SHA of any commit that only reformats code
+# (a Biome/rustfmt sweep, a mass rename, a licence-header insertion) so that
+# blame keeps pointing at the commit that last changed the logic.
+#
+# Enable locally with:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Example:
+# 0000000000000000000000000000000000000000  # style: format entire workspace

@@ -1,0 +1,38 @@
+name: Mutation testing
+
+on:
+  schedule:
+    # Weekly. Mutation testing is slow by nature, and its findings are about
+    # test quality rather than correctness — worth knowing, not worth blocking
+    # every pull request on.
+    - cron: '0 4 * * 1'
+  workflow_dispatch:
+
+jobs:
+  mutants:
+    name: cargo-mutants
+    runs-on: windows-latest
+    timeout-minutes: 120
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: slate
+
+      - name: Install cargo-mutants
+        run: cargo install cargo-mutants --locked
+
+      - name: Mutate the crates everything else trusts
+        run: cargo mutants --package slate-paths --package slate-config --package slate-ipc --in-place
+
+      - name: Upload the report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: mutants-report
+          path: mutants.out/
+          retention-days: 30

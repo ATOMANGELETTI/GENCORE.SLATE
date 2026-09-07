@@ -1,0 +1,23 @@
+[package]
+name = "slate-paths"
+description = "Portable-root discovery and the single source of every path in the suite."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+slate-core.workspace = true
+camino.workspace = true
+serde.workspace = true
+thiserror.workspace = true
+toml.workspace = true
+
+[dev-dependencies]
+slate-testing.workspace = true
+
+[lints]
+workspace = true

@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/project.json
+#
+# The workspace-root project.
+#
+# It owns everything that is repository-wide rather than package-specific: the
+# entire Rust workspace (Cargo handles crate-level granularity), the agent
+# documentation generator, packaging, and supply-chain auditing.
+
+id: 'root'
+layer: 'automation'
+language: 'rust'
+stack: 'systems'
+
+project:
+  name: 'GENCORE.SLATE'
+  description: 'Workspace-root automation: Rust workspace, agent docs, packaging.'
+  owner: 'ATOMANGELETTI'
+
+fileGroups:
+  rust:
+    - 'crates/**/*.rs'
+    - 'crates/**/Cargo.toml'
+    - 'tauri/*/src-tauri/**/*.rs'
+    - 'tauri/*/src-tauri/Cargo.toml'
+    - 'Cargo.toml'
+    - 'Cargo.lock'
+    - 'rust-toolchain.toml'
+    - 'clippy.toml'
+  agents:
+    - '.agents/**/*'
+    - 'scripts/sync-agents.ts'
+
+tasks:
+  # ── Rust ───────────────────────────────────────────────────────────────────
+  format-rust:
+    command: 'cargo fmt --all'
+    toolchain: 'rust'
+    # A run task: `moon check` must verify, never rewrite source.
+    type: 'run'
+    options:
+      cache: false
+
+  lint-rust:
+    command: 'cargo clippy --workspace --all-targets --all-features -- -D warnings'
+    inputs:
+      - '@group(rust)'
+    toolchain: 'rust'
+
+  test-rust:
+    command: 'cargo test --workspace --all-features'
+    inputs:
+      - '@group(rust)'
+    toolchain: 'rust'
+
+  build-rust:
+    command: 'cargo build --workspace --release'
+    inputs:
+      - '@group(rust)'
+    toolchain: 'rust'
+
+  # ── Agent documentation ────────────────────────────────────────────────────
+  agents-sync:
+    command: 'bun run scripts/sync-agents.ts'
+    inputs:
+      - '@group(agents)'
+    toolchain: 'bun'
+    options:
+      cache: false
+
+  agents-check:
+    command: 'bun run scripts/sync-agents.ts --check'
+    inputs:
+      - '@group(agents)'
+      - 'AGENTS.md'
+      - 'CLAUDE.md'
+      - '.cursor/rules/**/*'
+      - '.agent/rules/**/*'
+      - '.github/copilot-instructions.md'
+      - '.github/instructions/**/*'
+    toolchain: 'bun'
+
+  # ── Supply chain ───────────────────────────────────────────────────────────
+  audit:
+    command: 'cargo deny check'
+    inputs:
+      - 'deny.toml'
+      - 'Cargo.lock'
+    toolchain: 'rust'
+
+  # ── Packaging ──────────────────────────────────────────────────────────────
+  package:
+    command: 'bun run scripts/bun-package.ts --release'
+    toolchain: 'bun'
+    # A run task, so `moon check` does not build and zip the whole suite.
+    type: 'run'
+    options:
+      cache: false
+      runInCI: false
+
+  lint:
+    # Through bunx: the root project has no local node_modules/.bin on PATH.
+    command: 'bunx biome check .'
+    inputs:
+      - 'packages/*/src/**/*'
+      - 'packages/*/tests/**/*'
+      - 'tauri/*/src/**/*'
+      - 'scripts/**/*'
+      - 'biome.json'
+    toolchain: 'bun'

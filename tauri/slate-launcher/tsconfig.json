@@ -1,0 +1,80 @@
+{
+	"extends": "@slate/config-typescript/tauri-app.json",
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": [
+			"bun",
+			"vite/client"
+		],
+		"paths": {
+			"@slate/bindings": [
+				"../../packages/slate-bindings/src/index.ts"
+			],
+			"@slate/bindings/*": [
+				"../../packages/slate-bindings/src/*"
+			],
+			"@slate/icons": [
+				"../../packages/slate-icons/src/index.ts"
+			],
+			"@slate/icons/*": [
+				"../../packages/slate-icons/src/*"
+			],
+			"@slate/ipc": [
+				"../../packages/slate-ipc/src/index.ts"
+			],
+			"@slate/ipc/*": [
+				"../../packages/slate-ipc/src/*"
+			],
+			"@slate/tokens": [
+				"../../packages/slate-tokens/src/index.ts"
+			],
+			"@slate/tokens/*": [
+				"../../packages/slate-tokens/src/*"
+			],
+			"@slate/ui-kit": [
+				"../../packages/slate-ui-kit/src/index.ts"
+			],
+			"@slate/ui-kit/*": [
+				"../../packages/slate-ui-kit/src/*"
+			],
+			"@slate/utils": [
+				"../../packages/slate-utils/src/index.ts"
+			],
+			"@slate/utils/*": [
+				"../../packages/slate-utils/src/*"
+			]
+		},
+		"outDir": "dist/types",
+		"tsBuildInfoFile": "dist/types/.tsbuildinfo"
+	},
+	"include": [
+		"src/**/*",
+		"tests/**/*",
+		"vite.config.ts"
+	],
+	"exclude": [
+		"dist",
+		"src-tauri",
+		"node_modules"
+	],
+	"references": [
+		{
+			"path": "../../packages/slate-bindings"
+		},
+		{
+			"path": "../../packages/slate-icons"
+		},
+		{
+			"path": "../../packages/slate-ipc"
+		},
+		{
+			"path": "../../packages/slate-tokens"
+		},
+		{
+			"path": "../../packages/slate-ui-kit"
+		},
+		{
+			"path": "../../packages/slate-utils"
+		}
+	]
+}

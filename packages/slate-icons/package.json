@@ -1,0 +1,20 @@
+{
+	"name": "@slate/icons",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "The suite icon set.",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"lucide-react": "1.41.0"
+	},
+	"peerDependencies": {
+		"react": "19.2.8"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0"
+	}
+}

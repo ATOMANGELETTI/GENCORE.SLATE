@@ -1,0 +1,9 @@
+{
+	"//": "Moon exposes the real project and task graph over MCP. An agent that can query it does not have to infer the monorepo's structure from file paths, which is where wrong assumptions usually start.",
+	"mcpServers": {
+		"moon": {
+			"command": "moon",
+			"args": ["mcp"]
+		}
+	}
+}

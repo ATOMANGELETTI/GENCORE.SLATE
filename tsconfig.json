@@ -1,0 +1,37 @@
+{
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"//": "Root solution file. It compiles nothing itself — each project extends a base from packages/config-typescript and is referenced here so that `tsc --build` and editors resolve the whole graph.",
+	"files": [],
+	"references": [
+		{
+			"path": "./packages/slate-tokens"
+		},
+		{
+			"path": "./packages/slate-utils"
+		},
+		{
+			"path": "./packages/slate-icons"
+		},
+		{
+			"path": "./packages/slate-bindings"
+		},
+		{
+			"path": "./packages/slate-ipc"
+		},
+		{
+			"path": "./packages/slate-ui-kit"
+		},
+		{
+			"path": "./packages/slate-testing"
+		},
+		{
+			"path": "./tauri/slate-launcher"
+		},
+		{
+			"path": "./tauri/slate-terminal"
+		},
+		{
+			"path": "./tauri/slate-explorer"
+		}
+	]
+}

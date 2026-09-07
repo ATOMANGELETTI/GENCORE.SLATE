@@ -1,0 +1,42 @@
+{
+	"version": "0.2.0",
+	"//": "Debugging a Tauri app means attaching the native debugger to the Rust binary while Vite serves the frontend. Each configuration builds the app first via the matching preLaunchTask.",
+	"configurations": [
+		{
+			"name": "Debug Launcher (Rust)",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/target/debug/slate-launcher.exe",
+			"cwd": "${workspaceFolder}",
+			"env": { "SLATE_DEV_ROOT": "${workspaceFolder}/installDir", "SLATE_LOG": "debug" },
+			"preLaunchTask": "slate: dev launcher"
+		},
+		{
+			"name": "Debug Terminal (Rust)",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/target/debug/slate-terminal.exe",
+			"cwd": "${workspaceFolder}",
+			"env": { "SLATE_DEV_ROOT": "${workspaceFolder}/installDir", "SLATE_LOG": "debug" },
+			"preLaunchTask": "slate: dev terminal"
+		},
+		{
+			"name": "Debug Explorer (Rust)",
+			"type": "cppvsdbg",
+			"request": "launch",
+			"program": "${workspaceFolder}/target/debug/slate-explorer.exe",
+			"cwd": "${workspaceFolder}",
+			"env": { "SLATE_DEV_ROOT": "${workspaceFolder}/installDir", "SLATE_LOG": "debug" },
+			"preLaunchTask": "slate: dev explorer"
+		},
+		{
+			"name": "Debug Bun script",
+			"type": "bun",
+			"request": "launch",
+			"program": "${file}",
+			"cwd": "${workspaceFolder}",
+			"stopOnEntry": false,
+			"watchMode": false
+		}
+	]
+}

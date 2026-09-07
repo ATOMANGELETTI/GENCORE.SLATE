@@ -1,0 +1,20 @@
+# Settings shared by every SLATE application.
+# Delete any line to return it to its default.
+
+# system | light | dark
+theme = "dark"
+
+# solid | mica | acrylic  (Mica and Acrylic need Windows 11)
+material = "mica"
+
+# Follow the Windows accent colour instead of the suite blue.
+use-system-accent = true
+
+# Collapse animations to opacity changes only.
+reduce-motion = false
+
+# error | warn | info | debug | trace
+log-level = "info"
+
+# Days of rolling logs to keep in appdata/logs.
+log-retention-days = 14

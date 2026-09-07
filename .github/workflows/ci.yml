@@ -1,0 +1,136 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# A new push supersedes the run in flight; there is no value in finishing a
+# build for a commit that has already been replaced.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  # CI machines are ephemeral; incremental artefacts only cost time to write.
+  CARGO_INCREMENTAL: 0
+  RUSTFLAGS: -D warnings
+
+jobs:
+  # Windows is the only platform this product targets, so it is the only
+  # platform worth testing on.
+  quality:
+    name: Lint, typecheck, test, build
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          # moon ci compares against the base to run only what is affected.
+          fetch-depth: 0
+
+      - name: Install Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .tool-versions
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          # rust-toolchain.toml is the source of truth for the version.
+          toolchain: stable
+          components: rustfmt, clippy
+
+      - name: Cache Rust build
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: slate
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Install Moon
+        # Several steps below shell out to `moon` (directly, or through a
+        # package.json script such as `typecheck`/`build`). It is not part of
+        # any other setup action here, so without this the first `moon`
+        # invocation fails with "the term 'moon' is not recognized".
+        shell: bash
+        run: |
+          moon_version=$(grep '^moon ' .tool-versions | cut -d' ' -f2)
+          bun install --global "@moonrepo/cli@${moon_version}"
+
+      - name: Verify no foreign package manager was used
+        shell: bash
+        run: |
+          for lockfile in package-lock.json pnpm-lock.yaml yarn.lock; do
+            if [ -f "$lockfile" ]; then
+              echo "::error::$lockfile is present. This project uses Bun only (ADR 0001)."
+              exit 1
+            fi
+          done
+
+      - name: Check generated agent documentation
+        run: bun run agents:check
+
+      - name: Check generated design tokens
+        run: moon run slate-tokens:check
+
+      - name: Check versions agree
+        run: bun run scripts/bun-version.ts --check
+
+      - name: Format
+        run: bun run format:check
+
+      - name: Lint (Biome)
+        run: bun run lint
+
+      - name: Lint (Clippy)
+        run: cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test (TypeScript)
+        run: bun test
+
+      - name: Test (Rust)
+        run: cargo test --workspace --all-features
+
+      - name: Build
+        run: bun run build
+
+      - name: Verify the portable tree assembles
+        run: bun run package
+
+      - name: Upload the portable build
+        uses: actions/upload-artifact@v4
+        with:
+          name: slate-portable-debug
+          path: dist/*.zip
+          retention-days: 7
+          if-no-files-found: error
+
+  # Unused files, exports, and dependencies. Advisory rather than blocking:
+  # a false positive here should not stop a fix from merging.
+  hygiene:
+    name: Dead code and spelling
+    runs-on: windows-latest
+    timeout-minutes: 15
+    continue-on-error: true
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .tool-versions
+
+      - run: bun install --frozen-lockfile
+
+      - name: Unused files, exports, and dependencies
+        run: bun run lint:deps
+
+      - name: Spelling
+        run: bun run lint:spelling

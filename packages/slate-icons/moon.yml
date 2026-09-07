@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/project.json
+id: 'slate-icons'
+layer: 'library'
+language: 'typescript'
+stack: 'frontend'
+tags: ['ts-lib']
+
+project:
+  name: 'slate-icons'
+  description: 'The suite icon set.'
+  owner: 'ATOMANGELETTI'
+
+dependsOn: []
+
+tasks:
+  typecheck:
+    command: 'bunx tsc --build --pretty'
+    inputs:
+      - 'src/**/*'
+      - 'tests/**/*'
+      - 'tsconfig.json'
+    toolchain: 'bun'
+
+
+  # Libraries are consumed as source by Vite, so there is nothing to bundle;
+  # "building" one means proving it typechecks.
+  build:
+    deps:
+      - '~:typecheck'
+    command: 'noop'
+    toolchain: 'bun'

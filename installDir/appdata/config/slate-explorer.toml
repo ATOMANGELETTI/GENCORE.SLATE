@@ -1,0 +1,7 @@
+# Settings specific to slate-explorer.
+# Anything set here overrides suite.toml for this application only.
+
+[window]
+width = 1100.0
+height = 720.0
+maximized = false

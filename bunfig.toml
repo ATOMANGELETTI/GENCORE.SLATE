@@ -1,0 +1,39 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# Bun configuration.
+#
+# Bun is the only JavaScript runtime and package manager used in this
+# repository — see .agents/rules/01-tooling.md.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Fail loudly when a package declares an engine constraint we do not satisfy.
+telemetry = false
+
+[install]
+# Exact versions only. A caret range means two machines can resolve different
+# trees from the same lockfile-less install, which is exactly the class of
+# "works on my machine" bug a monorepo must not have.
+exact = true
+peer = true
+production = false
+frozenLockfile = false
+registry = "https://registry.npmjs.org"
+
+[install.cache]
+disable = false
+disableManifest = false
+
+[install.lockfile]
+save = true
+
+[run]
+# `bun run x` prefers a workspace binary over a globally installed one.
+bun = true
+shell = "bun"
+
+[test]
+root = "."
+coverage = false
+coverageThreshold = 0.8
+coverageReporter = ["text", "lcov"]
+coverageDir = "coverage"
+preload = ["./packages/slate-testing/src/setup/bun.setup.ts"]

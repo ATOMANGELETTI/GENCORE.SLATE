@@ -1,0 +1,14 @@
+{
+	"name": "@slate/bindings",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "The IPC contract shared with the Rust backend.",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"devDependencies": {
+		"@slate/config-typescript": "0.1.0"
+	}
+}

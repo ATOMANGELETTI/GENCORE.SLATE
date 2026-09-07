@@ -1,0 +1,12 @@
+/*
+ * The application's only stylesheet.
+ *
+ * It imports the generated token layer and adds nothing of its own: every
+ * value a component needs already exists as a token or a utility. If something
+ * is missing, add it to `@slate/tokens` rather than here — see
+ * .agents/rules/06-design-system.md.
+ */
+@import '@slate/tokens/css';
+
+/* Tailwind must see the shared kit's sources to emit its utilities. */
+@source '../../../../packages/slate-ui-kit/src';

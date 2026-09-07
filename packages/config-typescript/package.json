@@ -1,0 +1,17 @@
+{
+	"name": "@slate/config-typescript",
+	"version": "0.1.0",
+	"private": true,
+	"license": "LicenseRef-Proprietary",
+	"description": "Shared TypeScript configuration bases for every project in the suite.",
+	"files": [
+		"base.json",
+		"react-library.json",
+		"tauri-app.json"
+	],
+	"exports": {
+		"./base.json": "./base.json",
+		"./react-library.json": "./react-library.json",
+		"./tauri-app.json": "./tauri-app.json"
+	}
+}

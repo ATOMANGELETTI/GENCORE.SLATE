@@ -1,0 +1,91 @@
+name: Security
+
+on:
+  schedule:
+    # Daily, early. A vulnerability disclosed overnight is worth knowing about
+    # before the working day rather than at the next pull request.
+    - cron: '0 6 * * *'
+  pull_request:
+    paths:
+      - '**/Cargo.toml'
+      - '**/Cargo.lock'
+      - '**/package.json'
+      - 'bun.lock'
+      - 'deny.toml'
+      - '.github/workflows/security.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  dependencies:
+    name: Advisories, licences, and sources
+    # EmbarkStudios/cargo-deny-action is a Docker container action, which
+    # GitHub only supports on Linux runners — windows-latest fails outright
+    # with "Container action is only supported on Linux". This is purely an
+    # analysis step over Cargo.lock and bun.lock metadata (nothing is
+    # compiled), and deny.toml already pins the target it evaluates
+    # (`x86_64-pc-windows-msvc`), so the host OS running the check is
+    # unrelated to the Windows-only product itself.
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: .tool-versions
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - run: bun install --frozen-lockfile
+
+      - name: cargo-deny
+        uses: EmbarkStudios/cargo-deny-action@v2
+        with:
+          command: check
+          arguments: --all-features
+
+      - name: bun audit
+        run: bun audit --audit-level=moderate
+
+  secrets:
+    name: Secret scanning
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  codeql:
+    name: CodeQL
+    runs-on: windows-latest
+    timeout-minutes: 45
+
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [javascript-typescript, rust]
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+
+      - uses: github/codeql-action/autobuild@v3
+
+      - uses: github/codeql-action/analyze@v3
+        with:
+          category: /language:${{ matrix.language }}

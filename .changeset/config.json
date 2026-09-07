@@ -1,0 +1,15 @@
+{
+	"$schema": "https://unpkg.com/@changesets/config@3/schema.json",
+	"changelog": ["@changesets/changelog-github", { "repo": "ATOMANGELETTI/GENCORE.SLATE" }],
+	"commit": false,
+	"access": "restricted",
+	"baseBranch": "main",
+	"updateInternalDependencies": "patch",
+	"fixed": [["@slate/*", "slate-launcher", "slate-terminal", "slate-explorer", "gencore-slate"]],
+	"linked": [],
+	"ignore": [],
+	"privatePackages": {
+		"version": true,
+		"tag": false
+	}
+}

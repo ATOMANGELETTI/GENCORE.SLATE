@@ -1,0 +1,22 @@
+{
+	"recommendations": [
+		"biomejs.biome",
+		"rust-lang.rust-analyzer",
+		"tauri-apps.tauri-vscode",
+		"bradlc.vscode-tailwindcss",
+		"moonrepo.moon-console",
+		"tamasfe.even-better-toml",
+		"editorconfig.editorconfig",
+		"streetsidesoftware.code-spell-checker",
+		"oven.bun-vscode",
+		"vadimcn.vscode-lldb",
+		"ms-vscode.cpptools",
+		"usernamehw.errorlens",
+		"github.vscode-github-actions"
+	],
+	"unwantedRecommendations": [
+		"esbenp.prettier-vscode",
+		"dbaeumer.vscode-eslint",
+		"ms-vscode.vscode-typescript-next"
+	]
+}

@@ -1,0 +1,24 @@
+# Mutation testing — verifies that the test suite actually detects broken
+# behaviour rather than merely executing lines. Slow by nature, so CI runs it
+# on a weekly schedule (.github/workflows/mutants.yml) rather than per pull
+# request. Run locally with: cargo mutants --package slate-paths
+
+timeout_multiplier = 3.0
+minimum_test_timeout = 60
+test_tool = "cargo"
+
+# Generated, trivial, or UI-shell code where a surviving mutant tells us
+# nothing useful.
+exclude_globs = [
+    "tauri/*/src-tauri/src/main.rs",
+    "crates/slate-shim/**",
+    "**/build.rs",
+]
+
+exclude_re = [
+    "impl Debug",
+    "impl Display",
+    "impl Default",
+]
+
+additional_cargo_test_args = ["--all-features"]

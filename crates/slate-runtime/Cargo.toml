@@ -1,0 +1,30 @@
+[package]
+name = "slate-runtime"
+description = "The shared Tauri shell: window chrome, theme, logging, and portable bootstrap."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+slate-config.workspace = true
+camino.workspace = true
+parking_lot.workspace = true
+slate-core.workspace = true
+slate-paths.workspace = true
+serde.workspace = true
+tauri.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+tracing-appender.workspace = true
+tracing-subscriber.workspace = true
+window-vibrancy.workspace = true
+
+[target.'cfg(windows)'.dependencies]
+windows-sys.workspace = true
+
+[lints]
+workspace = true

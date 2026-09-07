@@ -1,0 +1,54 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "slate: dev launcher",
+			"type": "shell",
+			"command": "bun run dev:launcher",
+			"isBackground": true,
+			"problemMatcher": [],
+			"presentation": { "reveal": "always", "panel": "dedicated" },
+			"group": { "kind": "build", "isDefault": true }
+		},
+		{
+			"label": "slate: dev terminal",
+			"type": "shell",
+			"command": "bun run dev:terminal",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "slate: dev explorer",
+			"type": "shell",
+			"command": "bun run dev:explorer",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "slate: check all",
+			"type": "shell",
+			"command": "bun run check",
+			"problemMatcher": ["$rustc", "$tsc"],
+			"group": { "kind": "test", "isDefault": true }
+		},
+		{
+			"label": "slate: ui kit gallery",
+			"type": "shell",
+			"command": "bun run gallery",
+			"isBackground": true,
+			"problemMatcher": []
+		},
+		{
+			"label": "slate: package portable zip",
+			"type": "shell",
+			"command": "bun run package",
+			"problemMatcher": []
+		},
+		{
+			"label": "slate: sync agent docs",
+			"type": "shell",
+			"command": "bun run agents:sync",
+			"problemMatcher": []
+		}
+	]
+}

@@ -1,0 +1,42 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"//": "Renovate is used instead of Dependabot because it understands Bun workspaces and lockfiles, and can group a monorepo's npm and Cargo updates into single, reviewable pull requests.",
+	"extends": [
+		"config:recommended",
+		":dependencyDashboard",
+		":semanticCommits",
+		"group:allNonMajor",
+		"schedule:weekly"
+	],
+	"timezone": "America/Denver",
+	"labels": ["dependencies"],
+	"semanticCommitScope": "deps",
+	"rangeStrategy": "pin",
+	"lockFileMaintenance": { "enabled": true, "schedule": ["before 5am on monday"] },
+	"bun": { "enabled": true },
+	"cargo": { "enabled": true },
+	"packageRules": [
+		{
+			"description": "Tauri crates and JS packages must move together or the IPC layer breaks.",
+			"groupName": "tauri",
+			"matchPackageNames": ["/^@tauri-apps//", "/^tauri/", "/^tauri-plugin-/"]
+		},
+		{
+			"description": "React and its type definitions must stay aligned.",
+			"groupName": "react",
+			"matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"]
+		},
+		{
+			"description": "Security advisories bypass the weekly schedule.",
+			"matchDatasources": ["npm", "crate"],
+			"vulnerabilityAlerts": { "enabled": true },
+			"schedule": ["at any time"]
+		},
+		{
+			"description": "Major upgrades are reviewed deliberately, never auto-grouped.",
+			"matchUpdateTypes": ["major"],
+			"dependencyDashboardApproval": true
+		}
+	],
+	"vulnerabilityAlerts": { "labels": ["security"], "automerge": false }
+}

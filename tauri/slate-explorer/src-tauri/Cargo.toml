@@ -1,0 +1,29 @@
+[package]
+name = "slate-explorer"
+description = "GENCORE.SLATE slate-explorer application."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+authors.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[lib]
+name = "slate_explorer_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build.workspace = true
+
+[dependencies]
+slate-core.workspace = true
+slate-paths.workspace = true
+slate-runtime.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+tauri.workspace = true
+tracing.workspace = true
+
+[lints]
+workspace = true

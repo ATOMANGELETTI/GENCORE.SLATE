@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://moonrepo.dev/schemas/workspace.json
+#
+# Moon workspace — the project graph for GENCORE.SLATE.
+#
+# TypeScript packages and Tauri applications are individual Moon projects.
+# The Rust crates are NOT: Cargo already models that workspace precisely, so
+# a single root project owns the workspace-wide Rust tasks and Cargo handles
+# crate-level parallelism internally. Duplicating the crate graph in Moon
+# would buy nothing and drift immediately (ADR 0002).
+
+projects:
+  globs:
+    - 'packages/*'
+    - 'tauri/*'
+  sources:
+    root: '.'
+
+vcs:
+  client: 'git'
+  defaultBranch: 'main'
+  provider: 'github'
+
+generator:
+  # Where `moon generate` looks for templates.
+  templates:
+    - '.moon/templates'
+
+pipeline:
+  # Rust link steps dominate this repository, so a generous cache is worth it.
+  cacheLifetime: '7 days'
+  inheritColorsForPipedTasks: true
+  logRunningCommand: false
+
+telemetry: false

@@ -1,0 +1,85 @@
+# ── Build output ─────────────────────────────────────────────────────────────
+target/
+dist/
+build/
+out/
+*.tsbuildinfo
+
+# ── Bun / JavaScript ─────────────────────────────────────────────────────────
+node_modules/
+.bun/
+*.tgz
+# Bun is the only package manager in this repository. Any of these files
+# appearing means a foreign package manager was used — see .agents/rules/01.
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+npm-shrinkwrap.json
+
+# ── Rust ─────────────────────────────────────────────────────────────────────
+**/*.rs.bk
+*.pdb
+mutants.out*/
+
+# ── Moon ─────────────────────────────────────────────────────────────────────
+.moon/cache/
+.moon/docker/
+
+# ── Tauri ────────────────────────────────────────────────────────────────────
+tauri/*/src-tauri/gen/schemas/
+
+# ── Portable install directory ───────────────────────────────────────────────
+# The development portable root. Its *shape* is tracked, through a .gitkeep in
+# each directory, so a fresh clone can run `bun run dev:*` immediately. Nothing
+# written into it at runtime is tracked.
+#
+# The `!.../**/` line in each pair matters: git will not re-include a file whose
+# parent directory is excluded, so the directories have to be un-excluded before
+# the .gitkeep inside them can be.
+installDir/appdata/database/**
+installDir/appdata/logs/**
+installDir/appdata/binaries/**
+installDir/appdata/webview2/**
+installDir/programs/portableapps.com/**
+installDir/programs/portapps.io/**
+installDir/storage/**
+!installDir/appdata/database/**/
+!installDir/appdata/logs/**/
+!installDir/appdata/binaries/**/
+!installDir/appdata/webview2/**/
+!installDir/programs/portableapps.com/**/
+!installDir/programs/portapps.io/**/
+!installDir/storage/**/
+!installDir/**/.gitkeep
+
+# Built binaries and the generated marker never belong in the repository.
+installDir/programs/gencore/slate/*/*.exe
+installDir/Slate.exe
+installDir/.slate-root
+
+# ── Secrets & local overrides ────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+!installDir/appdata/config/*.key
+
+# ── Caches ───────────────────────────────────────────────────────────────────
+.cache/
+.temp/
+coverage/
+lcov.info
+*.profraw
+*.profdata
+
+# ── Editors & OS ─────────────────────────────────────────────────────────────
+.idea/
+*.swp
+*.swo
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# ── Claude Code worktrees (live inside the repo root) ────────────────────────
+.claude/worktrees/

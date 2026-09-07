@@ -1,0 +1,16 @@
+{
+	"name": "@slate/config-vite",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"license": "LicenseRef-Proprietary",
+	"description": "The shared Vite configuration factory for Tauri application frontends.",
+	"exports": {
+		".": "./src/index.ts"
+	},
+	"dependencies": {
+		"@tailwindcss/vite": "4.3.3",
+		"@vitejs/plugin-react": "6.1.1",
+		"vite": "8.2.2"
+	}
+}
