@@ -22,7 +22,16 @@
 			"addWords": true
 		}
 	],
-	"dictionaries": ["slate-project", "typescript", "node", "rust", "html", "css", "softwareTerms"],
+	"dictionaries": [
+		"slate-project",
+		"en-gb",
+		"typescript",
+		"node",
+		"rust",
+		"html",
+		"css",
+		"softwareTerms"
+	],
 	"words": [
 		"antigravity",
 		"appdata",

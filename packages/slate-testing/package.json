@@ -13,8 +13,7 @@
 		"@slate/bindings": "0.1.0",
 		"@testing-library/dom": "10.4.1",
 		"@testing-library/react": "16.3.3",
-		"@happy-dom/global-registrator": "20.14.0",
-		"happy-dom": "20.14.0"
+		"@happy-dom/global-registrator": "20.14.0"
 	},
 	"peerDependencies": {
 		"react": "19.2.8",

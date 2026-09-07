@@ -22,7 +22,14 @@ permissions:
 jobs:
   dependencies:
     name: Advisories, licences, and sources
-    runs-on: windows-latest
+    # EmbarkStudios/cargo-deny-action is a Docker container action, which
+    # GitHub only supports on Linux runners — windows-latest fails outright
+    # with "Container action is only supported on Linux". This is purely an
+    # analysis step over Cargo.lock and bun.lock metadata (nothing is
+    # compiled), and deny.toml already pins the target it evaluates
+    # (`x86_64-pc-windows-msvc`), so the host OS running the check is
+    # unrelated to the Windows-only product itself.
+    runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:

@@ -40,6 +40,14 @@ jobs:
 
       - run: bun install --frozen-lockfile
 
+      - name: Install Moon
+        # The "Quality gates" step below runs `bun run check`, which is
+        # `moon check --all` — moon is not installed by any other step here.
+        shell: bash
+        run: |
+          moon_version=$(grep '^moon ' .tool-versions | cut -d' ' -f2)
+          bun install --global "@moonrepo/cli@${moon_version}"
+
       - name: Confirm the versions agree
         # Catches a tag that does not match what the repository actually says.
         run: bun run scripts/bun-version.ts --check

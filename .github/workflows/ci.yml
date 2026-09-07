@@ -51,6 +51,16 @@ jobs:
       - name: Install dependencies
         run: bun install --frozen-lockfile
 
+      - name: Install Moon
+        # Several steps below shell out to `moon` (directly, or through a
+        # package.json script such as `typecheck`/`build`). It is not part of
+        # any other setup action here, so without this the first `moon`
+        # invocation fails with "the term 'moon' is not recognized".
+        shell: bash
+        run: |
+          moon_version=$(grep '^moon ' .tool-versions | cut -d' ' -f2)
+          bun install --global "@moonrepo/cli@${moon_version}"
+
       - name: Verify no foreign package manager was used
         shell: bash
         run: |

@@ -10,7 +10,7 @@ project:
   description: 'Every shared component in the suite.'
   owner: 'ATOMANGELETTI'
 
-dependsOn: ['slate-tokens', 'slate-icons']
+dependsOn: ['slate-tokens']
 
 tasks:
   typecheck:

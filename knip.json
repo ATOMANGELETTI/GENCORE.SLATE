@@ -1,22 +1,20 @@
 {
 	"$schema": "https://unpkg.com/knip@6/schema.json",
-	"//": "Detects unused files, exports, and dependencies across the Bun workspace. A monorepo accumulates dead code silently; this makes it fail CI instead.",
 	"workspaces": {
 		".": {
-			"entry": ["scripts/*.ts", "commitlint.config.ts"],
+			"entry": ["scripts/*.ts"],
 			"project": ["scripts/**/*.ts"]
 		},
 		"packages/*": {
-			"entry": ["src/index.ts", "src/index.tsx"],
-			"project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"]
+			"entry": "gallery/gallery.main.tsx",
+			"project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}", "gallery/**/*.{ts,tsx}"]
 		},
 		"tauri/*": {
-			"entry": ["src/main.tsx", "vite.config.ts"],
 			"project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"]
 		}
 	},
-	"ignoreDependencies": ["@biomejs/biome", "husky", "lint-staged", "cspell"],
-	"ignore": ["**/dist/**", "**/target/**", "**/src-tauri/gen/**", ".moon/templates/**"],
+	"ignoreDependencies": ["@slate/tokens", "tailwindcss"],
+	"ignoreBinaries": ["moon", "rustfmt"],
 	"ignoreExportsUsedInFile": true,
 	"includeEntryExports": false
 }

@@ -13,9 +13,6 @@
 /** The applications the suite ships. */
 export const SUITE_APPS = ['slate-launcher', 'slate-terminal', 'slate-explorer'] as const;
 
-/** One of the suite's own applications. */
-export type SuiteApp = (typeof SUITE_APPS)[number];
-
 /**
  * Directories created in every packaged tree.
  *
