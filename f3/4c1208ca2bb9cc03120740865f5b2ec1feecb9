@@ -1,0 +1,47 @@
+tauri/slate-launcher/package.json
+  s_e8407b49f97c06::t_c7ebe005787f59 18
+cspell.json
+  s_e8407b49f97c06::t_45b01a6a0d7549 25-34
+packages/slate-ui-kit/moon.yml
+  s_e8407b49f97c06::t_c020fed8298040 13
+.github/workflows/ci.yml
+  s_e8407b49f97c06::t_2bf141ab481b7e 54-63
+.github/workflows/release.yml
+  s_e8407b49f97c06::t_c05dc25c20a028 43-50
+.agents/templates/project.dictionary.txt
+  s_e8407b49f97c06::t_f9d936f330f8cd 2-3,5,7-20,24-28,30,32-38,40-44,47,49-51,55-58
+tauri/slate-terminal/package.json
+  s_e8407b49f97c06::t_c4bedf8af55512 18
+packages/slate-testing/package.json
+  s_e8407b49f97c06::t_39fd1c85f4d900 16
+package.json
+  s_e8407b49f97c06::t_317753ca9673a1 59,63
+knip.json
+  s_e8407b49f97c06::t_cb5849ce3dc7bd 9
+  s_e8407b49f97c06::t_c40738081d020c 5,10,17
+  s_e8407b49f97c06::t_45b01a6a0d7549 16
+.moon/templates/tauri-app/package.json
+  s_e8407b49f97c06::t_89ddd15fd3e1e0 18
+.tool-versions
+  s_e8407b49f97c06::t_de85455d931738 2-6,12
+tauri/slate-explorer/package.json
+  s_e8407b49f97c06::t_832ffe191cfe0d 18
+.github/workflows/security.yml
+  s_e8407b49f97c06::t_b175ae9c55ea29 25-32
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "f34c1208ca2bb9cc03120740865f5b2ec1feecb9",
+  "prompts": {},
+  "sessions": {
+    "s_e8407b49f97c06": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c878fdbe-0668-4e7a-a907-7b0d3ce944e0",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
