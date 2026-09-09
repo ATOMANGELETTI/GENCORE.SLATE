@@ -12,12 +12,25 @@ import type { UserConfig } from 'vite';
 type SlateViteOptions = {
 	/** The application's dev-server port. Each app needs its own. */
 	port: number;
+	/**
+	 * HTML entry points besides `index.html`, relative to the project root.
+	 *
+	 * Every application has at least one: the tray menu is drawn by a second
+	 * window rather than a native menu (ADR 0012), and a window needs its own
+	 * document. Declared here rather than per application so all three keep
+	 * the same build shape.
+	 */
+	entries?: string[];
 	/** Extra configuration merged over the defaults. */
 	overrides?: UserConfig;
 };
 
 /** Builds the Vite configuration for a Tauri frontend. */
-export function slateViteConfig({ port, overrides = {} }: SlateViteOptions): UserConfig {
+export function slateViteConfig({
+	port,
+	entries = [],
+	overrides = {},
+}: SlateViteOptions): UserConfig {
 	return {
 		plugins: [react(), tailwindcss()],
 
@@ -52,6 +65,11 @@ export function slateViteConfig({ port, overrides = {} }: SlateViteOptions): Use
 			// ships, for no benefit.
 			minify: process.env.TAURI_ENV_DEBUG !== 'true',
 			chunkSizeWarningLimit: 800,
+			// Naming `index.html` explicitly is required as soon as there is a
+			// second entry: Vite's default single-entry behaviour stops applying
+			// the moment `input` is set, and omitting it produces a build with
+			// no main window at all.
+			...(entries.length > 0 ? { rollupOptions: { input: ['index.html', ...entries] } } : {}),
 		},
 
 		// Only variables prefixed this way reach the frontend. The default
