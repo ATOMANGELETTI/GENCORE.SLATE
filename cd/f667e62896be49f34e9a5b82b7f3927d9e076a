@@ -1,0 +1,31 @@
+packages/slate-bindings/src/index.ts
+  s_a64317f6e778d7::t_cf4961c208958e 90-98,103-108,138-140,149-155,172-174,181-186
+  s_d082853af7acf4::t_52a1ed860867f6 146-148
+  s_d082853af7acf4::t_84b26ab11455bd 180
+packages/slate-bindings/tests/contract.test.ts
+  s_a64317f6e778d7::t_12f1e2394b645f 64-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "cdf667e62896be49f34e9a5b82b7f3927d9e076a",
+  "prompts": {},
+  "sessions": {
+    "s_a64317f6e778d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05260ee8-de12-4216-82d7-7d002c0e4da2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_d082853af7acf4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ec54370a-1ac8-4c9e-b7a8-4814a6a58af5",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
