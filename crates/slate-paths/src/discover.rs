@@ -17,6 +17,15 @@ pub const ENV_INSTALL_DIR: &str = "SLATE_INSTALL_DIR";
 /// Development-only override, honoured by debug builds.
 pub const ENV_DEV_ROOT: &str = "SLATE_DEV_ROOT";
 
+/// The repository checkout root, set by `scripts/bun-dev.ts` alongside
+/// [`ENV_DEV_ROOT`], and honoured by debug builds only.
+///
+/// A development checkout has no packaged executable for the Launcher to
+/// start a sibling application with, so it falls back to running that
+/// sibling's own `bun run dev:<app>` script instead — which only means
+/// something run from here.
+pub const ENV_REPO_ROOT: &str = "SLATE_REPO_ROOT";
+
 /// How far up the tree to search before giving up.
 ///
 /// A real install nests an executable five levels below the root. Sixteen
@@ -68,6 +77,22 @@ pub fn discover_root() -> Result<Utf8PathBuf, PathsError> {
     Err(PathsError::RootNotFound {
         searched: searched.join("; "),
     })
+}
+
+/// The repository checkout root, in a development build started through
+/// `scripts/bun-dev.ts`.
+///
+/// `None` in a release build regardless of what the environment holds — a
+/// stray value left over on a machine must never be picked up in production —
+/// and `None` in a debug build the script did not start, which means there is
+/// no `bun run` workflow to fall back to either. A caller sees exactly one
+/// signal either way: whether there is a repository to run `bun run` from.
+pub fn dev_repo_root() -> Option<Utf8PathBuf> {
+    if cfg!(debug_assertions) {
+        env_path(ENV_REPO_ROOT)
+    } else {
+        None
+    }
 }
 
 /// Walks upward from `start` looking for a directory containing the marker.

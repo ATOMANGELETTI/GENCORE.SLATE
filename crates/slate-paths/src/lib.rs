@@ -38,7 +38,9 @@ pub mod error;
 pub mod marker;
 pub mod paths;
 
-pub use discover::{ENV_DEV_ROOT, ENV_INSTALL_DIR, discover_root, find_marker_upward};
+pub use discover::{
+    ENV_DEV_ROOT, ENV_INSTALL_DIR, ENV_REPO_ROOT, dev_repo_root, discover_root, find_marker_upward,
+};
 pub use error::PathsError;
 pub use marker::{MARKER_FILE, RootMarker};
 pub use paths::{SlatePaths, StorageKind};
