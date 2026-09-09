@@ -23,13 +23,19 @@ pub enum ThemeMode {
 ///
 /// Mica and Acrylic need Windows 11; on anything older the runtime falls back
 /// to a solid surface, so this is a preference rather than a guarantee.
+///
+/// The default is `Solid`, which is a design decision rather than a
+/// conservative one: Mica tints the window with whatever the user's wallpaper
+/// happens to be, and the suite's palette is Nord — a specific, published set
+/// of colours whose whole value is being those colours. A Mica-tinted `nord0`
+/// is not `nord0`. Translucency remains available for anyone who prefers it.
 #[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "kebab-case")]
 pub enum WindowMaterial {
     /// A solid background token. Always available.
+    #[default]
     Solid,
     /// Windows 11 Mica.
-    #[default]
     Mica,
     /// Windows 11 Acrylic — heavier blur, higher cost.
     Acrylic,
@@ -44,6 +50,10 @@ pub struct SuiteConfig {
     /// Requested window material.
     pub material: WindowMaterial,
     /// Follow the Windows accent colour instead of the suite's own.
+    ///
+    /// Off by default. The suite's accent is Nord Frost, chosen against the
+    /// rest of the palette and contrast-checked with it; an arbitrary Windows
+    /// accent dropped into that place is neither.
     pub use_system_accent: bool,
     /// Collapse animations to opacity changes only.
     pub reduce_motion: bool,
@@ -58,7 +68,7 @@ impl Default for SuiteConfig {
         Self {
             theme: ThemeMode::default(),
             material: WindowMaterial::default(),
-            use_system_accent: true,
+            use_system_accent: false,
             reduce_motion: false,
             log_level: "info".to_owned(),
             log_retention_days: 14,
