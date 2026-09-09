@@ -63,5 +63,11 @@
 
 	"cSpell.enabled": true,
 	"npm.packageManager": "bun",
-	"terminal.integrated.defaultProfile.windows": "PowerShell"
+	"terminal.integrated.defaultProfile.windows": "PowerShell",
+
+	"workbench.editor.pinnedTabSizing": "compact",
+	"workbench.editor.pinnedTabsOnSeparateRow": true,
+	"workbench.editor.preventPinnedEditorClose": "keyboardAndMouse",
+	"workbench.editor.restoreViewState": true,
+	"window.restoreWindows": "all"
 }
