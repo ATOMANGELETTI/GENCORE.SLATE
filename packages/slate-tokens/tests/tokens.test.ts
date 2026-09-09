@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test';
 
-import { generateTokensCss } from '../src/generate/css.generator.ts';
+import { generateTokensCss, TOKEN_PREFIX } from '../src/generate/css.generator.ts';
 import { applyTheme } from '../src/index.ts';
 import { SEMANTIC_COLORS } from '../src/tokens/color.tokens.ts';
 import { CHROME, MOTION, RADIUS, SPACE } from '../src/tokens/layout.tokens.ts';
@@ -75,8 +75,13 @@ describe('generated stylesheet', () => {
 	});
 
 	test('exposes every colour role as a Tailwind utility', () => {
+		// Asserted by the value it points at rather than by the utility's name.
+		// This test previously required `--color-<role>`, which pinned the
+		// doubled `--color-bg-surface` in place and made `bg-surface` — the
+		// class every component writes — resolve to nothing at all. See the
+		// "Tailwind colour utilities" block below for the naming contract.
 		for (const role of Object.keys(SEMANTIC_COLORS.dark)) {
-			expect(css).toContain(`--color-${role}: var(--slate-${role})`);
+			expect(css).toContain(`var(--slate-${role});`);
 		}
 	});
 
@@ -109,7 +114,7 @@ describe('applyTheme', () => {
 
 describe('layout tokens', () => {
 	test('chrome dimensions match the documented design', () => {
-		expect(CHROME.titlebarHeight).toBe('38px');
+		expect(CHROME.titlebarHeight).toBe('34px');
 		expect(CHROME.statusbarHeight).toBe('24px');
 	});
 
@@ -120,6 +125,42 @@ describe('layout tokens', () => {
 
 		for (const duration of durations) {
 			expect(duration).toBeLessThanOrEqual(320);
+		}
+	});
+});
+
+describe('Tailwind colour utilities', () => {
+	const css = generateTokensCss();
+
+	/**
+	 * Tailwind names a utility `<property>-<colour name>`, so a colour named
+	 * `bg-surface` produces `bg-bg-surface` and the `bg-surface` every
+	 * component writes resolves to nothing. Tailwind reports no error for an
+	 * unknown utility — the class simply does not exist and the element keeps
+	 * what it inherited — which is how `text-on-accent` once rendered light
+	 * text on a light accent button while looking correct in the source.
+	 */
+	test('a category prefix is stripped so the class components write resolves', () => {
+		expect(css).toContain('--color-surface: var(--slate-bg-surface);');
+		expect(css).toContain('--color-primary: var(--slate-text-primary);');
+		expect(css).toContain('--color-hairline: var(--slate-border-hairline);');
+		expect(css).toContain('--color-on-accent: var(--slate-text-on-accent);');
+	});
+
+	test('never emits a doubled category', () => {
+		for (const doubled of ['--color-bg-', '--color-text-', '--color-border-']) {
+			expect(css).not.toContain(doubled);
+		}
+	});
+
+	test('a role without a category prefix passes through unchanged', () => {
+		expect(css).toContain('--color-accent-default: var(--slate-accent-default);');
+		expect(css).toContain('--color-status-danger: var(--slate-status-danger);');
+	});
+
+	test('every semantic role reaches Tailwind exactly once', () => {
+		for (const role of Object.keys(SEMANTIC_COLORS.dark)) {
+			expect(css).toContain(`var(${TOKEN_PREFIX}-${role});`);
 		}
 	});
 });
