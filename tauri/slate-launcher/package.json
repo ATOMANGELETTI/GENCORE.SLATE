@@ -20,6 +20,7 @@
 	"devDependencies": {
 		"@slate/config-typescript": "0.1.0",
 		"@slate/config-vite": "0.1.0",
+		"@slate/testing": "0.1.0",
 		"@tauri-apps/cli": "2.11.4",
 		"@types/react": "19.2.18",
 		"@types/react-dom": "19.2.7",

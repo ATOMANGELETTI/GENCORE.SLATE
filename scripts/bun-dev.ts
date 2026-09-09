@@ -72,6 +72,10 @@ const proc = Bun.spawn(['bunx', 'tauri', 'dev'], {
 	env: {
 		...process.env,
 		SLATE_DEV_ROOT: DEV_ROOT,
+		// Lets the Launcher start a sibling application with `bun run
+		// dev:<app>` instead of looking for a packaged executable a
+		// development checkout does not have — see `launcher-core::plan_launch`.
+		SLATE_REPO_ROOT: REPO_ROOT,
 		SLATE_LOG: process.env.SLATE_LOG ?? 'debug',
 		SLATE_LOG_CONSOLE: process.env.SLATE_LOG_CONSOLE ?? '1',
 	},
