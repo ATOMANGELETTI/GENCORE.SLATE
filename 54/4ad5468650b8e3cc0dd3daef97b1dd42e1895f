@@ -1,0 +1,37 @@
+docs/ipc.md
+  h_90ad036e211778 1-178
+docs/testing.md
+  h_90ad036e211778 1-108
+docs/commands.md
+  h_90ad036e211778 1-380
+docs/ui-kit.md
+  h_90ad036e211778 1-112
+docs/release.md
+  h_90ad036e211778 1-148
+docs/getting-started.md
+  h_90ad036e211778 1-200
+.agents/templates/project.dictionary.txt
+  h_90ad036e211778 35,45
+docs/portability.md
+  h_90ad036e211778 1-193
+docs/architecture.md
+  h_90ad036e211778 1-168
+docs/README.md
+  h_90ad036e211778 1-50
+docs/security.md
+  h_90ad036e211778 1-132
+README.md
+  h_90ad036e211778 76-81,84
+  h_90ad036e211778 85-87
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "544ad5468650b8e3cc0dd3daef97b1dd42e1895f",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
