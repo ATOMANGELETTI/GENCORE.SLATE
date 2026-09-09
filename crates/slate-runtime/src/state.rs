@@ -1,5 +1,7 @@
 //! Shared application state, managed by Tauri and available to every command.
 
+use std::sync::atomic::{AtomicBool, Ordering};
+
 use parking_lot::RwLock;
 use slate_config::{ConfigStore, ResolvedConfig};
 use slate_core::AppId;
@@ -17,6 +19,13 @@ pub struct SlateState {
     app_id: AppId,
     paths: SlatePaths,
     config: RwLock<ConfigStore>,
+    /// Whether the window is pinned above others.
+    ///
+    /// Deliberately in memory rather than in configuration: pinning a window
+    /// is a thing you do for the next few minutes, and a setting that
+    /// resurrects it three days later on a fresh launch is a bug report.
+    /// Tauri exposes no getter, so the value has to be remembered somewhere.
+    is_always_on_top: AtomicBool,
 }
 
 impl SlateState {
@@ -26,7 +35,18 @@ impl SlateState {
             app_id,
             paths,
             config: RwLock::new(config),
+            is_always_on_top: AtomicBool::new(false),
         }
+    }
+
+    /// Whether the window is currently pinned above other windows.
+    pub fn is_always_on_top(&self) -> bool {
+        self.is_always_on_top.load(Ordering::Relaxed)
+    }
+
+    /// Records that the window has been pinned or released.
+    pub fn set_always_on_top(&self, is_enabled: bool) {
+        self.is_always_on_top.store(is_enabled, Ordering::Relaxed);
     }
 
     /// Which application this is.
