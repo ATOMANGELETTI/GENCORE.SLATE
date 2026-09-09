@@ -1,0 +1,157 @@
+{
+  "mgxVersion": 1,
+  "projectName": "Untitled Project",
+  "projectDetail": "",
+  "createdAt": "2026-09-09T06:09:53.945Z",
+  "lastSavedAt": "2026-09-09T06:09:53.945Z",
+  "diagram": {
+    "nodes": [
+      {
+        "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE",
+        "type": "projectNode",
+        "position": {
+          "x": 107.56876051992879,
+          "y": -192.2415101342972
+        },
+        "style": {
+          "width": 260,
+          "height": 80
+        },
+        "data": {
+          "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE",
+          "name": "gencore-slate",
+          "type": "Node",
+          "workspaceFolder": "GENCORE.SLATE",
+          "path": "c:\\Users\\DUSTI\\Documents\\Development\\Projects\\GENCORE\\GENCORE.SLATE",
+          "color": "#3c873a",
+          "endpoints": []
+        },
+        "width": 260,
+        "height": 80,
+        "selected": false,
+        "dragging": false,
+        "positionAbsolute": {
+          "x": 107.56876051992879,
+          "y": -192.2415101342972
+        }
+      },
+      {
+        "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/crates",
+        "type": "projectNode",
+        "position": {
+          "x": 112.82541125074135,
+          "y": 4.185908570195714
+        },
+        "style": {
+          "width": 260,
+          "height": 80
+        },
+        "data": {
+          "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/crates",
+          "name": "crates",
+          "type": "Rust",
+          "workspaceFolder": "GENCORE.SLATE",
+          "path": "c:\\Users\\DUSTI\\Documents\\Development\\Projects\\GENCORE\\GENCORE.SLATE\\crates",
+          "color": "#dea584",
+          "endpoints": []
+        },
+        "width": 260,
+        "height": 80,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 112.82541125074135,
+          "y": 4.185908570195714
+        },
+        "dragging": false
+      },
+      {
+        "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/docs",
+        "type": "projectNode",
+        "position": {
+          "x": 110.04117349657463,
+          "y": -94.60214995954925
+        },
+        "style": {
+          "width": 260,
+          "height": 80
+        },
+        "data": {
+          "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/docs",
+          "name": "docs",
+          "type": "Documentation",
+          "workspaceFolder": "GENCORE.SLATE",
+          "path": "c:\\Users\\DUSTI\\Documents\\Development\\Projects\\GENCORE\\GENCORE.SLATE\\docs",
+          "color": "#f59e0b",
+          "endpoints": []
+        },
+        "width": 260,
+        "height": 80,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 110.04117349657463,
+          "y": -94.60214995954925
+        },
+        "dragging": false
+      },
+      {
+        "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/packages",
+        "type": "projectNode",
+        "position": {
+          "x": 116.7583473599052,
+          "y": 105.86997800550114
+        },
+        "style": {
+          "width": 260,
+          "height": 80
+        },
+        "data": {
+          "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/packages",
+          "name": "packages",
+          "type": "Node",
+          "workspaceFolder": "GENCORE.SLATE",
+          "path": "c:\\Users\\DUSTI\\Documents\\Development\\Projects\\GENCORE\\GENCORE.SLATE\\packages",
+          "color": "#3c873a",
+          "endpoints": []
+        },
+        "width": 260,
+        "height": 80,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 116.7583473599052,
+          "y": 105.86997800550114
+        },
+        "dragging": false
+      },
+      {
+        "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/tauri",
+        "type": "projectNode",
+        "position": {
+          "x": 120.86629973572065,
+          "y": 202.36063982525206
+        },
+        "style": {
+          "width": 260,
+          "height": 80
+        },
+        "data": {
+          "id": "GENCORE.SLATE::c:/Users/DUSTI/Documents/Development/Projects/GENCORE/GENCORE.SLATE/tauri",
+          "name": "tauri",
+          "type": "React",
+          "workspaceFolder": "GENCORE.SLATE",
+          "path": "c:\\Users\\DUSTI\\Documents\\Development\\Projects\\GENCORE\\GENCORE.SLATE\\tauri",
+          "color": "#61dafb",
+          "endpoints": []
+        },
+        "width": 260,
+        "height": 80,
+        "selected": false,
+        "positionAbsolute": {
+          "x": 120.86629973572065,
+          "y": 202.36063982525206
+        },
+        "dragging": false
+      }
+    ],
+    "edges": []
+  }
+}
