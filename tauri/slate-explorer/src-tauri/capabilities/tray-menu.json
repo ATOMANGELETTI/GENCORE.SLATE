@@ -1,0 +1,14 @@
+{
+	"$schema": "../gen/schemas/desktop-schema.json",
+	"identifier": "tray-menu",
+	"description": "The tray menu is a webview window rather than a native menu (ADR 0012), so it needs a capability of its own. It draws a list and calls the suite's tray commands, and that is all: it never touches window state, the filesystem, or any other window. `core:window:allow-set-size` and `allow-set-position` are the two exceptions, because the menu measures its own content and reports the size it needs.",
+	"windows": ["tray-menu"],
+	"permissions": [
+		"core:app:default",
+		"core:event:default",
+		"core:webview:default",
+		"core:window:allow-hide",
+		"core:window:allow-set-position",
+		"core:window:allow-set-size"
+	]
+}
