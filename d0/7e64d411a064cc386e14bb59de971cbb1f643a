@@ -1,0 +1,55 @@
+packages/slate-tokens/src/index.ts
+  s_a64317f6e778d7::t_fcec161572a6b1 22
+packages/slate-tokens/src/tokens/color.tokens.ts
+  s_a64317f6e778d7::t_e40126645c1716 2,6,11-34,37-61,64-133,140-142,146-190,193-229
+packages/slate-tokens/tests/tokens.test.ts
+  s_a64317f6e778d7::t_e9d2050cb6a1fe 3,131-165
+  s_a64317f6e778d7::t_0a041d31ed851e 78-82,84
+  s_d082853af7acf4::t_9e07ba2a1319af 117
+  s_a64317f6e778d7::t_b186400ad4272b 166
+packages/slate-tokens/src/tokens/layout.tokens.ts
+  s_d082853af7acf4::t_76370160baeceb 155-163
+  s_d082853af7acf4::t_34f1a4e569fe31 53-60,62-63,65-69,74-78,80-85,88,99-100,150,164-169
+packages/slate-tokens/src/generate/css.generator.ts
+  s_d082853af7acf4::t_28765e735a890f 146-149
+  s_a64317f6e778d7::t_7d42737a95284c 143-144,150
+  s_a64317f6e778d7::t_6960ec4a44cc7d 115
+  s_d082853af7acf4::t_2a80f853cb2e4c 145
+  s_a64317f6e778d7::t_121ae94beb1e0f 42-64,201-214,225-235
+packages/slate-tokens/src/generated/tokens.css
+  s_a64317f6e778d7::t_8c10ee02524b52 12-33,36-41,66-67,71-75,77,84,109-112,126-148,150-155,160-182,184-189
+  s_a64317f6e778d7::t_f91ab440367fad 34
+  s_d082853af7acf4::t_f8624b53837052 108,284-288
+  s_a64317f6e778d7::t_1020aef5fd1a53 195-211,218
+  s_a64317f6e778d7::t_e2391420baafb7 340-353,364-374
+  s_a64317f6e778d7::t_e40126645c1716 35
+  s_a64317f6e778d7::t_3e21907ad8fcd8 149,183
+  s_d082853af7acf4::t_4d859667d0f4a6 103
+  s_a64317f6e778d7::t_31337769a25bb4 282-283,289
+packages/slate-tokens/tests/contrast.test.ts
+  s_a64317f6e778d7::t_f91ab440367fad 1-200
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "d07e64d411a064cc386e14bb59de971cbb1f643a",
+  "prompts": {},
+  "sessions": {
+    "s_a64317f6e778d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05260ee8-de12-4216-82d7-7d002c0e4da2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_d082853af7acf4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ec54370a-1ac8-4c9e-b7a8-4814a6a58af5",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
