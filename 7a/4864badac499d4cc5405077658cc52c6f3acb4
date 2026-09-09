@@ -1,0 +1,36 @@
+packages/slate-ipc/src/index.ts
+  s_a64317f6e778d7::t_eaac98efbf4c38 15-16
+  s_d082853af7acf4::t_2a0a33db66ac27 18
+packages/slate-ipc/src/hooks/use-tray-menu.hook.ts
+  s_d082853af7acf4::t_8bb7842c097b29 1-136
+packages/slate-ipc/src/hooks/use-window-chrome.hook.ts
+  s_a64317f6e778d7::t_ed93cec7dcbf84 7,9-13,17-22,25-30,117-135
+packages/slate-ipc/src/invoke/command.service.ts
+  s_d082853af7acf4::t_0112eaa47a7791 32-54
+packages/slate-ipc/src/hooks/use-webview-zoom.hook.ts
+  s_a64317f6e778d7::t_63779566320132 1-66
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "7a4864badac499d4cc5405077658cc52c6f3acb4",
+  "prompts": {},
+  "sessions": {
+    "s_a64317f6e778d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05260ee8-de12-4216-82d7-7d002c0e4da2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_d082853af7acf4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ec54370a-1ac8-4c9e-b7a8-4814a6a58af5",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
