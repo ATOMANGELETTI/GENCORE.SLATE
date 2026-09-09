@@ -1,0 +1,58 @@
+crates/slate-runtime/src/commands/window.rs
+  s_a64317f6e778d7::t_0e37a93cfbf388 42,46-47,56-59,70-74,108-113,122-166
+  s_a64317f6e778d7::t_395a5f1198e72d 12-29,41,43-45,63-69
+  s_a64317f6e778d7::t_f303080c2e84d5 167
+crates/slate-runtime/src/commands/preferences.rs
+  s_d082853af7acf4::t_524ee47090c192 1-10,12-36
+  s_d082853af7acf4::t_24ac4ba0c48a72 11
+crates/slate-runtime/src/commands/tray.rs
+  s_a64317f6e778d7::t_1155df41efc47f 1-124
+crates/slate-runtime/src/state.rs
+  s_a64317f6e778d7::t_95d281b47fbde3 3-4,22-28,38,42-50
+  s_a64317f6e778d7::t_3aac9866c20bc4 51
+scripts/bun-tray-icons.ts
+  s_d082853af7acf4::t_b5fffb1d399200 289-303
+  s_d082853af7acf4::t_b643416c069ad7 24-26,28-31,33-34
+  s_a64317f6e778d7::t_2adb08db893b6f 1,5-12,14-23,27,32,35-163,166-177,181-288,304
+  s_d082853af7acf4::t_88e69a3c8b0aed 164-165,178-180
+  s_d082853af7acf4::t_e9b6e0c13e8675 2-4,13
+crates/slate-runtime/src/commands/mod.rs
+  s_d082853af7acf4::t_6ee674d6465b2c 21-22,25-26,29,31-34,36-37
+crates/slate-runtime/Cargo.toml
+  s_d082853af7acf4::t_e5694ba9772906 20
+crates/slate-runtime/src/tray.rs
+  s_d082853af7acf4::t_077284094463b2 1-62,66-318
+  s_d082853af7acf4::t_bfcc35c2a8fd0d 63-65
+Cargo.toml
+  s_a64317f6e778d7::t_9bf6bca62d10be 42
+crates/slate-runtime/src/lib.rs
+  s_d082853af7acf4::t_077284094463b2 134
+  s_d082853af7acf4::t_24743489dc5edf 34,40,62-64,71-76,117-123,131-133,135-140,170-176
+  s_d082853af7acf4::t_6ee674d6465b2c 70
+  s_d082853af7acf4::t_62007d559f2798 80,82-85,106-116,124-130
+  s_d082853af7acf4::t_402ddb1e5bae1b 177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "8ea7254a3d263c487b8af01b6d8fb3f65935f390",
+  "prompts": {},
+  "sessions": {
+    "s_a64317f6e778d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05260ee8-de12-4216-82d7-7d002c0e4da2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    },
+    "s_d082853af7acf4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ec54370a-1ac8-4c9e-b7a8-4814a6a58af5",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
