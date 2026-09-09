@@ -6,12 +6,16 @@
 	"license": "LicenseRef-Proprietary",
 	"description": "Every shared component in the suite. Deliberately free of any Tauri dependency so it renders in a browser.",
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./fonts.css": "./src/fonts/fonts.css"
 	},
 	"scripts": {
 		"gallery": "vite --config gallery/vite.config.ts"
 	},
 	"dependencies": {
+		"@radix-ui/react-context-menu": "2.3.7",
+		"@radix-ui/react-dialog": "1.1.23",
+		"@slate/icons": "0.1.0",
 		"@slate/tokens": "0.1.0",
 		"class-variance-authority": "0.7.1",
 		"clsx": "2.1.1",

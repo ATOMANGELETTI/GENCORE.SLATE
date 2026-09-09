@@ -27,7 +27,7 @@ function Gallery() {
 		<div className="h-screen overflow-auto bg-canvas text-primary">
 			<header className="sticky top-0 z-30 flex items-center justify-between border-b border-hairline bg-surface/90 px-6 py-3 backdrop-blur">
 				<div>
-					<h1 className="text-lg font-semibold tracking-tight">SLATE UI Kit</h1>
+					<h1 className="text-lg font-bold tracking-tight">SLATE UI Kit</h1>
 					<p className="text-xs text-tertiary">
 						{GALLERY_ENTRIES.length} components · switch themes to check both
 					</p>
@@ -51,7 +51,7 @@ function Gallery() {
 				{GALLERY_ENTRIES.map((entry) => (
 					<section key={entry.id} className="flex flex-col gap-4">
 						<div className="space-y-1">
-							<h2 className="text-md font-semibold text-primary">{entry.title}</h2>
+							<h2 className="text-md font-bold text-primary">{entry.title}</h2>
 							<p className="max-w-2xl text-sm text-tertiary">{entry.description}</p>
 						</div>
 

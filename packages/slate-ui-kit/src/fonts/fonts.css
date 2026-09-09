@@ -1,0 +1,59 @@
+/*
+ * The suite's typeface: Terminess, the Nerd Fonts patch of Terminus.
+ *
+ * Bundled rather than fetched. The content security policy in every
+ * `tauri.conf.json` allows `font-src 'self'` and nothing else, and a portable
+ * application has to render identically on a machine with the network cable
+ * unplugged. These files are served from the app's own bundle, so no CSP
+ * change is needed and no request leaves the process.
+ *
+ * They live here, in `@slate/ui-kit`, rather than in the portable
+ * `appdata/resources/fonts/` tree, because this package has no Tauri
+ * dependency by design — that is what lets the whole kit render in an ordinary
+ * browser for the gallery. A font reachable only through Tauri's asset
+ * protocol would leave the gallery rendering in Consolas, and a gallery that
+ * does not look like the product is worse than no gallery.
+ *
+ * The user-switchable fonts in `installDir/appdata/resources/fonts/` are a
+ * separate mechanism for a later feature; they will need the asset protocol
+ * scoped to that directory, which is a security decision to make then.
+ *
+ * Converted from the upstream TTFs with `wawoff2` as a one-off — roughly 2.7MB
+ * each becomes 1MB — which is why there is no conversion dependency in any
+ * manifest. Regenerating means running that conversion again by hand.
+ *
+ * Terminus is SIL Open Font License 1.1; see `LICENSE.txt` beside this file.
+ */
+
+@font-face {
+	font-family: 'Terminess Nerd Font Propo';
+	src: url('./terminess-propo-400.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	/*
+	 * `block`, not `swap`. A flash of Segoe UI in a 38px title bar is a visible
+	 * reflow of the entire chrome; a few frames of nothing is not.
+	 */
+	font-display: block;
+}
+
+@font-face {
+	font-family: 'Terminess Nerd Font Propo';
+	src: url('./terminess-propo-700.woff2') format('woff2');
+	font-weight: 700;
+	font-style: normal;
+	font-display: block;
+}
+
+/*
+ * Strictly monospaced, for anywhere columns have to line up — terminal output,
+ * code, a file listing's size column. Only the regular weight is bundled: a
+ * bold monospace has no use in the suite yet, and each face costs a megabyte.
+ */
+@font-face {
+	font-family: 'Terminess Nerd Font Mono';
+	src: url('./terminess-mono-400.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: block;
+}

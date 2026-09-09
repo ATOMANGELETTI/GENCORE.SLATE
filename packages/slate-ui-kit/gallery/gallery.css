@@ -1,5 +1,16 @@
 @import '@slate/tokens/css';
+@import '../src/fonts/fonts.css';
 
 /* The kit's own sources must be visible to Tailwind for utilities to exist. */
 @source '../src';
 @source '.';
+
+/*
+ * The gallery is an ordinary web page, not a transparent desktop window, so it
+ * paints its own ground. The token layer leaves `body` transparent because
+ * every application window is built `transparent` and draws its own frame —
+ * see the comment on `body` in the generated stylesheet.
+ */
+body {
+	background-color: var(--slate-bg-canvas);
+}
