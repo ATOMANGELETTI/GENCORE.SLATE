@@ -18,7 +18,7 @@
  * packaged tree. See `docs/webview2.md`.
  */
 
-import { mkdir, rm } from 'node:fs/promises';
+import { mkdir, readdir, rename, rm, rmdir } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const REPO_ROOT = join(import.meta.dir, '..');
@@ -114,6 +114,26 @@ async function fetchRuntime(): Promise<void> {
 
 	if ((await proc.exited) !== 0) {
 		throw new Error('Extracting the archive failed.');
+	}
+
+	// If expand unpacked into an inner directory (common in Microsoft Fixed Version CABs),
+	// flatten it so msedgewebview2.exe is directly at the CACHE root.
+	if (!(await isCached())) {
+		const entries = await readdir(CACHE, { withFileTypes: true });
+		for (const entry of entries) {
+			if (!entry.isDirectory()) {
+				continue;
+			}
+			const candidate = join(CACHE, entry.name);
+			if (await Bun.file(join(candidate, 'msedgewebview2.exe')).exists()) {
+				const children = await readdir(candidate);
+				for (const child of children) {
+					await rename(join(candidate, child), join(CACHE, child));
+				}
+				await rmdir(candidate);
+				break;
+			}
+		}
 	}
 
 	if (!(await isCached())) {
