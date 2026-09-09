@@ -73,13 +73,18 @@ behind each significant decision is recorded in
 
 | Topic                    | Where                                                                |
 | ------------------------ | -------------------------------------------------------------------- |
-| Contributor and AI rules | [`.agents/rules/`](.agents/rules/)                                    |
+| Documentation Hub        | [`docs/README.md`](docs/README.md)                                   |
+| Getting Started          | [`docs/getting-started.md`](docs/getting-started.md)                 |
+| Developer Commands       | [`docs/commands.md`](docs/commands.md)                               |
+| Architecture Overview    | [`docs/architecture.md`](docs/architecture.md)                       |
+| Portability & Storage    | [`docs/portability.md`](docs/portability.md)                         |
+| Contributor and AI rules | [`.agents/rules/`](.agents/rules/)                                   |
 | What depends on what     | [`.agents/architecture/module-map.md`](.agents/architecture/module-map.md) |
 | The portable layout      | [`.agents/architecture/install-layout.md`](.agents/architecture/install-layout.md) |
-| How applications talk    | [`.agents/architecture/ipc-protocol.md`](.agents/architecture/ipc-protocol.md) |
-| Decisions and why        | [`.agents/architecture/adr/`](.agents/architecture/adr/)               |
-| Common procedures        | [`.agents/workflows/`](.agents/workflows/)                             |
-| The WebView2 runtime     | [`docs/webview2.md`](docs/webview2.md)                                 |
+| How applications talk    | [`docs/ipc.md`](docs/ipc.md)                                         |
+| Decisions and why        | [`.agents/architecture/adr/`](.agents/architecture/adr/)             |
+| Common procedures        | [`.agents/workflows/`](.agents/workflows/)                           |
+| The WebView2 runtime     | [`docs/webview2.md`](docs/webview2.md)                               |
 
 `AGENTS.md`, `CLAUDE.md`, `.cursor/`, `.agent/`, and `.github/instructions/` are
 **generated** from `.agents/` by `bun run agents:sync`. Editing them directly is
