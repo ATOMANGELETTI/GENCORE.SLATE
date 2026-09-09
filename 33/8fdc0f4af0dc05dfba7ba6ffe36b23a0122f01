@@ -1,0 +1,34 @@
+.agents/templates/project.dictionary.txt
+  s_a64317f6e778d7::t_f8bae444f1c9f6 22,24,40-41,44,49-50,58,66-67,69
+.agents/workflows/add-component.md
+  s_a64317f6e778d7::t_2d2622b2ff60e7 40
+.agents/rules/06-design-system.md
+  s_a64317f6e778d7::t_bc0bfffc8be415 11-14,37,43-63,100-119,122-131
+.agent/rules/06-design-system.md
+  s_a64317f6e778d7::t_02cbeb348db82a 20-23,46,52-72,109-128,131-140
+.cursor/rules/06-design-system.mdc
+  s_a64317f6e778d7::t_0b7800c5e4b04d 19-22,45,51-71,108-127,130-139
+.github/instructions/06-design-system.instructions.md
+  s_a64317f6e778d7::t_e600b557c3b767 18-21,44,50-70,107-126,129-138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "338fdc0f4af0dc05dfba7ba6ffe36b23a0122f01",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_a64317f6e778d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05260ee8-de12-4216-82d7-7d002c0e4da2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
