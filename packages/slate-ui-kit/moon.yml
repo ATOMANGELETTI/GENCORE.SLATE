@@ -10,9 +10,17 @@ project:
   description: 'Every shared component in the suite.'
   owner: 'ATOMANGELETTI'
 
-dependsOn: ['slate-tokens']
+dependsOn: ['slate-tokens', 'slate-icons']
 
 tasks:
+  # Every component, in both themes, in a browser — see gallery/gallery.main.tsx.
+  # `preset: 'server'`, matching every app's own `dev`/`dev-web` task, because
+  # this is a long-running dev server too, not a one-shot command.
+  gallery:
+    command: 'bunx vite --config gallery/vite.config.ts'
+    toolchain: 'bun'
+    preset: 'server'
+
   typecheck:
     command: 'bunx tsc --build --pretty'
     inputs:

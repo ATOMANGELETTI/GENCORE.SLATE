@@ -87,11 +87,25 @@ export type ResolvedConfig = {
 
 // ── Window and runtime ───────────────────────────────────────────────────────
 
+/**
+ * Mirrors `slate_runtime::commands::window::WindowVisibility`.
+ *
+ * One value rather than three booleans, because the three are not independent:
+ * a window cannot be hidden and visible at once, and a union makes that
+ * combination unrepresentable on both sides of the boundary.
+ */
+export type WindowVisibility = 'visible' | 'minimized' | 'hidden';
+
 /** Mirrors `slate_runtime::commands::window::WindowState`. */
 export type WindowState = {
 	isMaximized: boolean;
 	isFocused: boolean;
-	isMinimized: boolean;
+	/**
+	 * Closing hides to the tray rather than exiting, so `'hidden'` is a normal
+	 * resting state rather than a window on its way out.
+	 */
+	visibility: WindowVisibility;
+	isAlwaysOnTop: boolean;
 };
 
 /**
@@ -121,11 +135,24 @@ export type SlateCommands = {
 	slate_window_minimize: { args: undefined; returns: undefined };
 	slate_window_toggle_maximize: { args: undefined; returns: boolean };
 	slate_window_close: { args: undefined; returns: undefined };
+	slate_window_hide: { args: undefined; returns: undefined };
+	slate_window_show: { args: undefined; returns: undefined };
+	slate_window_set_always_on_top: { args: { isEnabled: boolean }; returns: boolean };
 	slate_window_start_drag: { args: undefined; returns: undefined };
 	slate_window_persist_geometry: { args: undefined; returns: undefined };
 	slate_runtime_info: { args: undefined; returns: RuntimeInfo };
 	slate_set_theme: { args: { theme: ThemeMode }; returns: undefined };
 	slate_reload_config: { args: undefined; returns: ResolvedConfig };
+	/** Reveals the application's own config TOML in the system file explorer.
+	 *  Stands in for a Preferences window that does not exist yet. */
+	slate_open_config_file: { args: undefined; returns: undefined };
+	/** Reports the size the tray menu's content needs, in logical pixels. */
+	slate_tray_menu_ready: { args: { width: number; height: number }; returns: undefined };
+	slate_tray_menu_dismiss: { args: undefined; returns: undefined };
+	slate_tray_show_main_window: { args: undefined; returns: undefined };
+	slate_tray_hide_main_window: { args: undefined; returns: undefined };
+	slate_tray_main_window_is_visible: { args: undefined; returns: boolean };
+	slate_tray_quit: { args: undefined; returns: undefined };
 };
 
 /** The name of any shared command. */
@@ -142,11 +169,21 @@ export const COMMANDS = [
 	'slate_window_minimize',
 	'slate_window_toggle_maximize',
 	'slate_window_close',
+	'slate_window_hide',
+	'slate_window_show',
+	'slate_window_set_always_on_top',
 	'slate_window_start_drag',
 	'slate_window_persist_geometry',
 	'slate_runtime_info',
 	'slate_set_theme',
 	'slate_reload_config',
+	'slate_open_config_file',
+	'slate_tray_menu_ready',
+	'slate_tray_menu_dismiss',
+	'slate_tray_show_main_window',
+	'slate_tray_hide_main_window',
+	'slate_tray_main_window_is_visible',
+	'slate_tray_quit',
 ] as const satisfies readonly SlateCommandName[];
 
 /** Tauri event names the runtime emits. */

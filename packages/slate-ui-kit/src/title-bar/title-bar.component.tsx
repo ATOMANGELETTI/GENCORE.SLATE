@@ -1,4 +1,6 @@
+import { ContextMenu } from '../context-menu/context-menu.component.tsx';
 import { cn } from '../lib/cn.util.ts';
+import type { MenuEntry } from '../menu/menu.types.ts';
 import { TrafficLights } from './traffic-lights.component.tsx';
 
 /**
@@ -27,6 +29,13 @@ type TitleBarProps = {
 	actions?: React.ReactNode;
 	/** Optional leading content, placed after the traffic lights. */
 	leading?: React.ReactNode;
+	/**
+	 * Items offered on a right-click of the bar.
+	 *
+	 * Custom chrome removes the system menu Windows would otherwise show here,
+	 * so without this a right-click on the title bar does nothing at all.
+	 */
+	contextMenu?: MenuEntry[];
 	className?: string;
 };
 
@@ -39,9 +48,10 @@ export function TitleBar({
 	onToggleMaximize,
 	actions,
 	leading,
+	contextMenu,
 	className,
 }: TitleBarProps) {
-	return (
+	const bar = (
 		/* The bar is a pointer affordance, not a control. Double-clicking to zoom
 		   is platform behaviour users expect, and everything it offers is also
 		   reachable from the labelled traffic lights and the title-bar context
@@ -80,7 +90,7 @@ export function TitleBar({
 			>
 				<span
 					className={cn(
-						'max-w-[50%] truncate text-base font-semibold tracking-tight transition-colors',
+						'max-w-[50%] truncate text-base font-bold tracking-tight transition-colors',
 						'duration-[var(--slate-duration-normal)]',
 						isFocused ? 'text-secondary' : 'text-tertiary',
 					)}
@@ -93,5 +103,15 @@ export function TitleBar({
 				{actions}
 			</div>
 		</header>
+	);
+
+	if (!contextMenu) {
+		return bar;
+	}
+
+	return (
+		<ContextMenu label="Window" entries={contextMenu}>
+			{bar}
+		</ContextMenu>
 	);
 }

@@ -1,12 +1,16 @@
 {
 	"$schema": "../gen/schemas/desktop-schema.json",
 	"identifier": "main",
-	"description": "The least this window needs: read its own state, listen for its own events, and call the suite's own commands. No filesystem, shell, network, or process permission is granted — every one of those would have to be justified by a specific feature (.agents/rules/08-tauri-and-security.md).",
+	"description": "The least this window needs: read its own state, listen for its own events, and call the suite's own commands. `core:tray:default` is required because each application shows its own tray icon; `core:webview:allow-set-webview-zoom` because the content context menu offers Zoom In, Zoom Out and Reset Zoom; `core:window:allow-start-dragging` because the custom title bar is a `data-tauri-drag-region` and Tauri denies that call without this permission even though `core:window:default` is granted; `opener:allow-reveal-item-in-dir` because Preferences reveals the app's own config file in the system file explorer rather than opening a settings window that does not exist yet. No filesystem, shell, network, or process permission is granted beyond that single, specific opener command \u2014 everything here is justified by a specific feature (.agents/rules/08-tauri-and-security.md).",
 	"windows": ["main"],
 	"permissions": [
 		"core:app:default",
 		"core:event:default",
+		"core:tray:default",
+		"core:webview:allow-set-webview-zoom",
+		"core:webview:default",
+		"core:window:allow-start-dragging",
 		"core:window:default",
-		"core:webview:default"
+		"opener:allow-reveal-item-in-dir"
 	]
 }

@@ -8,10 +8,10 @@ alwaysApply: false
 
 # Design system
 
-The look is **modern, flat, minimal, and macOS-inspired**. Restraint is the
-whole aesthetic: hairline borders instead of heavy ones, layered low-opacity
-shadows instead of drop shadows, generous space instead of dividers, and one
-accent colour used sparingly.
+The look is **modern, flat, minimal, and macOS-inspired**, drawn in **Nord** and
+set in **Terminess**. Restraint is the whole aesthetic: hairline borders instead
+of heavy ones, layered low-opacity shadows instead of drop shadows, generous
+space instead of dividers, and one accent colour used sparingly.
 
 ## Tokens are the only source of colour, space, and motion
 
@@ -34,13 +34,33 @@ token — do not inline it "just this once".
 | Background | `--slate-bg-*`      | `canvas`, `surface`, `elevated`, `overlay`, `inset` |
 | Text       | `--slate-text-*`    | `primary`, `secondary`, `tertiary`, `inverted`   |
 | Border     | `--slate-border-*`  | `hairline`, `strong`, `focus`                    |
-| Accent     | `--slate-accent-*`  | Follows the Windows accent colour when available |
+| Accent     | `--slate-accent-*`  | Nord Frost. Not the Windows accent — see below     |
 | Status     | `--slate-status-*`  | `success`, `warning`, `danger`, `info`           |
 | Space      | `--slate-space-*`   | 4pt grid: `1` = 4px … `16` = 64px                |
 | Radius     | `--slate-radius-*`  | `sm` 6, `md` 8, `lg` 10, `xl` 14, `full`         |
 | Shadow     | `--slate-shadow-*`  | `sm`, `md`, `lg`, `overlay`                      |
 | Motion     | `--slate-duration-*`, `--slate-ease-*` | 150–220ms, macOS easing curve |
-| Font       | `--slate-font-*`    | `sans` (Inter), `mono` (Geist Mono)              |
+| Font       | `--slate-font-*`    | `sans` (Terminess Propo), `mono` (Terminess Mono) |
+| Menu       | `--slate-chrome-menu*` | Width, item height, radius, padding            |
+
+## The palette is Nord
+
+`packages/slate-tokens/src/tokens/color.tokens.ts` holds the official sixteen
+Nord colours in `NORD`, exact and not to be adjusted. Each group has one job:
+Polar Night is the dark theme's backgrounds, Snow Storm the light theme's and
+the dark theme's text, Frost the interactive accent, Aurora the status colours
+and the traffic lights.
+
+Nord was drawn for syntax highlighting, so a few roles have no Nord answer —
+`nord3` on `nord0` is 1.6:1 and cannot be interface text. Those are **derived
+from an official colour**, never invented: an alpha tint where the value sits on
+several surfaces, an HSL lightness shift where it has to stay legible as ink.
+`packages/slate-tokens/tests/contrast.test.ts` asserts every pairing against
+WCAG AA and is what stops a nudged hex quietly breaking one. ADR 0011 records
+the decision and its costs.
+
+Two settings exist that would undo it, and both default to off: `material`
+(Mica tints the window with the user's wallpaper) and `use-system-accent`.
 
 ## Theming
 
@@ -77,8 +97,35 @@ Purposeful and short. 150ms for state changes, 220ms for entrances, on
 `--slate-ease-standard`. Nothing bounces. Nothing spins for decoration. If
 `prefers-reduced-motion` is set, transitions collapse to opacity only.
 
+## Menus
+
+Three surfaces share one menu: the title bar's, the content area's, and the
+tray's. They are built from `MenuSurface`, `MenuItem`, `MenuSeparator` and
+`MenuHeader` in `@slate/ui-kit`, and an application supplies only the *items*.
+
+- Item height 30px, a 14px leading glyph, the shortcut right-aligned in
+  `--slate-text-tertiary`.
+- A rule is full-bleed, so groups read as regions rather than as a stray line.
+- `tone="danger"` is for anything that discards or terminates. The label carries
+  the meaning; the colour only reinforces it.
+- A disabled item explains itself through `unavailableReason`. A greyed item
+  with no explanation wastes the reader's time, and a control that can *never*
+  be enabled should be absent.
+- The three menus must differ. A right-click that offers the same list wherever
+  it lands is telling the user their click carried no meaning.
+
+The tray menu is a webview window rather than a native one, which is what lets
+it use these components at all — ADR 0012.
+
 ## Fonts
 
-Inter Variable and Geist Mono ship as font files inside `@slate/ui-kit`. Never
-reference a font CDN: the content security policy blocks it, and a portable app
-must render identically on a machine with no network.
+Terminess Nerd Font ships as WOFF2 inside `@slate/ui-kit`: `Propo` for the
+interface, `Mono` for anywhere columns must line up. It is a monospace-derived
+face used deliberately as the interface face, and it has **two weights, 400 and
+700** — there is no semibold to reach for, and the type scale snaps to even
+sizes because Terminus was drawn for small bitmap sizes. ADR 0013 records why.
+
+Never reference a font CDN: the content security policy blocks it, and a
+portable app must render identically on a machine with no network. The fonts in
+`installDir/appdata/resources/fonts/` are for the future font-switching feature
+and are not what the applications currently load.

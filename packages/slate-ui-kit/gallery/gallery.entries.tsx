@@ -1,4 +1,32 @@
-import { AppShell, Button, StatusItem, TitleBar, TrafficLights } from '../src/index.ts';
+import {
+	CloseIcon,
+	HideIcon,
+	LayoutIcon,
+	MinimiseIcon,
+	PasteIcon,
+	PinIcon,
+	QuitIcon,
+	ReloadIcon,
+	SettingsIcon,
+	UpdateIcon,
+	ZoomIcon,
+} from '@slate/icons';
+import { useState } from 'react';
+
+import {
+	AboutDialog,
+	AppShell,
+	Button,
+	ContextMenu,
+	type MenuEntry,
+	MenuHeader,
+	MenuItem,
+	MenuSeparator,
+	MenuSurface,
+	StatusItem,
+	TitleBar,
+	TrafficLights,
+} from '../src/index.ts';
 
 /**
  * Every component in the kit, rendered for visual review.
@@ -21,6 +49,31 @@ type GalleryEntry = {
 
 function Row({ children }: { children: React.ReactNode }) {
 	return <div className="flex flex-wrap items-center gap-3">{children}</div>;
+}
+
+/**
+ * A dialog needs somewhere to hold `open` state, so it gets a small component
+ * of its own rather than a bare closure — `useState` inside a plain function
+ * called as `entry.render()` would work by accident but reads as a hook
+ * violation to anyone skimming it later.
+ */
+function AboutDialogDemo() {
+	const [open, setOpen] = useState(false);
+
+	return (
+		<>
+			<Button onClick={() => setOpen(true)}>About Launcher…</Button>
+			<AboutDialog
+				open={open}
+				onOpenChange={setOpen}
+				appName="Launcher"
+				icon={LayoutIcon}
+				description="Launches the suite's apps and third-party portable apps. Hosts the IPC broker."
+				suiteVersion="0.1.0"
+				copyright="Copyright (c) 2026 Dustin Angeletti. All rights reserved."
+			/>
+		</>
+	);
 }
 
 export const GALLERY_ENTRIES: GalleryEntry[] = [
@@ -104,6 +157,153 @@ export const GALLERY_ENTRIES: GalleryEntry[] = [
 				</Row>
 			</div>
 		),
+	},
+	{
+		id: 'menu-surface',
+		title: 'Menu',
+		description:
+			'One surface for all three menus. Items are 30px, the leading glyph column and the trailing shortcut column both align, and a rule is full-bleed so groups read as regions.',
+		render: () => (
+			<MenuSurface className="w-fit">
+				<MenuItem
+					item={{
+						id: 'r',
+						label: 'Reload',
+						icon: ReloadIcon,
+						shortcut: 'Ctrl+R',
+						onSelect: () => {},
+					}}
+				/>
+				<MenuItem
+					item={{
+						id: 'z',
+						label: 'Zoom',
+						icon: ZoomIcon,
+						shortcut: 'Ctrl+Shift+M',
+						onSelect: () => {},
+					}}
+				/>
+				<MenuSeparator />
+				<MenuItem
+					item={{ id: 'p', label: 'Always on Top', isChecked: true, onSelect: () => {} }}
+					hasCheckColumn
+				/>
+				<MenuItem
+					item={{ id: 'v', label: 'Full Screen', isChecked: false, onSelect: () => {} }}
+					hasCheckColumn
+				/>
+				<MenuSeparator />
+				<MenuItem
+					item={{
+						id: 'd',
+						label: 'Open Terminal',
+						icon: PasteIcon,
+						disabled: true,
+						unavailableReason: 'The process layer is not wired up yet',
+						onSelect: () => {},
+					}}
+				/>
+				<MenuItem
+					item={{
+						id: 'q',
+						label: 'Close',
+						icon: CloseIcon,
+						shortcut: 'Alt+F4',
+						tone: 'danger',
+						onSelect: () => {},
+					}}
+				/>
+			</MenuSurface>
+		),
+	},
+	{
+		id: 'tray-menu',
+		title: 'Tray menu',
+		description:
+			'The same surface with a header, because the tray is the one place a menu appears with no window around it to say which application it belongs to.',
+		render: () => (
+			<MenuSurface className="w-fit">
+				<MenuHeader name="Launcher" version="v0.1.0" icon={LayoutIcon} isRunning />
+				<MenuSeparator />
+				<MenuItem
+					item={{
+						id: 'h',
+						label: 'Hide Window',
+						icon: HideIcon,
+						shortcut: 'Ctrl+H',
+						onSelect: () => {},
+					}}
+				/>
+				<MenuItem
+					item={{
+						id: 's',
+						label: 'Preferences',
+						icon: SettingsIcon,
+						shortcut: 'Ctrl+,',
+						onSelect: () => {},
+					}}
+				/>
+				<MenuSeparator />
+				<MenuItem
+					item={{ id: 'u', label: 'Check for Updates', icon: UpdateIcon, onSelect: () => {} }}
+				/>
+				<MenuSeparator />
+				<MenuItem
+					item={{
+						id: 'q',
+						label: 'Quit Launcher',
+						icon: QuitIcon,
+						shortcut: 'Alt+F4',
+						tone: 'danger',
+						onSelect: () => {},
+					}}
+				/>
+			</MenuSurface>
+		),
+	},
+	{
+		id: 'context-menu',
+		title: 'Context menu',
+		description:
+			'Right-click the panel. Radix owns positioning, focus and dismissal; the kit owns how it looks.',
+		render: () => {
+			const entries: MenuEntry[] = [
+				{
+					id: 'min',
+					label: 'Minimise',
+					icon: MinimiseIcon,
+					shortcut: 'Ctrl+M',
+					onSelect: () => {},
+				},
+				{ id: 'zoom', label: 'Zoom', icon: ZoomIcon, shortcut: 'Ctrl+Shift+M', onSelect: () => {} },
+				{ id: 's1', kind: 'separator' },
+				{ id: 'top', label: 'Always on Top', icon: PinIcon, isChecked: false, onSelect: () => {} },
+				{ id: 's2', kind: 'separator' },
+				{
+					id: 'close',
+					label: 'Close',
+					icon: CloseIcon,
+					shortcut: 'Alt+F4',
+					tone: 'danger',
+					onSelect: () => {},
+				},
+			];
+
+			return (
+				<ContextMenu label="Window" entries={entries}>
+					<div className="flex h-24 w-full items-center justify-center rounded-lg border border-hairline bg-surface text-tertiary">
+						Right-click anywhere in here
+					</div>
+				</ContextMenu>
+			);
+		},
+	},
+	{
+		id: 'about-dialog',
+		title: 'About dialog',
+		description:
+			'What the content menu\'s "About" opens to. Built on the same Radix Dialog every application reuses, styled to match the menus rather than the browser default.',
+		render: () => <AboutDialogDemo />,
 	},
 	{
 		id: 'status-bar',

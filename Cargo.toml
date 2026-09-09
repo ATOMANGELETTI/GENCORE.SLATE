@@ -39,7 +39,7 @@ explorer-core = { path = "crates/explorer-core" }
 # ── Tauri ────────────────────────────────────────────────────────────────────
 # No `protocol-asset`: the asset protocol is disabled in every tauri.conf.json,
 # and enabling the feature without using it only widens the attack surface.
-tauri = { version = "2.11", features = [] }
+tauri = { version = "2.11", features = ["tray-icon", "image-png"] }
 tauri-build = { version = "2.6", features = [] }
 tauri-plugin-opener = "2.5"
 tauri-plugin-log = "2.9"

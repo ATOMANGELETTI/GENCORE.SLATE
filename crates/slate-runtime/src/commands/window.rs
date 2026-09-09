@@ -9,6 +9,24 @@ use tauri::{Manager, WebviewWindow};
 
 use crate::state::SlateState;
 
+/// Where the window is, as far as the user can tell.
+///
+/// Minimised and hidden are not independent of "on screen", and modelling them
+/// as three separate booleans admits states that cannot exist — hidden *and*
+/// visible, say. One enum makes the impossible combinations unrepresentable,
+/// which is the same rule `.agents/rules/04-typescript.md` states for the
+/// frontend: prefer a union once a third state becomes imaginable.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+pub enum WindowVisibility {
+    /// On screen.
+    Visible,
+    /// Minimised to the taskbar.
+    Minimized,
+    /// Hidden to the tray, with the process still running.
+    Hidden,
+}
+
 /// Everything the frontend needs to render the title bar correctly.
 #[derive(Debug, Clone, serde::Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -20,8 +38,13 @@ pub struct WindowState {
     /// The traffic lights carry colour only while focused and desaturate
     /// otherwise — the detail that makes the chrome read as deliberate.
     pub is_focused: bool,
-    /// Whether the window is minimised.
-    pub is_minimized: bool,
+    /// Whether the window is on screen, minimised, or hidden to the tray.
+    ///
+    /// Closing hides to the tray rather than exiting, so `Hidden` is a normal
+    /// resting state here rather than a window on its way out.
+    pub visibility: WindowVisibility,
+    /// Whether the window is pinned above other windows.
+    pub is_always_on_top: bool,
 }
 
 /// Reads the current window state.
@@ -30,11 +53,25 @@ pub struct WindowState {
 ///
 /// Returns [`SlateError::Internal`] if the window cannot be queried.
 #[tauri::command]
-pub fn slate_window_state(window: WebviewWindow) -> Result<WindowState, SlateError> {
+pub fn slate_window_state(
+    window: WebviewWindow,
+    app: tauri::AppHandle,
+) -> Result<WindowState, SlateError> {
     Ok(WindowState {
         is_maximized: window.is_maximized().map_err(to_error)?,
         is_focused: window.is_focused().map_err(to_error)?,
-        is_minimized: window.is_minimized().map_err(to_error)?,
+        visibility: if window.is_minimized().map_err(to_error)? {
+            WindowVisibility::Minimized
+        } else if window.is_visible().map_err(to_error)? {
+            WindowVisibility::Visible
+        } else {
+            WindowVisibility::Hidden
+        },
+        // Tauri has no getter for this, so the value the frontend sees is the
+        // one this process last set. It is stored rather than queried, which
+        // means it survives a hide but not a restart — acceptable, because it
+        // is deliberately not persisted to configuration either.
+        is_always_on_top: app.state::<SlateState>().is_always_on_top(),
     })
 }
 
@@ -68,12 +105,64 @@ pub fn slate_window_toggle_maximize(window: WebviewWindow) -> Result<bool, Slate
 
 /// Closes the window.
 ///
+/// Closing hides to the tray rather than exiting: the suite keeps a tray icon
+/// per application, and a tray icon for a process that has already gone is
+/// worse than no tray icon at all. Quitting is an explicit choice, offered
+/// only from the tray menu. The interception itself lives in
+/// [`crate::tray::attach_close_to_tray`].
+///
 /// # Errors
 ///
 /// Returns [`SlateError::Internal`] if the operation fails.
 #[tauri::command]
 pub fn slate_window_close(window: WebviewWindow) -> Result<(), SlateError> {
     window.close().map_err(to_error)
+}
+
+/// Hides the window, leaving the application running in the tray.
+///
+/// # Errors
+///
+/// Returns [`SlateError::Internal`] if the operation fails.
+#[tauri::command]
+pub fn slate_window_hide(window: WebviewWindow) -> Result<(), SlateError> {
+    window.hide().map_err(to_error)
+}
+
+/// Shows the window and brings it forward.
+///
+/// Unminimises first: a window restored from the tray while minimised would
+/// otherwise become visible without ever appearing on screen.
+///
+/// # Errors
+///
+/// Returns [`SlateError::Internal`] if the operation fails.
+#[tauri::command]
+pub fn slate_window_show(window: WebviewWindow) -> Result<(), SlateError> {
+    if window.is_minimized().map_err(to_error)? {
+        window.unminimize().map_err(to_error)?;
+    }
+    window.show().map_err(to_error)?;
+    window.set_focus().map_err(to_error)
+}
+
+/// Pins the window above other windows, or releases it.
+///
+/// Returns the state after the change so the frontend does not have to ask.
+///
+/// # Errors
+///
+/// Returns [`SlateError::Internal`] if the operation fails.
+#[tauri::command]
+pub fn slate_window_set_always_on_top(
+    window: WebviewWindow,
+    app: tauri::AppHandle,
+    is_enabled: bool,
+) -> Result<bool, SlateError> {
+    window.set_always_on_top(is_enabled).map_err(to_error)?;
+    app.state::<SlateState>().set_always_on_top(is_enabled);
+
+    Ok(is_enabled)
 }
 
 /// Begins a drag initiated from the custom title bar.

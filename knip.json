@@ -10,6 +10,7 @@
 			"project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}", "gallery/**/*.{ts,tsx}"]
 		},
 		"tauri/*": {
+			"entry": ["src/tray/tray.main.tsx"],
 			"project": ["src/**/*.{ts,tsx}", "tests/**/*.{ts,tsx}"]
 		}
 	},

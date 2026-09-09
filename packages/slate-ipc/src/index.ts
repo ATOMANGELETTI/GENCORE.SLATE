@@ -12,5 +12,7 @@
  */
 
 export { type RuntimeInfoState, setTheme, useRuntimeInfo } from './hooks/use-runtime-info.hook.ts';
+export { type TrayMenu, useTrayMenu } from './hooks/use-tray-menu.hook.ts';
+export { useWebviewZoom, type WebviewZoom } from './hooks/use-webview-zoom.hook.ts';
 export { useWindowChrome, type WindowChrome } from './hooks/use-window-chrome.hook.ts';
-export { invoke, isDesktop, toSlateError } from './invoke/command.service.ts';
+export { invoke, invokeAppCommand, isDesktop, toSlateError } from './invoke/command.service.ts';

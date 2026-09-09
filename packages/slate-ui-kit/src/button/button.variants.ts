@@ -10,7 +10,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 export const buttonVariants = cva(
 	[
 		'inline-flex shrink-0 items-center justify-center gap-2',
-		'rounded-md font-medium whitespace-nowrap',
+		'rounded-md font-bold whitespace-nowrap',
 		'transition-[background-color,color,box-shadow,opacity]',
 		'duration-[var(--slate-duration-fast)] ease-standard',
 		'disabled:pointer-events-none disabled:opacity-40',
@@ -23,7 +23,7 @@ export const buttonVariants = cva(
 				primary: 'bg-accent-default text-on-accent hover:bg-accent-hover active:brightness-95',
 				secondary: 'bg-elevated text-primary ring-1 ring-inset ring-hairline hover:bg-hover',
 				ghost: 'bg-transparent text-secondary hover:bg-hover hover:text-primary',
-				danger: 'bg-status-danger text-on-accent hover:brightness-110 active:brightness-95',
+				danger: 'bg-status-danger text-on-danger hover:brightness-110 active:brightness-95',
 			},
 			size: {
 				sm: 'h-7 px-2.5 text-xs [&_svg]:size-3.5',

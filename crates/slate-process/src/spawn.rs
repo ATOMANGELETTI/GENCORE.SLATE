@@ -79,15 +79,69 @@ impl Supervisor {
                 reason: error.to_string(),
             })?;
 
+        Ok(self.track(app, child))
+    }
+
+    /// Starts an application by running its `bun run` development script from
+    /// the repository checkout, instead of a packaged executable — the
+    /// fallback for a development build, which has no packaged executable to
+    /// run yet. See [`Supervisor::launch`] for the production path.
+    ///
+    /// Unlike `launch`, stdio is inherited rather than discarded: this is a
+    /// developer's own terminal session, and the spawned `tauri dev`
+    /// process's compiler errors and Vite output are exactly what they need
+    /// to see when something breaks — the packaged path never reaches a
+    /// console at all, which is why it discards its child's instead.
+    ///
+    /// # Errors
+    ///
+    /// Returns [`ProcessError::AlreadyRunning`] if the application is already
+    /// up, or [`ProcessError::Spawn`] if the script could not be started —
+    /// most often because `bun` is not on `PATH`.
+    pub fn launch_dev_script(
+        &self,
+        app: &AppId,
+        repo_root: &Utf8Path,
+        script: &str,
+    ) -> Result<RunningProcess, ProcessError> {
+        self.reap();
+
+        if self.children.lock().contains_key(app) {
+            return Err(ProcessError::AlreadyRunning {
+                app: app.to_string(),
+            });
+        }
+
+        let child = Command::new("bun")
+            .arg("run")
+            .arg(script)
+            .current_dir(repo_root.as_std_path())
+            .stdin(Stdio::null())
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .spawn()
+            .map_err(|error| ProcessError::Spawn {
+                app: app.to_string(),
+                reason: error.to_string(),
+            })?;
+
+        Ok(self.track(app, child))
+    }
+
+    /// Records a spawned child and reports it, once it exists.
+    ///
+    /// The one piece of bookkeeping both launch paths share, so neither can
+    /// drift from the other on what counts as "running".
+    fn track(&self, app: &AppId, child: Child) -> RunningProcess {
         let pid = child.id();
         self.children.lock().insert(app.clone(), child);
 
         tracing::info!(app = %app, pid, "launched application");
 
-        Ok(RunningProcess {
+        RunningProcess {
             app: app.clone(),
             pid,
-        })
+        }
     }
 
     /// The applications this supervisor started that are still running.

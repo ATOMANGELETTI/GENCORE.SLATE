@@ -1,19 +1,36 @@
-import { useRuntimeInfo, useWindowChrome } from '@slate/ipc';
-import { AppShell, StatusItem } from '@slate/ui-kit';
+import { LayoutIcon } from '@slate/icons';
+import { invoke, useRuntimeInfo, useWebviewZoom, useWindowChrome } from '@slate/ipc';
+import { AboutDialog, AppShell, ContextMenu, StatusItem } from '@slate/ui-kit';
+import { useState } from 'react';
 
+import { buildContentContextMenu } from '../context-menu/content.context-menu.ts';
+import { buildTitlebarContextMenu } from '../context-menu/titlebar.context-menu.ts';
 import { ContentLayout } from '../layout/content.layout.tsx';
 
 /**
  * The Launcher window.
  *
- * Chrome, theming, and window state all come from the shared runtime, so this
- * file contains only what is specific to Launcher — which is the point of the
- * split. When this application grows real functionality it goes inside
- * `ContentLayout`, not here.
+ * Two different context menus, deliberately: the title bar offers window
+ * operations, the content area offers application ones. A right-click that
+ * produces the same list wherever it lands is telling the user their click
+ * carried no meaning. The tray offers a third, from its own window.
  */
 export function AppRoot() {
 	const chrome = useWindowChrome();
 	const runtime = useRuntimeInfo();
+	const zoom = useWebviewZoom();
+	const [isAboutOpen, setIsAboutOpen] = useState(false);
+
+	// Preferences has no window yet, so it reveals the config file it would
+	// eventually edit instead — genuinely useful today, rather than a menu
+	// item that does nothing until that window exists.
+	const contentMenu = buildContentContextMenu({
+		zoom,
+		onOpenPreferences: () => {
+			void invoke('slate_open_config_file').catch(() => {});
+		},
+		onShowAbout: () => setIsAboutOpen(true),
+	});
 
 	return (
 		<AppShell
@@ -23,6 +40,7 @@ export function AppRoot() {
 			onClose={chrome.close}
 			onMinimize={chrome.minimize}
 			onToggleMaximize={chrome.toggleMaximize}
+			titleBarContextMenu={buildTitlebarContextMenu(chrome)}
 			status={{
 				leading: (
 					<StatusItem tone={runtime.status === 'error' ? 'warning' : 'default'}>Ready</StatusItem>
@@ -32,7 +50,21 @@ export function AppRoot() {
 				),
 			}}
 		>
-			<ContentLayout />
+			<ContextMenu label="Launcher" entries={contentMenu} className="block">
+				<div className="h-full">
+					<ContentLayout />
+				</div>
+			</ContextMenu>
+
+			<AboutDialog
+				open={isAboutOpen}
+				onOpenChange={setIsAboutOpen}
+				appName="Launcher"
+				icon={LayoutIcon}
+				description="Launches the suite's apps and third-party portable apps. Hosts the IPC broker."
+				suiteVersion={runtime.info?.suiteVersion ?? null}
+				copyright="Copyright (c) 2026 Dustin Angeletti. All rights reserved."
+			/>
 		</AppShell>
 	);
 }

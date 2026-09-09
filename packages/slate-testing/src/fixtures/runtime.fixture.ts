@@ -12,11 +12,15 @@ export function makeWindowChrome(overrides: Partial<WindowState> = {}) {
 	return {
 		isMaximized: false,
 		isFocused: true,
-		isMinimized: false,
+		visibility: 'visible' as const,
+		isAlwaysOnTop: false,
 		...overrides,
 		close: () => {},
 		minimize: () => {},
 		toggleMaximize: () => {},
+		hide: () => {},
+		show: () => {},
+		setAlwaysOnTop: () => {},
 	};
 }
 
@@ -31,8 +35,8 @@ export function makeRuntimeInfo(overrides: Partial<RuntimeInfo> = {}): RuntimeIn
 		config: {
 			suite: {
 				theme: 'dark',
-				material: 'mica',
-				'use-system-accent': true,
+				material: 'solid',
+				'use-system-accent': false,
 				'reduce-motion': false,
 				'log-level': 'info',
 				'log-retention-days': 14,

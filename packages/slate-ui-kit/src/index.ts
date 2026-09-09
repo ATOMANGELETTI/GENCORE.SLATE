@@ -14,7 +14,31 @@
 export { AppShell } from './app-shell/app-shell.component.tsx';
 export { Button } from './button/button.component.tsx';
 export { type ButtonVariants, buttonVariants } from './button/button.variants.ts';
+export { ContextMenu } from './context-menu/context-menu.component.tsx';
+export {
+	AboutDialog,
+	Dialog,
+	dialogContentVariants,
+	dialogOverlayVariants,
+} from './dialog/index.ts';
 export { cn } from './lib/cn.util.ts';
+export {
+	isSeparator,
+	type MenuEntry,
+	type MenuItemDescriptor,
+	type MenuItemTone,
+	type MenuSeparatorDescriptor,
+} from './menu/menu.types.ts';
+export {
+	type MenuItemVariants,
+	menuItemVariants,
+	menuSurfaceVariants,
+} from './menu/menu.variants.ts';
+export { MenuHeader } from './menu/menu-header.component.tsx';
+export { MenuItem } from './menu/menu-item.component.tsx';
+export { MenuSeparator } from './menu/menu-separator.component.tsx';
+export { MenuShortcut } from './menu/menu-shortcut.component.tsx';
+export { MenuSurface } from './menu/menu-surface.component.tsx';
 export { StatusBar, StatusItem } from './status-bar/status-bar.component.tsx';
 export { TitleBar } from './title-bar/title-bar.component.tsx';
 export { TrafficLights } from './title-bar/traffic-lights.component.tsx';

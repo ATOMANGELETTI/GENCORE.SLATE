@@ -17,6 +17,7 @@ slate-core.workspace = true
 slate-paths.workspace = true
 serde.workspace = true
 tauri.workspace = true
+tauri-plugin-opener.workspace = true
 thiserror.workspace = true
 tracing.workspace = true
 tracing-appender.workspace = true

@@ -34,9 +34,19 @@ fn a_partial_file_only_overrides_the_keys_it_names() {
     let store = ConfigStore::load(&paths, &KnownApp::Launcher.id()).expect("loads");
 
     assert_eq!(store.resolved().suite.log_level, "debug");
-    // Everything else keeps its default rather than becoming empty.
-    assert_eq!(store.resolved().suite.log_retention_days, 14);
-    assert!(store.resolved().suite.use_system_accent);
+    // Everything else keeps its default rather than becoming empty. Compared
+    // against `SuiteConfig::default()` rather than against literals, so that
+    // changing a default is not mistaken for breaking the merge.
+    let defaults = SuiteConfig::default();
+    assert_eq!(
+        store.resolved().suite.log_retention_days,
+        defaults.log_retention_days
+    );
+    assert_eq!(
+        store.resolved().suite.use_system_accent,
+        defaults.use_system_accent
+    );
+    assert_eq!(store.resolved().suite.material, defaults.material);
 }
 
 #[test]

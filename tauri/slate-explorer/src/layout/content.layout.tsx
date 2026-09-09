@@ -16,7 +16,7 @@ export function ContentLayout() {
 			</div>
 
 			<div className="space-y-1">
-				<h1 className="text-2xl font-semibold tracking-tight text-primary">Explorer Template</h1>
+				<h1 className="text-2xl font-bold tracking-tight text-primary">Explorer Template</h1>
 				<p className="max-w-sm text-md text-tertiary">
 					The shared shell is wired up. Application content belongs here.
 				</p>

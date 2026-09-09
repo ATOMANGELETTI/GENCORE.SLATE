@@ -39,6 +39,29 @@ function declarations(entries: Record<string, string>, prefix: string, indent = 
 		.join('\n');
 }
 
+/**
+ * The Tailwind colour name a semantic role maps to.
+ *
+ * Tailwind builds a utility as `<property>-<colour name>`, so a role that
+ * already carries its category — `bg-surface` — would otherwise produce
+ * `bg-bg-surface`, and the obvious `bg-surface` would silently resolve to
+ * nothing at all. Tailwind emits no error for an unknown utility, so the class
+ * simply does not exist and the element keeps whatever it inherited: the exact
+ * failure that left `text-on-accent` rendering light text on a light accent
+ * button while looking, in the source, entirely correct.
+ *
+ * Stripping the category is what makes the class names every component already
+ * writes — `bg-surface`, `text-secondary`, `border-hairline` — resolve. Roles
+ * with no category prefix (`accent-default`, `status-danger`) pass through
+ * unchanged, which is why those were the only ones that ever worked.
+ *
+ * The `--slate-*` custom properties keep their full role name, so anything
+ * reading `var(--slate-bg-surface)` directly is unaffected.
+ */
+function utilityName(role: string): string {
+	return role.replace(/^(?:bg|text|border)-/, '');
+}
+
 function themeBlock(theme: ThemeName): string {
 	return Object.entries(SEMANTIC_COLORS[theme])
 		.map(([role, value]) => `\t${TOKEN_PREFIX}-${role}: ${value};`)
@@ -89,7 +112,7 @@ export function generateTokensCss(): string {
 		'/* ── Tailwind v4 utilities, mapped to the variables above ───────────── */',
 		'@theme inline {',
 		...Object.keys(SEMANTIC_COLORS.dark).map(
-			(role) => `\t--color-${role}: var(${TOKEN_PREFIX}-${role});`,
+			(role) => `\t--color-${utilityName(role)}: var(${TOKEN_PREFIX}-${role});`,
 		),
 		...Object.keys(SPACE).map((key) => `\t--spacing-${key}: var(${TOKEN_PREFIX}-space-${key});`),
 		...Object.keys(RADIUS).map((key) => `\t--radius-${key}: var(${TOKEN_PREFIX}-radius-${key});`),
@@ -117,7 +140,14 @@ export function generateTokensCss(): string {
 		'\t}',
 		'',
 		'\tbody {',
-		'\t\tbackground-color: var(--slate-bg-canvas);',
+		'\t\t/* Transparent, not the canvas colour. Every window is built with',
+		'\t\t   `transparent` and `decorations(false)`, so the frame is drawn by',
+		"\t\t   `AppShell`, and the compositor's own drop shadow is what separates",
+		'\t\t   the window from the desktop — an opaque body would paint a hard',
+		'\t\t   edge behind that shadow instead of letting it fade. A page that',
+		'\t\t   needs a ground of its own, such as the component gallery, sets',
+		'\t\t   `bg-canvas` on its own root. */',
+		'\t\tbackground-color: transparent;',
 		'\t\tcolor: var(--slate-text-primary);',
 		'\t\tfont-family: var(--slate-font-sans);',
 		'\t\tfont-size: var(--slate-text-base);',
@@ -168,6 +198,20 @@ export function generateTokensCss(): string {
 		'\t\tbackground: transparent;',
 		'\t}',
 		'',
+		'	/* The one entrance in the suite: menus and the tray popup. Opacity plus',
+		'	   a very slight scale — no movement, no overshoot. Declared here because',
+		'	   motion is a token, not a component detail. */',
+		'	@keyframes slate-menu-in {',
+		'		from {',
+		'			opacity: 0;',
+		'			transform: scale(0.96);',
+		'		}',
+		'		to {',
+		'			opacity: 1;',
+		'			transform: scale(1);',
+		'		}',
+		'	}',
+		'',
 		'\t/* Honour the accessibility setting rather than merely shortening. */',
 		'\t@media (prefers-reduced-motion: reduce) {',
 		'\t\t*,',
@@ -178,6 +222,17 @@ export function generateTokensCss(): string {
 		'\t\t\ttransition-duration: 0.01ms !important;',
 		'\t\t\tscroll-behavior: auto !important;',
 		'\t\t}',
+		'',
+		'		/* Collapse the menu entrance to opacity alone. Shortening a scale',
+		'		   still moves, and the movement is the part that causes trouble. */',
+		'		@keyframes slate-menu-in {',
+		'			from {',
+		'				opacity: 0;',
+		'			}',
+		'			to {',
+		'				opacity: 1;',
+		'			}',
+		'		}',
 		'\t}',
 		'}',
 		'',

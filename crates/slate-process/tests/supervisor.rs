@@ -9,6 +9,7 @@
 // fixture that cannot be built should fail loudly here and now.
 #![allow(clippy::expect_used)]
 
+use camino::Utf8PathBuf;
 use slate_core::KnownApp;
 use slate_paths::SlatePaths;
 use slate_process::{ProcessError, Supervisor};
@@ -58,4 +59,26 @@ fn a_failed_launch_leaves_no_recorded_process() {
         supervisor.running().is_empty(),
         "a failed launch must not be recorded"
     );
+}
+
+#[test]
+fn a_dev_script_is_tracked_the_same_way_as_a_packaged_launch() {
+    // A script name that names nothing in the root `package.json`: `bun run`
+    // starts and then fails on its own almost immediately, but the OS-level
+    // spawn this pins succeeds regardless — this is about the tracking that
+    // happens around the spawn, not what the script goes on to do. Bun is a
+    // safe assumption here: it is this project's only toolchain (ADR 0001),
+    // so anywhere `cargo test` runs, `bun run` already has to work too.
+    let supervisor = Supervisor::new();
+    let repo_root = Utf8PathBuf::from(".");
+
+    let process = supervisor
+        .launch_dev_script(
+            &KnownApp::Terminal.id(),
+            &repo_root,
+            "this-script-does-not-exist",
+        )
+        .expect("bun itself should still start, whatever it goes on to do with the script name");
+
+    assert_eq!(process.app, KnownApp::Terminal.id());
 }

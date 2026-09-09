@@ -1,0 +1,13 @@
+{
+	"//": "The gallery is a plain browser page rather than part of the library build, so it extends the shared base by relative path. Vite's oxc transform resolves the nearest tsconfig itself and does not honour a package `exports` map for a `.json` entry, which is why this cannot reuse the `@slate/config-typescript/...` specifier the package tsconfig uses.",
+	"extends": "../../config-typescript/react-library.json",
+	"include": ["**/*", "../src/**/*"],
+	"compilerOptions": {
+		"noEmit": true,
+		"composite": false,
+		"paths": {
+			"@slate/icons": ["../../slate-icons/src/index.ts"],
+			"@slate/tokens": ["../../slate-tokens/src/index.ts"]
+		}
+	}
+}

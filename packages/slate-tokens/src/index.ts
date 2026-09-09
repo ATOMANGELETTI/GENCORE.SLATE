@@ -19,8 +19,7 @@
 export { generateTokensCss, TOKEN_PREFIX } from './generate/css.generator.ts';
 export {
 	type ColorRole,
-	NEUTRAL,
-	PALETTE,
+	NORD,
 	SEMANTIC_COLORS,
 	type ThemeName,
 } from './tokens/color.tokens.ts';

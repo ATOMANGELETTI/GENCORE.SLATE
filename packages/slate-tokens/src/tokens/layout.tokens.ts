@@ -50,25 +50,42 @@ export const RADIUS = {
 
 /** Type scale. Sizes are px; line heights are unitless ratios. */
 export const TYPOGRAPHY = {
+	/**
+	 * Terminess is the Nerd Fonts patch of Terminus, and it is the suite's
+	 * interface face, not just its code face — the chrome is meant to read as
+	 * technical. `Propo` has proportional glyph advances and is correct for
+	 * labels; `Mono` is strictly monospaced and belongs anywhere columns must
+	 * line up. Both ship inside `@slate/ui-kit`; the fallbacks exist only for
+	 * the moment before the WOFF2 lands.
+	 */
 	family: {
-		sans: "'Inter Variable', 'Inter', 'Segoe UI Variable Text', 'Segoe UI', system-ui, sans-serif",
-		mono: "'Geist Mono Variable', 'Geist Mono', 'Cascadia Code', 'Consolas', ui-monospace, monospace",
+		sans: "'Terminess Nerd Font Propo', 'Cascadia Code', 'Consolas', ui-monospace, monospace",
+		mono: "'Terminess Nerd Font Mono', 'Cascadia Code', 'Consolas', ui-monospace, monospace",
 	},
+	/**
+	 * Terminus was drawn as a bitmap face for small sizes, so the scale snaps
+	 * to even values: an odd size lands the stems between pixels and the whole
+	 * interface goes soft.
+	 */
 	size: {
 		'2xs': '10px',
 		xs: '11px',
 		sm: '12px',
-		base: '13px',
-		md: '14px',
-		lg: '16px',
-		xl: '20px',
-		'2xl': '26px',
+		base: '14px',
+		md: '16px',
+		lg: '18px',
+		xl: '22px',
+		'2xl': '28px',
 	},
+	/**
+	 * Two weights, because Terminess has two. The intermediate weights the
+	 * previous sans-serif scale carried (500, 590, 680) have no face here, and
+	 * asking the renderer to synthesise them smears a bitmap-derived outline
+	 * badly enough to be obvious at 14px.
+	 */
 	weight: {
 		regular: '400',
-		medium: '500',
-		semibold: '590',
-		bold: '680',
+		bold: '700',
 	},
 	leading: {
 		tight: '1.25',
@@ -79,6 +96,8 @@ export const TYPOGRAPHY = {
 		tight: '-0.01em',
 		normal: '0',
 		wide: '0.02em',
+		/** For the small capitalised labels the menus and the tray header use. */
+		wider: '0.06em',
 	},
 } as const;
 
@@ -128,12 +147,26 @@ export const MOTION = {
  * disagree about how tall a title bar is.
  */
 export const CHROME = {
-	titlebarHeight: '38px',
+	titlebarHeight: '34px',
 	statusbarHeight: '24px',
 	trafficLightSize: '12px',
 	trafficLightGap: '8px',
 	sidebarWidth: '240px',
-	windowRadius: '10px',
+	/**
+	 * Square, not rounded. The window is built `transparent(true)` so a
+	 * rounded corner has somewhere to reveal — but WebView2 does not reliably
+	 * punch a transparent hole in its own corners, so the area outside a
+	 * rounded `AppShell` can render as an opaque white square instead of
+	 * see-through, which reads as a rendering bug rather than a design
+	 * choice. A square window has no such gap.
+	 */
+	windowRadius: '0px',
+
+	/** Menus: the context menus, and the tray popup that reuses their shape. */
+	menuMinWidth: '208px',
+	menuItemHeight: '30px',
+	menuRadius: '10px',
+	menuPadding: '4px',
 } as const;
 
 /** Stacking order. Centralised so two overlays cannot fight over a value. */
