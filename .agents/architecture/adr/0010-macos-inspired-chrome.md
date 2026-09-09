@@ -28,7 +28,11 @@ Details that matter for it to read as deliberate rather than approximate:
   grey when it is not.
 - Symbols appear on hover, not at rest.
 - The bar is a drag region; double-clicking it zooms.
-- Height is 38px, with a hairline bottom border.
+- Height is 34px, with a hairline bottom border. (Amended from an initial
+  38px: still comfortably above the 12px traffic lights and their 8px gap,
+  and closer to the tighter macOS bar this decision is borrowing from. The
+  placement, order, and focus behaviour this ADR settles are unaffected —
+  this is a single token value, not a reopening of the decision.)
 
 ## Consequences
 
