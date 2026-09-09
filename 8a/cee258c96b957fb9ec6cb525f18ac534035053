@@ -1,0 +1,47 @@
+docs/security.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-132
+webview2.lock.json
+  s_d082853af7acf4::t_8146e6f4e8d0e6 3-4
+docs/testing.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-108
+docs/ui-kit.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-112
+docs/portability.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-193
+docs/release.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-148
+docs/getting-started.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-200
+scripts/bun-webview2.ts
+  s_d082853af7acf4::t_8146e6f4e8d0e6 21,119-136
+  s_d082853af7acf4::t_c363d847979fa1 137-138
+docs/ipc.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-178
+docs/architecture.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-168
+docs/README.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-50
+docs/commands.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 1-380
+README.md
+  s_d082853af7acf4::t_8146e6f4e8d0e6 76-81,84-87
+.agents/templates/project.dictionary.txt
+  s_d082853af7acf4::t_563706f9b39c1c 49
+  s_d082853af7acf4::t_8146e6f4e8d0e6 37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "8acee258c96b957fb9ec6cb525f18ac534035053",
+  "prompts": {},
+  "sessions": {
+    "s_d082853af7acf4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ec54370a-1ac8-4c9e-b7a8-4814a6a58af5",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
