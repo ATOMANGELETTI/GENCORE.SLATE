@@ -1,0 +1,27 @@
+webview2.lock.json
+  h_90ad036e211778 3-4
+scripts/bun-webview2.ts
+  h_90ad036e211778 21,119-136
+  s_33a0871af3c088::t_7f3d0f02e3cde0 137-138
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "3cac796e99fe5463939f1135b1fe214dd6288711",
+  "prompts": {},
+  "humans": {
+    "h_90ad036e211778": {
+      "author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  },
+  "sessions": {
+    "s_33a0871af3c088": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6ce43089-72c5-411b-b832-39a0dc5d67aa",
+        "model": "unknown"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
