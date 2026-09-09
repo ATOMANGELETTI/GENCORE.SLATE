@@ -37,7 +37,7 @@ strings — that tests Tailwind, not the component.
 
 ## 4. Add it to the gallery
 
-Register it in `packages/slate-ui-kit/gallery/gallery.entries.ts` so it renders
+Register it in `packages/slate-ui-kit/gallery/gallery.entries.tsx` so it renders
 in both themes at `bun run gallery`. A component absent from the gallery will
 drift visually without anyone noticing.
 

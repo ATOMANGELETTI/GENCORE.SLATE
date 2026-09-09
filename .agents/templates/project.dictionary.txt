@@ -19,7 +19,9 @@ deserialised
 deserialises
 deserialising
 devtools
+dismissable
 dpiaware
+focusability
 gencore
 hexdigit
 idat
@@ -35,12 +37,17 @@ lockfiles
 lossily
 msedgedriver
 msedgewebview
+nord
+Nord
 portableapps
 portapps
+Propo
 registrator
 rlib
 rsplit
 rustls
+scanline
+scanlines
 segoe
 slate
 slatepaths
@@ -48,6 +55,7 @@ staticlib
 statusbar
 supersampled
 systemroot
+Terminess
 thiserror
 titlebar
 traylet
@@ -55,5 +63,8 @@ unlisten
 unlisteners
 unmaximize
 unmigrated
+unminimises
+unminimize
 vite
+wawoff
 webviews
