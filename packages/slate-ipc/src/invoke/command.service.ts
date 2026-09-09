@@ -29,6 +29,29 @@ export async function invoke<Name extends SlateCommandName>(
 	}
 }
 
+/**
+ * Invokes a command that is not part of the shared contract in
+ * `@slate/bindings` — one specific to a single application, registered only
+ * in that application's own `invoke_handler!`.
+ *
+ * This is the escape hatch `invoke` deliberately does not offer: adding an
+ * application-specific command to the shared contract would force every
+ * other application to register it too, just to satisfy the contract test —
+ * see `.agents/architecture/module-map.md` for where such a command belongs
+ * instead. Error handling is identical to `invoke`; only the compile-time name
+ * check is gone, since there is no shared contract to check it against.
+ */
+export async function invokeAppCommand<T>(
+	command: string,
+	args?: Record<string, unknown>,
+): Promise<T> {
+	try {
+		return (await tauriInvoke(command, args)) as T;
+	} catch (cause) {
+		throw toSlateError(cause, command);
+	}
+}
+
 /** Normalises anything thrown by the IPC layer into a `SlateError`. */
 export function toSlateError(cause: unknown, command?: string): SlateError {
 	if (isSlateError(cause)) {
