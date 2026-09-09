@@ -7,6 +7,10 @@
  * .agents/rules/06-design-system.md.
  */
 @import '@slate/tokens/css';
+/* The suite's typeface, bundled beside the kit so it needs no network and no
+   CSP exception. */
+@import '@slate/ui-kit/fonts.css';
+
 
 /* Tailwind must see the shared kit's sources to emit its utilities. */
 @source '../../../../packages/slate-ui-kit/src';

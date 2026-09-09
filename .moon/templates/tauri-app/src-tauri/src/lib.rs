@@ -36,7 +36,12 @@ pub fn run() {
             slate_runtime::commands::runtime::slate_runtime_info,
             slate_runtime::commands::runtime::slate_set_theme,
             slate_runtime::commands::runtime::slate_reload_config,
+            slate_runtime::commands::preferences::slate_open_config_file,
         ])
+        // Preferences reveals this app's own config file rather than opening a
+        // settings window that does not exist yet (see
+        // `slate_runtime::commands::preferences`).
+        .plugin(tauri_plugin_opener::init())
         .setup(slate_runtime::setup)
         .run(tauri::generate_context!())
         .expect("the application failed to start");
