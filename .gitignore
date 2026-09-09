@@ -83,3 +83,8 @@ ehthumbs.db
 
 # ── Claude Code worktrees (live inside the repo root) ────────────────────────
 .claude/worktrees/
+
+# ── Personal Files ────────────────────────────────────────────────────────────
+
+.personal/vaults/
+.personal/vaults/api-keys/
