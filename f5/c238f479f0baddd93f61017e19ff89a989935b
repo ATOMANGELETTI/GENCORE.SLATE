@@ -1,0 +1,20 @@
+packages/slate-testing/src/fixtures/runtime.fixture.ts
+  s_a64317f6e778d7::t_75c06285180100 15,21-23,38-39
+  s_a64317f6e778d7::t_ed93cec7dcbf84 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "f5c238f479f0baddd93f61017e19ff89a989935b",
+  "prompts": {},
+  "sessions": {
+    "s_a64317f6e778d7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05260ee8-de12-4216-82d7-7d002c0e4da2",
+        "model": "claude-opus-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
