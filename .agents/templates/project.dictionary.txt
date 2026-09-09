@@ -34,6 +34,7 @@ launcherctl
 libsqlite
 localappdata
 lockfiles
+longpaths
 lossily
 msedgedriver
 msedgewebview
@@ -45,6 +46,7 @@ Propo
 registrator
 rlib
 rsplit
+rustflags
 rustls
 scanline
 scanlines
