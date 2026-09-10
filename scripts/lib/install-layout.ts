@@ -84,6 +84,31 @@ export function layoutFiles(): LayoutFile[] {
 }
 
 /**
+ * The size each application's window opens at on a fresh install.
+ *
+ * Per application rather than one shared number, because the three want
+ * genuinely different shapes: the Launcher is a single column of applications
+ * and wants to be tall and narrow, while a terminal and a file manager want
+ * width. `slate_config::WindowConfig` has one default for all three, which is
+ * right for a fallback and wrong for what actually ships.
+ *
+ * The Launcher's width has a second consumer: opening a view widens the window
+ * by `CHROME.windowExpansion`, so this is the number it widens *from*.
+ */
+const DEFAULT_WINDOW: Record<
+	(typeof SUITE_APPS)[number],
+	{ width: number; height: number; reason: string }
+> = {
+	'slate-launcher': {
+		width: 540,
+		height: 720,
+		reason: 'Tall and narrow: one column of applications. Opening a view adds 180.',
+	},
+	'slate-terminal': { width: 1100, height: 720, reason: 'Wide enough for 120 columns.' },
+	'slate-explorer': { width: 1100, height: 720, reason: 'Wide enough for a sidebar and a list.' },
+};
+
+/**
  * Default configuration seeded into a fresh install.
  *
  * Written as readable, commented TOML rather than an empty file: the first
@@ -120,19 +145,24 @@ export function seedConfig(): Array<{ destination: string; contents: string }> {
 				'',
 			].join('\n'),
 		},
-		...SUITE_APPS.map((app) => ({
-			destination: `appdata/config/${app}.toml`,
-			contents: [
-				`# Settings specific to ${app}.`,
-				'# Anything set here overrides suite.toml for this application only.',
-				'',
-				'[window]',
-				'width = 1100.0',
-				'height = 720.0',
-				'maximized = false',
-				'',
-			].join('\n'),
-		})),
+		...SUITE_APPS.map((app) => {
+			const window = DEFAULT_WINDOW[app];
+
+			return {
+				destination: `appdata/config/${app}.toml`,
+				contents: [
+					`# Settings specific to ${app}.`,
+					'# Anything set here overrides suite.toml for this application only.',
+					'',
+					`# ${window.reason}`,
+					'[window]',
+					`width = ${window.width.toFixed(1)}`,
+					`height = ${window.height.toFixed(1)}`,
+					'maximized = false',
+					'',
+				].join('\n'),
+			};
+		}),
 	];
 }
 

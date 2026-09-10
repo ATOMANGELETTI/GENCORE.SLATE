@@ -1,6 +1,8 @@
+# Settings specific to slate-terminal.
+# Anything set here overrides suite.toml for this application only.
+
+# Wide enough for 120 columns.
 [window]
 width = 1100.0
 height = 720.0
-x = 402.0
-y = 230.0
 maximized = false
