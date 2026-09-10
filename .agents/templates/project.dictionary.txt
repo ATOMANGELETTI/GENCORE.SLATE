@@ -13,7 +13,9 @@ bootstrapper
 bsdtar
 cascadia
 cdylib
+cheatsheet
 chrono
+ciede
 consolas
 deque
 derefs
@@ -24,9 +26,11 @@ deserialising
 devtools
 dismissable
 dpiaware
+filesync
 fira
 firacode
 focusability
+frecency
 gencore
 hexdigit
 idat
@@ -34,6 +38,7 @@ idents
 iend
 ihdr
 installdir
+keyline
 launchable
 launcherctl
 libsqlite
@@ -45,9 +50,11 @@ msedgedriver
 msedgewebview
 nerdfonts
 nord
+onfig
 portableapps
 portapps
 pyftsubset
+redmean
 registrator
 rlib
 rsplit
@@ -66,12 +73,14 @@ systemroot
 thiserror
 titlebar
 traylet
+unfocusable
 unlisten
 unlisteners
 unmaximize
 unmigrated
 unminimises
 unminimize
+unparseable
 vite
 wawoff
 wcag
