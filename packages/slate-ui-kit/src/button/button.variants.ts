@@ -10,7 +10,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 export const buttonVariants = cva(
 	[
 		'inline-flex shrink-0 items-center justify-center gap-2',
-		'rounded-md font-bold whitespace-nowrap',
+		'rounded-md font-medium whitespace-nowrap',
 		'transition-[background-color,color,box-shadow,opacity]',
 		'duration-[var(--slate-duration-fast)] ease-standard',
 		'disabled:pointer-events-none disabled:opacity-40',

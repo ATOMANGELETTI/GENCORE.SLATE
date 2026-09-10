@@ -13,7 +13,13 @@
 
 import { describe, expect, test } from 'bun:test';
 
-import { type ColorRole, SEMANTIC_COLORS, type ThemeName } from '../src/tokens/color.tokens.ts';
+import {
+	ACCENT_NAMES,
+	ACCENTS,
+	type ColorRole,
+	SEMANTIC_COLORS,
+	type ThemeName,
+} from '../src/tokens/color.tokens.ts';
 
 /** WCAG 2.1 AA, normal-size text. */
 const AA_TEXT = 4.5;
@@ -71,6 +77,33 @@ export function contrastRatio(foreground: string, background: string): number {
 	const darker = Math.min(overLuminance, underLuminance);
 
 	return (lighter + 0.05) / (darker + 0.05);
+}
+
+/**
+ * How different two colours look, as opposed to how they contrast.
+ *
+ * The "redmean" approximation: a weighted Euclidean distance in sRGB whose red
+ * and blue weights shift with the average red channel. Not a true perceptual
+ * metric — CIEDE2000 is — but it is a few lines rather than a hundred, needs no
+ * colour-space conversion, and is far closer to how eyes work than a plain RGB
+ * distance. It is used for exactly one job here: proving that two swatches a
+ * user picks between are actually telling apart.
+ *
+ * @see https://en.wikipedia.org/wiki/Color_difference#sRGB
+ */
+function perceptualDistance(first: string, second: string): number {
+	const a = parseHex(first);
+	const b = parseHex(second);
+	const meanRed = (a.r + b.r) / 2;
+	const deltaRed = a.r - b.r;
+	const deltaGreen = a.g - b.g;
+	const deltaBlue = a.b - b.b;
+
+	return Math.sqrt(
+		(2 + meanRed / 256) * deltaRed * deltaRed +
+			4 * deltaGreen * deltaGreen +
+			(2 + (255 - meanRed) / 256) * deltaBlue * deltaBlue,
+	);
 }
 
 /** Every surface text is allowed to sit on. */
@@ -176,6 +209,70 @@ for (const theme of THEMES) {
 			expect(contrastRatio(colors['chrome-inactive'], colors['bg-surface'])).toBeGreaterThanOrEqual(
 				1.3,
 			);
+		});
+	});
+}
+
+/**
+ * The accent is the one colour a user can choose, which makes it the one colour
+ * a user can get wrong. Every member of the set has to clear the same bars the
+ * default does, in both themes — otherwise the picker is a way to break your own
+ * contrast from inside the preferences, and the failure would be invisible to
+ * the person who caused it.
+ */
+for (const theme of THEMES) {
+	describe(`${theme} theme, selectable accents`, () => {
+		const colors = SEMANTIC_COLORS[theme];
+
+		for (const accent of ACCENT_NAMES) {
+			const { default: base, hover, muted } = ACCENTS[theme][accent];
+
+			test(`${accent} carries the accent foreground at AA`, () => {
+				expect(contrastRatio(colors['text-on-accent'], base)).toBeGreaterThanOrEqual(AA_TEXT);
+			});
+
+			test(`${accent} stays legible through its hover state`, () => {
+				// A hover that moved toward the foreground would drop the fill's
+				// own text below AA partway through the transition.
+				expect(contrastRatio(colors['text-on-accent'], hover)).toBeGreaterThanOrEqual(AA_TEXT);
+			});
+
+			for (const surface of SURFACES) {
+				test(`${accent} is distinguishable from ${surface}`, () => {
+					expect(contrastRatio(base, colors[surface])).toBeGreaterThanOrEqual(AA_NON_TEXT);
+				});
+			}
+
+			test(`${accent} keeps body text legible on a selected row`, () => {
+				// `muted` doubles as `bg-selected`, so it is a background that
+				// ordinary row text has to survive sitting on.
+				const selected = composite(parseHex(muted), parseHex(colors['bg-canvas']));
+				const asHex = `#${[selected.r, selected.g, selected.b]
+					.map((channel) => Math.round(channel).toString(16).padStart(2, '0'))
+					.join('')}`;
+
+				expect(contrastRatio(colors['text-primary'], asHex)).toBeGreaterThanOrEqual(AA_TEXT);
+			});
+		}
+
+		test('the accents are distinguishable from one another', () => {
+			// Measured as a perceptual distance, not as a contrast ratio.
+			// Contrast is a luminance comparison and is blind to hue: teal and
+			// cyan sit at 1.02:1 against each other while being obviously
+			// different colours, so a contrast gate here would either pass
+			// everything or fail the whole set.
+			//
+			// The three that ship measure 35–64 apart in both themes. `nord10`,
+			// which was tried and dropped, came out 9.3 from `nord9` in dark and
+			// 14.7 in light — an order of magnitude closer, and the reason the
+			// picker offers three swatches rather than four.
+			const swatches = ACCENT_NAMES.map((accent) => ACCENTS[theme][accent].default);
+
+			for (const [index, swatch] of swatches.entries()) {
+				for (const other of swatches.slice(index + 1)) {
+					expect(perceptualDistance(swatch, other)).toBeGreaterThan(30);
+				}
+			}
 		});
 	});
 }

@@ -22,7 +22,8 @@ codebase loses its shape.
 | [0010](0010-macos-inspired-chrome.md)      | macOS-inspired chrome with traffic lights on the left  | Accepted |
 | [0011](0011-nord-palette.md)               | Nord is the suite's palette                            | Accepted |
 | [0012](0012-tray-menu-as-a-window.md)      | The tray menu is a webview window, not a native menu   | Accepted |
-| [0013](0013-terminess-ui-typeface.md)      | Terminess is the interface typeface, not just the code one | Accepted |
+| [0013](0013-terminess-ui-typeface.md)      | Terminess is the interface typeface, not just the code one | Superseded by [0014](0014-fira-sans-and-fira-code.md) |
+| [0014](0014-fira-sans-and-fira-code.md)    | Fira Sans for language, Fira Code for values           | Accepted |
 
 ## Writing a new one
 

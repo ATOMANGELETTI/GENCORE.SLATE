@@ -41,7 +41,7 @@ export function AboutDialog({
 			</div>
 
 			<div className="flex flex-col items-center gap-1 text-center">
-				<h2 className="text-lg font-bold tracking-tight text-primary">{appName}</h2>
+				<h2 className="text-lg font-semibold tracking-tight text-primary">{appName}</h2>
 				<p className="font-mono text-xs text-tertiary">SLATE {suiteVersion ?? '—'}</p>
 			</div>
 

@@ -52,7 +52,7 @@ export function MenuHeader({
 
 			{Icon ? <Icon aria-hidden="true" className="size-4 shrink-0 text-secondary" /> : null}
 
-			<span className="flex-1 truncate text-xs font-bold uppercase tracking-wider text-secondary">
+			<span className="flex-1 truncate text-xs font-medium uppercase tracking-wider text-secondary">
 				{name}
 			</span>
 

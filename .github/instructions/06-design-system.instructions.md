@@ -16,7 +16,7 @@ description: The visual language — tokens, theming, and the macOS-inspired rul
 # Design system
 
 The look is **modern, flat, minimal, and macOS-inspired**, drawn in **Nord** and
-set in **Terminess**. Restraint is the whole aesthetic: hairline borders instead
+set in **Fira**. Restraint is the whole aesthetic: hairline borders instead
 of heavy ones, layered low-opacity shadows instead of drop shadows, generous
 space instead of dividers, and one accent colour used sparingly.
 
@@ -46,8 +46,9 @@ token — do not inline it "just this once".
 | Space      | `--slate-space-*`   | 4pt grid: `1` = 4px … `16` = 64px                |
 | Radius     | `--slate-radius-*`  | `sm` 6, `md` 8, `lg` 10, `xl` 14, `full`         |
 | Shadow     | `--slate-shadow-*`  | `sm`, `md`, `lg`, `overlay`                      |
-| Motion     | `--slate-duration-*`, `--slate-ease-*` | 150–220ms, macOS easing curve |
-| Font       | `--slate-font-*`    | `sans` (Terminess Propo), `mono` (Terminess Mono) |
+| Motion     | `--slate-duration-*`, `--slate-ease-*` | 120–320ms, macOS easing curve |
+| Font       | `--slate-font-*`    | `sans` (Fira Sans), `mono` (Fira Code)            |
+| Density    | `--slate-density-*` | Row heights. Redefined under `[data-density]`     |
 | Menu       | `--slate-chrome-menu*` | Width, item height, radius, padding            |
 
 ## The palette is Nord
@@ -83,7 +84,7 @@ theme to look right, the token set is wrong.
 
 | Surface       | Height | Notes                                                |
 | ------------- | ------ | ---------------------------------------------------- |
-| Title bar     | 38px   | Traffic lights left, centred title, right action slot |
+| Title bar     | 34px   | Traffic lights left, centred title, right action slot |
 | Status bar    | 24px   | Hairline top border, 11px text, three slots           |
 | Content area  | fill   | Owns its own scrolling; never scrolls the window body |
 
@@ -94,14 +95,15 @@ macOS reading, faithfully:
 - Traffic lights sit **top-left**: close, minimise, zoom, in that order.
 - They carry colour only while the window is focused, and desaturate to grey
   when it is not. Symbols appear on hover, not at rest.
-- The title is centred, 13px, semibold, `--slate-text-secondary`.
+- The title is centred, 13px, medium, `--slate-text-secondary`.
 - The bar is a drag region (`data-tauri-drag-region`); double-clicking it zooms.
 - The right slot holds app-specific actions and stays visually quiet.
 
 ## Motion
 
-Purposeful and short. 150ms for state changes, 220ms for entrances, on
-`--slate-ease-standard`. Nothing bounces. Nothing spins for decoration. If
+Purposeful and short. 120ms for a state change, 160ms for an ordinary
+transition, 220ms for an entrance, on `--slate-ease-standard`. Nothing
+bounces. Nothing spins for decoration. If
 `prefers-reduced-motion` is set, transitions collapse to opacity only.
 
 ## Menus
@@ -126,13 +128,63 @@ it use these components at all — ADR 0012.
 
 ## Fonts
 
-Terminess Nerd Font ships as WOFF2 inside `@slate/ui-kit`: `Propo` for the
-interface, `Mono` for anywhere columns must line up. It is a monospace-derived
-face used deliberately as the interface face, and it has **two weights, 400 and
-700** — there is no semibold to reach for, and the type scale snaps to even
-sizes because Terminus was drawn for small bitmap sizes. ADR 0013 records why.
+Two faces from one superfamily, split by **what the text is**, not by where it
+appears:
+
+- **Fira Sans** (`--slate-font-sans`) sets anything read as *language* — labels,
+  app names, headings, prose.
+- **Fira Code** (`--slate-font-mono`) sets anything read as a *value* — a
+  version, a count, a byte size, a path, a slash command.
+
+That split is the rule. A folder called "Documents" is language; `0.1.0` beside
+it is a value. Reaching for `font-mono` to make something look technical is the
+mistake this replaced — when everything was monospaced, a monospaced version
+number said nothing.
+
+The scale has **four weights** (400, 500, 600, 700). `font-medium` is the default
+for emphasis inside a row, `font-semibold` for a heading or a wordmark, and
+`font-bold` is rare and deliberate. `base` is **13px**. ADR 0014 records why this
+replaced Terminess, and what it cost.
+
+Uppercase is the house style for structural labelling — section headers, the
+status bar, key hints, list rows in the Launcher — and **uppercase always takes
+tracking**. Capitals destroy the word shape a reader recognises, so the letters
+have to be separated to be read individually: `tracking-wide` at 12px and above,
+`tracking-wider` below it, `tracking-widest` for a banded header. Setting
+uppercase without tracking is a defect, not a preference. Prose inside a view —
+a description, an empty state, help text — stays sentence case; uppercase is for
+labels, not sentences.
+
+Eight WOFF2 files ship inside `@slate/ui-kit`, four faces each split into `latin`
+and `latin-ext`, so a window rendering only ASCII pays for 24KB rather than 70KB.
+**The subsets cover Latin and two arrows and nothing else** — anything outside
+that range renders as a replacement box, which is why keyboard hints are spelled
+`ENTER` and `ESC` rather than drawn as glyphs.
 
 Never reference a font CDN: the content security policy blocks it, and a
-portable app must render identically on a machine with no network. The fonts in
-`installDir/appdata/resources/fonts/` are for the future font-switching feature
-and are not what the applications currently load.
+portable app must render identically on a machine with no network. The Nerd Font
+builds in `installDir/appdata/resources/fonts/nerdfonts/` are for the future
+font-switching feature and are not what the applications currently load.
+
+## Settings that change the tokens
+
+Three preferences move token values at runtime. All three work the same way — a
+data attribute on the root element, resolved by the cascade — and none of them
+writes a colour or a dimension from script, because a value written by script
+cannot respond to the *other* settings.
+
+| Setting | Attribute       | Applied by      | Default       |
+| ------- | --------------- | --------------- | ------------- |
+| Theme   | `data-theme`    | `applyTheme`    | dark          |
+| Density | `data-density`  | `applyDensity`  | comfortable   |
+| Accent  | `data-accent`   | `applyAccent`   | cyan          |
+
+Each helper **removes** its attribute for the default rather than writing it, so
+the default lives in exactly one place: the `:root` block of the generated
+stylesheet.
+
+The accent is the one colour a user can choose, which makes it the one colour a
+user can get wrong. The set is therefore closed — three Frost derivations — and
+every member is asserted against WCAG AA in both themes by
+`packages/slate-tokens/tests/contrast.test.ts`. **Adding an accent means adding
+it to `ACCENTS` and letting that test pass**, never widening the picker alone.

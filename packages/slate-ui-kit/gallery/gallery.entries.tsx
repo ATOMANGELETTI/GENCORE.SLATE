@@ -1,14 +1,26 @@
 import {
+	AppearanceIcon,
 	CloseIcon,
+	DesktopIcon,
+	DownloadIcon,
+	FileIcon,
+	FolderIcon,
 	HideIcon,
+	InfoIcon,
 	LayoutIcon,
 	MinimiseIcon,
+	MusicIcon,
 	PasteIcon,
 	PinIcon,
+	PlusIcon,
+	PrivacyIcon,
 	QuitIcon,
 	ReloadIcon,
+	SearchIcon,
 	SettingsIcon,
+	TerminalIcon,
 	UpdateIcon,
+	VideoIcon,
 	ZoomIcon,
 } from '@slate/icons';
 import { useState } from 'react';
@@ -18,13 +30,21 @@ import {
 	AppShell,
 	Button,
 	ContextMenu,
+	KeyHint,
 	type MenuEntry,
 	MenuHeader,
 	MenuItem,
 	MenuSeparator,
 	MenuSurface,
+	Meter,
+	NavItem,
+	SectionLabel,
+	SegmentedControl,
 	StatusItem,
+	Switch,
+	TextField,
 	TitleBar,
+	Tooltip,
 	TrafficLights,
 } from '../src/index.ts';
 
@@ -73,6 +93,112 @@ function AboutDialogDemo() {
 				copyright="Copyright (c) 2026 Dustin Angeletti. All rights reserved."
 			/>
 		</>
+	);
+}
+
+/**
+ * The settings controls need somewhere to hold their own state, for the same
+ * reason the dialog does — a `useState` inside `entry.render()` would work by
+ * accident and read as a hook violation to anyone skimming it later.
+ */
+function SettingsRowsDemo() {
+	const [material, setMaterial] = useState('solid');
+	const [isReduced, setIsReduced] = useState(false);
+
+	return (
+		<div className="w-full max-w-md">
+			<SectionLabel className="pt-0">Appearance</SectionLabel>
+			<div className="flex items-center justify-between border-b border-hairline py-3">
+				<div>
+					<div className="text-base text-primary">Window material</div>
+					<div className="text-xs text-tertiary">Solid, Mica or Acrylic</div>
+				</div>
+				<SegmentedControl
+					label="Window material"
+					value={material}
+					onValueChange={setMaterial}
+					items={[
+						{ value: 'solid', label: 'Solid' },
+						{ value: 'mica', label: 'Mica' },
+						{ value: 'acrylic', label: 'Acrylic' },
+					]}
+				/>
+			</div>
+			<div className="flex items-center justify-between py-3">
+				<div>
+					<div className="text-base text-primary">Reduce motion</div>
+					<div className="text-xs text-tertiary">Collapse transitions to opacity</div>
+				</div>
+				<Switch
+					label="Reduce motion"
+					checked={isReduced}
+					onCheckedChange={(next) => setIsReduced(next)}
+				/>
+			</div>
+		</div>
+	);
+}
+
+function TextFieldDemo() {
+	const [query, setQuery] = useState('');
+
+	return (
+		<div className="flex w-full max-w-md flex-col gap-6">
+			<TextField
+				label="Search apps"
+				isLabelHidden
+				icon={SearchIcon}
+				placeholder="Search apps"
+				value={query}
+				onChange={(event) => setQuery(event.target.value)}
+				trailing={<span className="font-mono text-xs text-tertiary">16</span>}
+			/>
+			<TextField label="Working directory" placeholder="storage/documents" size="sm" />
+			<TextField label="Disabled" placeholder="Not editable" disabled />
+		</div>
+	);
+}
+
+function NavListDemo() {
+	const [selected, setSelected] = useState('downloads');
+	const folders = [
+		{ id: 'desktop', label: 'Desktop', icon: DesktopIcon },
+		{ id: 'downloads', label: 'Downloads', icon: DownloadIcon },
+		{ id: 'documents', label: 'Documents', icon: FileIcon },
+		{ id: 'pictures', label: 'Pictures', icon: FolderIcon },
+		{ id: 'videos', label: 'Videos', icon: VideoIcon },
+		{ id: 'music', label: 'Music', icon: MusicIcon },
+	];
+
+	return (
+		<div className="flex w-full gap-10">
+			<div className="w-48">
+				<SectionLabel id="gallery-folders" className="pt-0">
+					Folders
+				</SectionLabel>
+				<nav aria-labelledby="gallery-folders" className="flex flex-col">
+					{folders.map((folder) => (
+						<NavItem
+							key={folder.id}
+							icon={folder.icon}
+							label={folder.label}
+							isUppercase
+							isSelected={selected === folder.id}
+							onClick={() => setSelected(folder.id)}
+						/>
+					))}
+				</nav>
+			</div>
+			<div className="w-48">
+				<SectionLabel className="pt-0">Sentence case</SectionLabel>
+				<div className="flex flex-col">
+					<NavItem icon={AppearanceIcon} label="Appearance" isSelected />
+					<NavItem icon={PrivacyIcon} label="Privacy" />
+					<NavItem icon={SettingsIcon} label="Advanced" trailing={<span>›</span>} />
+					<NavItem icon={InfoIcon} label="Unavailable" disabled />
+				</div>
+			</div>
+		</div>
 	);
 }
 
@@ -317,6 +443,102 @@ export const GALLERY_ENTRIES: GalleryEntry[] = [
 					<StatusItem tone="warning">1 warning</StatusItem>
 					<StatusItem>SLATE 0.1.0</StatusItem>
 				</div>
+			</div>
+		),
+	},
+	{
+		id: 'section-label',
+		title: 'Section label',
+		description:
+			'Names a group of rows. Capitals are the house style, and the tracking is what buys back the legibility capitals cost — set one without the other and 10px labels stop being readable. Banded is for a boundary that has to survive being scrolled past.',
+		render: () => (
+			<div className="flex w-full gap-10">
+				<div className="w-48 rounded-lg border border-hairline bg-canvas px-2 pb-2">
+					<SectionLabel>Suite</SectionLabel>
+					<SectionLabel>Portable apps</SectionLabel>
+				</div>
+				<div className="w-48 overflow-hidden rounded-lg border border-hairline bg-canvas">
+					<SectionLabel tone="banded">Suite</SectionLabel>
+					<div className="h-8" />
+					<SectionLabel tone="banded">Portable apps</SectionLabel>
+				</div>
+			</div>
+		),
+	},
+	{
+		id: 'nav-item',
+		title: 'Nav item',
+		description:
+			'The row the folder list and every expanded view menu are built from. Real buttons, so they are reachable by keyboard; the selected one carries aria-current, which is how a screen reader user knows which of six similar rows they are on. Switch the density above and watch the heights follow.',
+		render: () => <NavListDemo />,
+	},
+	{
+		id: 'text-field',
+		title: 'Text field',
+		description:
+			'Drawn as a ruled line rather than a box — a boxed input inside a window already made of hairline regions adds a second competing border for no information. The rule takes the accent on focus, which is the visible focus indicator.',
+		render: () => <TextFieldDemo />,
+	},
+	{
+		id: 'settings-controls',
+		title: 'Switch and segmented control',
+		description:
+			'Both are for settings that apply immediately. The segmented control is chosen over a dropdown wherever there are three or four options, because for a setting you are comparing rather than searching, showing the alternatives is the point.',
+		render: () => <SettingsRowsDemo />,
+	},
+	{
+		id: 'key-hint',
+		title: 'Key hint',
+		description:
+			'The strip along the foot of the command bar. The keys are spelled out rather than drawn as glyphs: the suite is Windows-only, so the Mac vocabulary would be wrong, and the bundled font subsets would render most of those glyphs as replacement boxes anyway.',
+		render: () => (
+			<div className="flex flex-wrap items-center gap-5">
+				<KeyHint keys={['↑', '↓']}>Select</KeyHint>
+				<KeyHint keys={['TAB']}>Complete</KeyHint>
+				<KeyHint keys={['ENTER']}>Run</KeyHint>
+				<KeyHint keys={['ESC']}>Exit</KeyHint>
+				<KeyHint keys={['CTRL', 'K']}>Focus</KeyHint>
+			</div>
+		),
+	},
+	{
+		id: 'meter',
+		title: 'Meter',
+		description:
+			'A bounded quantity, not a progress bar — nothing here is in progress, and role="progressbar" would have a screen reader announce "loading" about a disk that is simply 3% full. Three pixels tall, because the number beside it is the information.',
+		render: () => (
+			<div className="flex w-full max-w-xs flex-col gap-6">
+				<Meter
+					label="Storage used"
+					value={3}
+					max={100}
+					valueText="557 KB of 16 GB"
+					hint="557 KB USED · 16.0 GB FREE"
+				/>
+				<Meter label="Nearly full" value={92} max={100} hint="14.7 GB USED · 1.3 GB FREE" />
+			</div>
+		),
+	},
+	{
+		id: 'tooltip',
+		title: 'Tooltip',
+		description:
+			'The name of an icon-only control, for people who are not using a screen reader. Hover or focus any of these. It never carries information that exists nowhere else — a tooltip cannot be reached by touch, cannot be selected, and disappears.',
+		render: () => (
+			<div className="flex items-center gap-1">
+				{[
+					{ label: 'Storage', icon: FolderIcon },
+					{ label: 'Add application', icon: PlusIcon },
+					{ label: 'Console', icon: TerminalIcon },
+					{ label: 'Settings', icon: SettingsIcon },
+					{ label: 'About', icon: InfoIcon },
+				].map(({ label, icon: Icon }) => (
+					<Tooltip key={label} content={label}>
+						<Button variant="ghost" size="icon" aria-label={label}>
+							<Icon strokeWidth={1.5} aria-hidden="true" />
+						</Button>
+					</Tooltip>
+				))}
 			</div>
 		),
 	},

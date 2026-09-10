@@ -1,23 +1,49 @@
-import { applyTheme, type ThemePreference } from '@slate/tokens';
+import {
+	ACCENT_NAMES,
+	type AccentName,
+	applyAccent,
+	applyDensity,
+	applyTheme,
+	DEFAULT_ACCENT,
+	type DensityName,
+	type ThemePreference,
+} from '@slate/tokens';
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { Button } from '../src/index.ts';
+import { SegmentedControl, TooltipProvider } from '../src/index.ts';
 import { GALLERY_ENTRIES } from './gallery.entries.tsx';
 import './gallery.css';
 
 /**
  * The UI kit gallery.
  *
- * Every component, in both themes, in a browser. Run it with
- * `bun run gallery`.
+ * Every component, in every theme, density and accent, in a browser. Run it
+ * with `bun run gallery`.
+ *
+ * The three switches at the top are not a convenience. Theme, density and
+ * accent are the three axes a component can look correct on one setting of and
+ * wrong on another, and a kit whose gallery only ever renders the defaults will
+ * ship a component that has never been seen in compact light teal.
  */
 function Gallery() {
 	const [theme, setTheme] = useState<ThemePreference>('dark');
+	const [density, setDensity] = useState<DensityName>('comfortable');
+	const [accent, setAccent] = useState<AccentName>(DEFAULT_ACCENT);
 
-	const choose = (next: ThemePreference) => {
+	const chooseTheme = (next: ThemePreference) => {
 		setTheme(next);
 		applyTheme(next, document.documentElement);
+	};
+
+	const chooseDensity = (next: DensityName) => {
+		setDensity(next);
+		applyDensity(next, document.documentElement);
+	};
+
+	const chooseAccent = (next: AccentName) => {
+		setAccent(next);
+		applyAccent(next, document.documentElement);
 	};
 
 	return (
@@ -25,25 +51,40 @@ function Gallery() {
 		// `body { overflow: hidden }`, which is correct for an application
 		// window and would otherwise clip everything below the fold here.
 		<div className="h-screen overflow-auto bg-canvas text-primary">
-			<header className="sticky top-0 z-30 flex items-center justify-between border-b border-hairline bg-surface/90 px-6 py-3 backdrop-blur">
+			<header className="sticky top-0 z-30 flex flex-wrap items-center justify-between gap-4 border-b border-hairline bg-surface/90 px-6 py-3 backdrop-blur">
 				<div>
-					<h1 className="text-lg font-bold tracking-tight">SLATE UI Kit</h1>
+					<h1 className="text-lg font-semibold tracking-tight">SLATE UI Kit</h1>
 					<p className="text-xs text-tertiary">
-						{GALLERY_ENTRIES.length} components · switch themes to check both
+						{GALLERY_ENTRIES.length} components · check every axis below
 					</p>
 				</div>
 
-				<div className="flex gap-1">
-					{(['dark', 'light', 'system'] as const).map((option) => (
-						<Button
-							key={option}
-							size="sm"
-							variant={theme === option ? 'primary' : 'ghost'}
-							onClick={() => choose(option)}
-						>
-							{option}
-						</Button>
-					))}
+				<div className="flex flex-wrap items-center gap-2">
+					<SegmentedControl
+						label="Theme"
+						value={theme}
+						onValueChange={chooseTheme}
+						items={[
+							{ value: 'dark', label: 'Dark' },
+							{ value: 'light', label: 'Light' },
+							{ value: 'system', label: 'System' },
+						]}
+					/>
+					<SegmentedControl
+						label="Density"
+						value={density}
+						onValueChange={chooseDensity}
+						items={[
+							{ value: 'comfortable', label: 'Comfortable' },
+							{ value: 'compact', label: 'Compact' },
+						]}
+					/>
+					<SegmentedControl
+						label="Accent"
+						value={accent}
+						onValueChange={chooseAccent}
+						items={ACCENT_NAMES.map((name) => ({ value: name, label: name }))}
+					/>
 				</div>
 			</header>
 
@@ -51,7 +92,7 @@ function Gallery() {
 				{GALLERY_ENTRIES.map((entry) => (
 					<section key={entry.id} className="flex flex-col gap-4">
 						<div className="space-y-1">
-							<h2 className="text-md font-bold text-primary">{entry.title}</h2>
+							<h2 className="text-md font-semibold text-primary">{entry.title}</h2>
 							<p className="max-w-2xl text-sm text-tertiary">{entry.description}</p>
 						</div>
 
@@ -71,6 +112,10 @@ if (!container) {
 
 createRoot(container).render(
 	<StrictMode>
-		<Gallery />
+		{/* One provider for the page, so moving between neighbouring tooltips
+		    skips the delay the way it does in a real window. */}
+		<TooltipProvider>
+			<Gallery />
+		</TooltipProvider>
 	</StrictMode>,
 );

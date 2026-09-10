@@ -69,24 +69,6 @@ export const NORD = {
  */
 const DERIVED = {
 	/**
-	 * `nord8` lightened 6% in HSL. A hover state must lighten rather than
-	 * darken, or the dark foreground on a filled accent stops clearing
-	 * contrast halfway through the transition.
-	 */
-	frostLight: '#9eccd9',
-	/**
-	 * `nord10` darkened in HSL until `nord6` on top of it clears 4.5:1. The
-	 * light theme needs a filled accent that is visible against Snow Storm,
-	 * and `nord10` itself manages only 3.4:1.
-	 */
-	frostDeep: '#4a6a91',
-	/**
-	 * `frostDeep` darkened 4%. The light theme's hover must darken, not
-	 * lighten: the foreground on a filled accent there is `nord6`.
-	 */
-	frostDeepDark: '#436083',
-
-	/**
 	 * `nord11` lightened in HSL at its own saturation, until it clears 4.5:1
 	 * on `nord1`. Pure `nord11` is **2.46:1** there and 2.87:1 even on
 	 * `nord0` — it fails as text on every Polar Night surface, so a dark
@@ -134,12 +116,71 @@ const DERIVED = {
 } as const;
 
 /**
+ * The accents a user may choose between, resolved per theme.
+ *
+ * The accent is a setting, which makes it the one colour in the system a user
+ * can get wrong — so the set is closed, drawn entirely from Frost, and every
+ * member is asserted against AA by the contrast test in both themes. A picker
+ * that let someone select an unreadable accent would be a way to break your own
+ * interface from inside the preferences.
+ *
+ * Only three, from `nord7`, `nord8` and `nord9`. `nord10` was tried and dropped:
+ * once each theme's derivation has run, it lands within a couple of percent of
+ * `nord9` in both, and two swatches a user cannot tell apart are worse than
+ * three they can.
+ *
+ * The derivations follow the same rule as everything else here. In the dark
+ * theme the accent is a **light fill carrying `nord0`**, so anything too dark
+ * for that ink is lightened; in the light theme it is a **dark fill carrying
+ * `nord6`**, so anything too light is darkened. `hover` moves away from the
+ * foreground in both — lighter in dark, darker in light — because a hover that
+ * moved toward it would drop the fill's own text below AA halfway through the
+ * transition.
+ */
+export const ACCENTS = {
+	dark: {
+		/** `nord7`, unmodified: 5.99:1 against `nord0`. */
+		teal: { default: NORD.nord7, hover: '#a2c7c7', muted: '#8fbcbb33' },
+		/** `nord8`, unmodified: 6.24:1. The suite's default. */
+		cyan: { default: NORD.nord8, hover: '#9eccd9', muted: '#88c0d033' },
+		/** `nord9` lightened one step, from 4.64:1 to 4.71:1 — margin, not repair. */
+		blue: { default: '#83a2c2', hover: '#98b1cc', muted: '#83a2c233' },
+	},
+	light: {
+		/** `nord7` darkened until `nord6` on it clears 4.7:1. */
+		teal: { default: '#447170', hover: '#3c6463', muted: '#44717026' },
+		/** `nord8` darkened likewise. The suite's default. */
+		cyan: { default: '#337082', hover: '#2d6373', muted: '#33708226' },
+		/** `nord9` darkened likewise. */
+		blue: { default: '#476b90', hover: '#406182', muted: '#476b9026' },
+	},
+} as const;
+
+/** The accents a user may select. */
+export type AccentName = keyof (typeof ACCENTS)['dark'];
+
+/** The accents a user may select, in the order a picker should offer them. */
+export const ACCENT_NAMES = ['teal', 'cyan', 'blue'] as const satisfies readonly AccentName[];
+
+/**
+ * The accent applied when the user has expressed no preference.
+ *
+ * `nord8` is Nord's own primary Frost colour, and it is what the suite's chrome
+ * was drawn against.
+ */
+export const DEFAULT_ACCENT = 'cyan' satisfies AccentName;
+
+/**
  * Semantic colour roles, resolved per theme.
  *
  * Alpha-composited borders and overlays are intentional: a hairline defined as
  * a translucent Snow Storm or Polar Night sits correctly on any surface
  * beneath it, whereas a fixed value only looks right on the one it was picked
  * for.
+ *
+ * The five accent-derived roles read from {@link ACCENTS} rather than repeating
+ * a hex, so the default accent and the first entry in the picker cannot drift
+ * apart. Those same five are what `applyAccent` overrides at runtime.
  */
 export const SEMANTIC_COLORS = {
 	dark: {
@@ -156,7 +197,7 @@ export const SEMANTIC_COLORS = {
 		'bg-overlay': '#2e3440cc',
 		'bg-hover': '#eceff40f',
 		'bg-active': '#eceff41a',
-		'bg-selected': '#88c0d033',
+		'bg-selected': ACCENTS.dark[DEFAULT_ACCENT].muted,
 
 		'text-primary': NORD.nord6,
 		'text-secondary': NORD.nord4,
@@ -166,11 +207,11 @@ export const SEMANTIC_COLORS = {
 
 		'border-hairline': '#d8dee91f',
 		'border-strong': '#d8dee93d',
-		'border-focus': NORD.nord8,
+		'border-focus': ACCENTS.dark[DEFAULT_ACCENT].default,
 
-		'accent-default': NORD.nord8,
-		'accent-hover': DERIVED.frostLight,
-		'accent-muted': '#88c0d033',
+		'accent-default': ACCENTS.dark[DEFAULT_ACCENT].default,
+		'accent-hover': ACCENTS.dark[DEFAULT_ACCENT].hover,
+		'accent-muted': ACCENTS.dark[DEFAULT_ACCENT].muted,
 
 		'status-success': NORD.nord14,
 		'status-warning': NORD.nord13,
@@ -178,6 +219,9 @@ export const SEMANTIC_COLORS = {
 		// Dark, like `text-on-accent`: the dark theme's fills are the light
 		// end of the palette, so their foregrounds are the dark end.
 		'text-on-danger': NORD.nord0,
+		// Deliberately a fixed `nord8` rather than the chosen accent. Status
+		// means something; an informational marker that changed hue with a
+		// preference would stop being a signal and become decoration.
 		'status-info': NORD.nord8,
 
 		// Aurora, not macOS red/amber/green: a `#ff5f57` dot in a Nord window
@@ -198,7 +242,7 @@ export const SEMANTIC_COLORS = {
 		'bg-overlay': '#2e344066',
 		'bg-hover': '#2e34400f',
 		'bg-active': '#2e34401a',
-		'bg-selected': '#5e81ac26',
+		'bg-selected': ACCENTS.light[DEFAULT_ACCENT].muted,
 
 		'text-primary': NORD.nord0,
 		'text-secondary': NORD.nord2,
@@ -208,11 +252,11 @@ export const SEMANTIC_COLORS = {
 
 		'border-hairline': '#2e344026',
 		'border-strong': '#2e34404d',
-		'border-focus': DERIVED.frostDeep,
+		'border-focus': ACCENTS.light[DEFAULT_ACCENT].default,
 
-		'accent-default': DERIVED.frostDeep,
-		'accent-hover': DERIVED.frostDeepDark,
-		'accent-muted': '#5e81ac26',
+		'accent-default': ACCENTS.light[DEFAULT_ACCENT].default,
+		'accent-hover': ACCENTS.light[DEFAULT_ACCENT].hover,
+		'accent-muted': ACCENTS.light[DEFAULT_ACCENT].muted,
 
 		'status-success': DERIVED.auroraGreenDeep,
 		'status-warning': DERIVED.auroraYellowDeep,
@@ -235,3 +279,18 @@ export type ColorRole = keyof (typeof SEMANTIC_COLORS)['dark'];
 
 /** The themes the suite ships. */
 export type ThemeName = keyof typeof SEMANTIC_COLORS;
+
+/**
+ * The roles that follow the chosen accent.
+ *
+ * Listed once, here, because `applyAccent` and the contrast test both need to
+ * agree on exactly which roles move — and a role that moved in one but not the
+ * other would be a preference that silently broke a ratio.
+ */
+export const ACCENT_DRIVEN_ROLES = [
+	'accent-default',
+	'accent-hover',
+	'accent-muted',
+	'bg-selected',
+	'border-focus',
+] as const satisfies readonly ColorRole[];
