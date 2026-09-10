@@ -3,10 +3,12 @@
 //! Almost everything lives in `slate-runtime`: the portable bootstrap, window
 //! chrome, logging, and the commands the custom title bar needs. What remains
 //! here is only what is specific to Launcher — starting Terminal and
-//! Explorer, in `commands::launch` — which is what keeps the three
-//! applications consistent as they grow apart.
+//! Explorer, revealing the suite's own directories, and widening the window
+//! for an expanded view — which is what keeps the three applications
+//! consistent as they grow apart.
 
 pub mod commands;
+pub mod state;
 
 use slate_core::KnownApp;
 use slate_process::Supervisor;
@@ -33,8 +35,13 @@ pub fn run() {
         // Tracks Terminal and Explorer once the Launcher has started them —
         // see `commands::launch`.
         .manage(Supervisor::new())
+        // Remembers the window's collapsed width while a view holds it open —
+        // see `commands::window`.
+        .manage(state::LauncherState::default())
         .invoke_handler(tauri::generate_handler![
             commands::launch::slate_launcher_launch_app,
+            commands::reveal::slate_launcher_reveal,
+            commands::window::slate_launcher_set_expanded,
             slate_runtime::commands::window::slate_window_state,
             slate_runtime::commands::window::slate_window_minimize,
             slate_runtime::commands::window::slate_window_toggle_maximize,
