@@ -1,0 +1,154 @@
+packages/slate-ui-kit/src/text-field/text-field.component.tsx
+  s_9d1cc9bff2ec53::t_b46e972ca69483 1-3,5-75
+  s_9d1cc9bff2ec53::t_88bc4a731cd483 4
+packages/slate-ui-kit/src/menu/menu-header.component.tsx
+  s_9d1cc9bff2ec53::t_4daa53480e974b 55
+packages/slate-ui-kit/tests/tooltip/tooltip.component.test.tsx
+  s_9d1cc9bff2ec53::t_319b191391e7bb 1-51
+packages/slate-ui-kit/src/section-label/section-label.variants.ts
+  s_9d1cc9bff2ec53::t_dfed0d6131716a 1-30
+packages/slate-ui-kit/tests/key-hint/key-hint.component.test.tsx
+  s_9d1cc9bff2ec53::t_16ef59cab7bbdd 1-38
+.agents/templates/project.dictionary.txt
+  s_9d1cc9bff2ec53::t_4efbd09d98a7b3 5-7,27,46,77,79
+  s_9d1cc9bff2ec53::t_6b09dc2d530352 28,50,63
+tauri/slate-terminal/src/layout/content.layout.tsx
+  s_9d1cc9bff2ec53::t_4daa53480e974b 19
+packages/slate-tokens/src/tokens/color.tokens.ts
+  s_9d1cc9bff2ec53::t_4e9eb8c06cfcb5 118-172,180-183,200,210,212-214,222-224,245,255,257-259,282-296
+packages/slate-ui-kit/src/text-field/text-field.variants.ts
+  s_9d1cc9bff2ec53::t_b16053baf96c06 1-37
+packages/slate-ui-kit/src/segmented-control/segmented-control.component.tsx
+  s_9d1cc9bff2ec53::t_436c31a5bb6d95 1-81
+packages/slate-ui-kit/src/dialog/about-dialog.component.tsx
+  s_9d1cc9bff2ec53::t_4daa53480e974b 44
+packages/slate-ui-kit/package.json
+  s_9d1cc9bff2ec53::t_95f7df7343dee7 18-20
+packages/slate-ui-kit/tests/segmented-control/segmented-control.component.test.tsx
+  s_9d1cc9bff2ec53::t_18d511d939a074 13-16,19
+  s_9d1cc9bff2ec53::t_88bc4a731cd483 17,23,31,40,53
+  s_9d1cc9bff2ec53::t_a3686918a73c3b 1-12,18,20-22,24-30,32-39,41-52,54-60
+packages/slate-tokens/src/generated/tokens.css
+  s_9d1cc9bff2ec53::t_23c9e1dd7b9285 66-67,71,74,77-78,87,112-116,130-133,146,154-157,170-176,187,195-198,212-236,239-245,248-254,257-264,267-272,275-280,283-290,354-365
+  s_9d1cc9bff2ec53::t_2c150035bcac65 237-238,246-247,255-256,265-266,273-274,281-282
+packages/slate-ui-kit/tests/section-label/section-label.component.test.tsx
+  s_9d1cc9bff2ec53::t_ec6ac0a1e85532 1-21,26-28,30-32,34-41
+  s_9d1cc9bff2ec53::t_32bf57d76ec634 22-25,29,33
+packages/slate-ui-kit/src/fonts/LICENSE.txt
+  s_9d1cc9bff2ec53::t_f99a2bdac740e9 1-2,4-6
+packages/slate-ui-kit/tests/switch/switch.component.test.tsx
+  s_9d1cc9bff2ec53::t_0824ce2ef8364b 1-44
+packages/slate-ui-kit/src/nav-item/nav-item.component.tsx
+  s_9d1cc9bff2ec53::t_8d37b923821e97 1-3,5-44,48-51
+  s_9d1cc9bff2ec53::t_88bc4a731cd483 4
+  s_9d1cc9bff2ec53::t_6a684ce0bc7ce1 45-47
+.agents/architecture/adr/0013-terminess-ui-typeface.md
+  s_9d1cc9bff2ec53::t_1ad4792dc105dc 3
+packages/slate-ui-kit/src/title-bar/title-bar.component.tsx
+  s_9d1cc9bff2ec53::t_4daa53480e974b 93
+packages/slate-tokens/src/generate/css.generator.ts
+  s_9d1cc9bff2ec53::t_cc39e45e1181c5 78-109,119-129,132-137,140-146,187
+  s_9d1cc9bff2ec53::t_27885b23e3008a 110-118,130-131,138-139
+  s_9d1cc9bff2ec53::t_2f93f47445dd66 24
+  s_9d1cc9bff2ec53::t_a8e748e2dd3911 15-21
+  s_9d1cc9bff2ec53::t_841cec5fbe51bf 175-176,184-186
+  s_9d1cc9bff2ec53::t_108a5383e83342 210-224
+  s_9d1cc9bff2ec53::t_cb0854b46e2c40 188,195-196
+packages/slate-ui-kit/tests/nav-item/nav-item.component.test.tsx
+  s_9d1cc9bff2ec53::t_7c5613844bbfff 80
+  s_9d1cc9bff2ec53::t_6d40088ae7c840 1-75,86-91
+  s_9d1cc9bff2ec53::t_5c6f71a2370b28 76-79,81-85
+packages/slate-ui-kit/src/nav-item/nav-item.variants.ts
+  s_9d1cc9bff2ec53::t_d376a443fd61f3 1-34,41-42,44-51
+  s_9d1cc9bff2ec53::t_6a684ce0bc7ce1 35-40,43
+packages/slate-ui-kit/gallery/gallery.entries.tsx
+  s_9d1cc9bff2ec53::t_1a5630b415e2f6 2,4-7,9,12,15-16,19,21,23,33,39-42,44-45,47
+  s_9d1cc9bff2ec53::t_343a0a1bc500e0 449-544
+  s_9d1cc9bff2ec53::t_7618f108b4064c 99-178,180-189,191-204
+  s_9d1cc9bff2ec53::t_32bf57d76ec634 179,190
+.agents/architecture/adr/0014-fira-sans-and-fira-code.md
+  s_9d1cc9bff2ec53::t_4aa39af647966a 1-131
+packages/slate-ui-kit/src/section-label/section-label.component.tsx
+  s_9d1cc9bff2ec53::t_253201ff8bac1e 1,3-18
+  s_9d1cc9bff2ec53::t_88bc4a731cd483 2
+packages/slate-ui-kit/src/key-hint/key-hint.component.tsx
+  s_9d1cc9bff2ec53::t_3f92a3d355c398 1-54
+packages/slate-ui-kit/gallery/gallery.main.tsx
+  s_9d1cc9bff2ec53::t_e55fed1ff8dcb0 1-10,14,21-27,31-32,34,39-48,54,56,58,62-87,95,115-119
+packages/slate-ui-kit/src/tooltip/tooltip.component.tsx
+  s_9d1cc9bff2ec53::t_e0abb7e7476d43 1-70
+packages/slate-ui-kit/src/meter/meter.component.tsx
+  s_9d1cc9bff2ec53::t_06137e21caafa7 71-79,81-86
+  s_9d1cc9bff2ec53::t_bbc30b2deee1cc 1-5,9,26-45,47-53,56-58,64,68,89-92
+  s_9d1cc9bff2ec53::t_701836f1d1b52f 6-8,10,12-25,55,59-63,65-67,69-70,80,87-88
+  s_9d1cc9bff2ec53::t_c5eb493318640a 54
+  s_9d1cc9bff2ec53::t_d80e22d319f822 11,46
+.agents/rules/06-design-system.md
+  s_9d1cc9bff2ec53::t_e2984abad7888b 12,42-44,80,91,97-99
+  s_9d1cc9bff2ec53::t_a4c3430df5721e 124-155,158-183
+packages/slate-ui-kit/tests/text-field/text-field.component.test.tsx
+  s_9d1cc9bff2ec53::t_88bc4a731cd483 51
+  s_9d1cc9bff2ec53::t_d0e3d042229aa5 1-50,52-67
+packages/slate-ui-kit/src/switch/switch.component.tsx
+  s_9d1cc9bff2ec53::t_aea8a9c0b7536a 1-44
+packages/slate-ui-kit/src/fonts/fonts.css
+  s_9d1cc9bff2ec53::t_cc5e5ccbc4fe11 2-8,13-14,17-21,23-26,28-31,33-34,37-38,40-41,45,49-102,106-108,111-114,117-118,120-123,126-138,142-145
+packages/slate-ui-kit/src/index.ts
+  s_9d1cc9bff2ec53::t_9246287f6e3df1 24
+  s_9d1cc9bff2ec53::t_1ffce4559d65d0 43-51,53-55
+  s_9d1cc9bff2ec53::t_88bc4a731cd483 58
+packages/slate-tokens/src/index.ts
+  s_9d1cc9bff2ec53::t_a2d43321104d5a 17-23,28-31,33,40-41,50-52,74-105
+packages/slate-icons/src/index.ts
+  s_9d1cc9bff2ec53::t_95d587c8ad5c7d 15-22,28,30,36-37,39-40,42-43,48,50-51,58,60,62,71-72,75,78-79
+  s_9d1cc9bff2ec53::t_136c41f8e3db21 54
+packages/slate-tokens/src/tokens/layout.tokens.ts
+  s_9d1cc9bff2ec53::t_c5e46c3cc5e844 54-69,72-73,76-84,90,93,97-103,107-108,116-123,129,185-190,194-208,216-240
+  s_9d1cc9bff2ec53::t_f5676f44bb9abf 241
+packages/slate-ui-kit/src/button/button.variants.ts
+  s_9d1cc9bff2ec53::t_4daa53480e974b 13
+packages/slate-tokens/tests/contrast.test.ts
+  s_9d1cc9bff2ec53::t_f685bd2b935598 82-108
+  s_9d1cc9bff2ec53::t_41762bba3732c1 269,271-272
+  s_9d1cc9bff2ec53::t_74e297b91c0408 216-258,270,274-279
+  s_9d1cc9bff2ec53::t_8e74aa71575407 16-22
+  s_9d1cc9bff2ec53::t_117b83af0ef8dd 259-268,273
+packages/slate-ui-kit/tests/meter/meter.component.test.tsx
+  s_9d1cc9bff2ec53::t_19c7dd4170cc83 7,9,12,19-21,38,44,50
+  s_9d1cc9bff2ec53::t_06137e21caafa7 60,67
+  s_9d1cc9bff2ec53::t_24f69291a3f9fd 1-6,8,10-11,13-18,22-37,39-43,45-49,51-52,70-75
+  s_9d1cc9bff2ec53::t_40ced6977f0dc6 53-59,61-66,68-69
+tauri/slate-explorer/src/layout/content.layout.tsx
+  s_9d1cc9bff2ec53::t_4daa53480e974b 19
+packages/slate-tokens/tests/tokens.test.ts
+  s_9d1cc9bff2ec53::t_7204ca9777f999 121-177,189-210,217-223
+  s_9d1cc9bff2ec53::t_297ddb09c6b57b 4-12
+  s_9d1cc9bff2ec53::t_07d36396f847ec 178-188
+  s_9d1cc9bff2ec53::t_a1f1936e2b21f4 224
+docs/ui-kit.md
+  s_9d1cc9bff2ec53::t_ab7fcc9aad2bc5 17,19-20,46-47,51-52,73,92-106
+.agents/architecture/adr/README.md
+  s_9d1cc9bff2ec53::t_1ad4792dc105dc 25-26
+.agent/rules/06-design-system.md
+  s_9d1cc9bff2ec53::t_199a0222cadca9 21,51-53,89,100,106-108,133-164,167-192
+.cursor/rules/06-design-system.mdc
+  s_9d1cc9bff2ec53::t_f338cfa2f0cfba 20,50-52,88,99,105-107,132-163,166-191
+.github/instructions/06-design-system.instructions.md
+  s_9d1cc9bff2ec53::t_f1e6af1946bd3c 19,49-51,87,98,104-106,131-162,165-190
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "718217220de4216f0562b163f810b7201363242f",
+  "prompts": {},
+  "sessions": {
+    "s_9d1cc9bff2ec53": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29e826a9-369e-4fc6-a8bc-2c03e98f474f",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
