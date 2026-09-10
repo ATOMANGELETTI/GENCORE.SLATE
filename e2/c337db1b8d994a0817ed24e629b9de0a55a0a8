@@ -1,0 +1,157 @@
+tauri/slate-launcher/src/command/predict-command.util.ts
+  s_9d1cc9bff2ec53::t_2b17c2cf060c28 1-196
+tauri/slate-launcher/src/views/settings.view.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 2-3
+  s_9d1cc9bff2ec53::t_b53399acb49ff5 1,4-43,50,52,58-63,66-69,71-213
+  s_9d1cc9bff2ec53::t_d16c29d38f3a2e 44-49,51,53-57,64-65,70
+tauri/slate-launcher/src/command/command-results.component.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 1
+  s_9d1cc9bff2ec53::t_75eef95c501c4b 25-86,123-131
+  s_9d1cc9bff2ec53::t_b34cce0a74e033 2-24,87-122,132-144
+tauri/slate-launcher/src/command/command.types.ts
+  s_9d1cc9bff2ec53::t_33828ae13b9da6 1-93
+tauri/slate-launcher/src/views/views.registry.ts
+  s_9d1cc9bff2ec53::t_f23e1ed004a5d9 1-118
+tauri/slate-launcher/src-tauri/src/lib.rs
+  s_9d1cc9bff2ec53::t_c39a9da9d7d517 6-8,11,38-40,43-44
+tauri/slate-launcher/src/views/about.view.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 37
+  s_9d1cc9bff2ec53::t_a02b3d29e49c4e 1-36,38-89
+tauri/slate-launcher/src-tauri/src/state.rs
+  s_9d1cc9bff2ec53::t_77cdf954ef5dd6 1-52
+tauri/slate-launcher/src/views/storage.view.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 54
+  s_9d1cc9bff2ec53::t_4b57188d28b6dc 1-53,55-98
+tauri/slate-launcher/src/apps/app-icon.constants.ts
+  s_9d1cc9bff2ec53::t_136c41f8e3db21 9,44
+  s_9d1cc9bff2ec53::t_43cc7e4f1891f4 1-8,10-43,45-47
+tauri/slate-launcher/src/views/view-frame.component.tsx
+  s_9d1cc9bff2ec53::t_3d7c1e2899627e 1-62
+tauri/slate-launcher/src/command/command-hints.component.tsx
+  s_9d1cc9bff2ec53::t_d5d824b06a0c2d 2-81
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 1
+tauri/slate-launcher/src/command/command-bar.component.tsx
+  s_9d1cc9bff2ec53::t_bbc8a24e8cd23e 1-84,90-157
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 85-89
+tauri/slate-launcher/src/views/help.view.tsx
+  s_9d1cc9bff2ec53::t_a17575c3bd186f 1-41,43-56,58-72
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 42,57
+tauri/slate-launcher/src-tauri/src/commands/window.rs
+  s_9d1cc9bff2ec53::t_c4a3aebd01b525 1-113
+  s_9d1cc9bff2ec53::t_25d35a076f881c 114-116
+tauri/slate-launcher/src/views/console.view.tsx
+  s_9d1cc9bff2ec53::t_75eef95c501c4b 43
+  s_9d1cc9bff2ec53::t_dc1f559d12bca1 12-23,27,47
+  s_9d1cc9bff2ec53::t_e05ceb5bbd6bd0 1-11,24-26,28-42,44-46,48-65
+tauri/slate-launcher/src/command/run-command.service.ts
+  s_9d1cc9bff2ec53::t_9ea91c4ba4fae2 1-60,82-120,123-170
+  s_9d1cc9bff2ec53::t_e30e6409c8b871 61-81,121-122
+tauri/slate-launcher/tests/unit/command/evaluate-expression.util.test.ts
+  s_9d1cc9bff2ec53::t_2aab24b7ad2812 1-134
+tauri/slate-launcher/src/command/parse-command.util.ts
+  s_9d1cc9bff2ec53::t_a568cfd197b421 1-115
+tauri/slate-launcher/src/command/commands.registry.ts
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3
+  s_9d1cc9bff2ec53::t_a485e530858d71 1-2,4-155
+tauri/slate-launcher/tests/unit/views/views.registry.test.ts
+  s_9d1cc9bff2ec53::t_4be8cafef701f5 1-2,4-49
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3
+tauri/slate-launcher/moon.yml
+  s_9d1cc9bff2ec53::t_ce711818875935 19
+tauri/slate-launcher/src/command/evaluate-expression.util.ts
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 59-62
+  s_9d1cc9bff2ec53::t_75eef95c501c4b 78-80,85-87
+  s_9d1cc9bff2ec53::t_4234a9d5c233a1 1-58,63,97-107,109-112,116-117,120-317
+  s_9d1cc9bff2ec53::t_e30e6409c8b871 64-77,81-84,88-96,108,113-115,118-119
+tauri/slate-launcher/src/rail/rail-actions.component.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3
+  s_9d1cc9bff2ec53::t_2d23b250f30971 1-2,4-48
+tauri/slate-launcher/tests/unit/command/run-command.service.test.ts
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3,10-12
+  s_9d1cc9bff2ec53::t_1fb9cf6050a50c 1-2,4-9,13-214
+tauri/slate-launcher/src/search/fuzzy-match.util.ts
+  s_9d1cc9bff2ec53::t_4bde5f435f608d 1-141
+tauri/slate-launcher/src/apps/app-list.component.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3
+  s_9d1cc9bff2ec53::t_4e6ca6dd0e5f6e 1-2,4-79
+tauri/slate-launcher/src/data/apps.constants.ts
+  s_9d1cc9bff2ec53::t_60f8901c94d887 1-148
+tauri/slate-launcher/src/views/setting-row.component.tsx
+  s_9d1cc9bff2ec53::t_847c7fe7a2e78c 1-62
+tauri/slate-launcher/src-tauri/src/commands/reveal.rs
+  s_9d1cc9bff2ec53::t_0614830f63e265 1-23,25,27,29,31,33,35-44,51,61-79,81-85
+  s_9d1cc9bff2ec53::t_b5f6afc6a10108 24,26,28,30,32,34,45-50,52-60,80
+tauri/slate-launcher/src/state/launcher.store.ts
+  s_9d1cc9bff2ec53::t_798994e6081a2e 1-101
+tauri/slate-launcher/src/views/add-app.view.tsx
+  s_9d1cc9bff2ec53::t_fd20076556401f 1-68
+tauri/slate-launcher/src/views/updates.view.tsx
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3,34,46
+  s_9d1cc9bff2ec53::t_5f304842329f8a 1-2,4-33,35-45,47-63
+tauri/slate-launcher/src-tauri/src/commands/mod.rs
+  s_9d1cc9bff2ec53::t_c39a9da9d7d517 5-6,13-16,19-20
+tauri/slate-launcher/src/apps/app.types.ts
+  s_9d1cc9bff2ec53::t_4d282f99f4cbf1 1-68
+tauri/slate-launcher/src/views/view.types.ts
+  s_9d1cc9bff2ec53::t_df1b0f18369b15 1-49
+tauri/slate-launcher/src/apps/filter-apps.util.ts
+  s_9d1cc9bff2ec53::t_6de6d4dc466e2c 1-75
+.claude/launch.json
+  s_9d1cc9bff2ec53::t_1eb0897cb3777e 13-14
+  s_9d1cc9bff2ec53::t_f4fbf503964c00 10-12,15-16
+  s_9d1cc9bff2ec53::t_764305bcb7bb55 1-6,8-9,17-19
+  s_9d1cc9bff2ec53::t_c09d0989ae0e49 7
+tauri/slate-launcher/tests/unit/state/launcher.store.test.ts
+  s_9d1cc9bff2ec53::t_8fc97e2e74ea51 1-142
+tauri/slate-launcher/src/hooks/use-expanded-window.hook.ts
+  s_9d1cc9bff2ec53::t_8c10c222960c82 1-32
+tauri/slate-launcher/src/apps/app-row.component.tsx
+  s_9d1cc9bff2ec53::t_62460284e23262 1-2,4-68
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3
+tauri/slate-launcher/tests/unit/apps/filter-apps.util.test.ts
+  s_9d1cc9bff2ec53::t_945e3fea015d37 1-131
+tauri/slate-launcher/src/data/volume.constants.ts
+  s_9d1cc9bff2ec53::t_c05a9f9e40c37a 1-28
+tauri/slate-launcher/tests/unit/command/predict-command.util.test.ts
+  s_9d1cc9bff2ec53::t_8f2c6e3199fbc7 1-81,84-85,93-167
+  s_9d1cc9bff2ec53::t_c032cea4b11851 82-83,86-92
+tauri/slate-launcher/src/rail/suite-rail.component.tsx
+  s_9d1cc9bff2ec53::t_79204483ac4c59 1-26,28-71
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 27
+tauri/slate-launcher/package.json
+  s_9d1cc9bff2ec53::t_8c0507c6fa2024 20-21
+  s_9d1cc9bff2ec53::t_ce711818875935 13,18
+tauri/slate-launcher/src/layout/content.layout.tsx
+  s_9d1cc9bff2ec53::t_7abf189760be12 159,174,196
+  s_9d1cc9bff2ec53::t_3a208cd78e7669 1-5,8-19,21-26,29-35,37-39,41-44,46-49,51-87,89-112,114-121,123-156,160-173,175-195,197-226,228
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 6-7,50,88
+  s_9d1cc9bff2ec53::t_7634a4f857e440 113
+  s_9d1cc9bff2ec53::t_dc1f559d12bca1 20,45
+tauri/slate-launcher/src/app/app.root.tsx
+  s_9d1cc9bff2ec53::t_75eef95c501c4b 31
+  s_9d1cc9bff2ec53::t_18598d0003ab36 1,10-20,22,26-28,30,32,41-45,53,65-96,100,104-114,116-165,167-186,191-201,203,205-215,226
+  s_9d1cc9bff2ec53::t_dc1f559d12bca1 52,187-190
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 2-9,23,54-64,166,204
+  s_9d1cc9bff2ec53::t_7634a4f857e440 202
+tauri/slate-launcher/tests/unit/command/parse-command.util.test.ts
+  s_9d1cc9bff2ec53::t_57d2fdba15c735 3
+  s_9d1cc9bff2ec53::t_5920da224d713a 1-2,4-121
+tauri/slate-launcher/src/data/folders.constants.ts
+  s_9d1cc9bff2ec53::t_f0feb583e0c27d 1-39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "e2c337db1b8d994a0817ed24e629b9de0a55a0a8",
+  "prompts": {},
+  "sessions": {
+    "s_9d1cc9bff2ec53": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29e826a9-369e-4fc6-a8bc-2c03e98f474f",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
