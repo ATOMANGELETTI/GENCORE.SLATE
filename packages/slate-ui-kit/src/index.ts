@@ -21,6 +21,7 @@ export {
 	dialogContentVariants,
 	dialogOverlayVariants,
 } from './dialog/index.ts';
+export { KeyHint } from './key-hint/key-hint.component.tsx';
 export { cn } from './lib/cn.util.ts';
 export {
 	isSeparator,
@@ -39,6 +40,19 @@ export { MenuItem } from './menu/menu-item.component.tsx';
 export { MenuSeparator } from './menu/menu-separator.component.tsx';
 export { MenuShortcut } from './menu/menu-shortcut.component.tsx';
 export { MenuSurface } from './menu/menu-surface.component.tsx';
+export { Meter } from './meter/meter.component.tsx';
+export { NavItem } from './nav-item/nav-item.component.tsx';
+export { type NavItemVariants, navItemVariants } from './nav-item/nav-item.variants.ts';
+export { SectionLabel } from './section-label/section-label.component.tsx';
+export {
+	type SectionLabelVariants,
+	sectionLabelVariants,
+} from './section-label/section-label.variants.ts';
+export { SegmentedControl } from './segmented-control/segmented-control.component.tsx';
 export { StatusBar, StatusItem } from './status-bar/status-bar.component.tsx';
+export { Switch } from './switch/switch.component.tsx';
+export { TextField } from './text-field/text-field.component.tsx';
+export { type TextFieldVariants, textFieldVariants } from './text-field/text-field.variants.ts';
 export { TitleBar } from './title-bar/title-bar.component.tsx';
 export { TrafficLights } from './title-bar/traffic-lights.component.tsx';
+export { Tooltip, TooltipProvider } from './tooltip/tooltip.component.tsx';

@@ -166,9 +166,43 @@ async function assemble(version: string): Promise<void> {
 	}
 	detail(`${seedConfig().length} configuration files`);
 
+	await copyResources();
+
 	const marker = rootMarker(version, await buildId());
 	await Bun.write(join(TREE, '.slate-root'), marker);
 	await Bun.write(join(TREE, 'README.txt'), rootReadme(version));
+}
+
+/**
+ * Copies the checked-in shared resources into the tree.
+ *
+ * `appdata/resources/` is the one directory whose contents live in the
+ * repository rather than being produced by a build — the vendored Nerd Fonts
+ * and the Lucide icon set. `LAYOUT_DIRECTORIES` creates the directory, and
+ * without this it would ship empty: the zip would have the shape of a portable
+ * install and none of the assets.
+ *
+ * A plain recursive walk rather than a manifest, because the point of the
+ * directory is that things can be added to it without a build step needing to
+ * be told.
+ */
+async function copyResources(): Promise<void> {
+	const source = join(REPO_ROOT, 'installDir/appdata/resources');
+	const glob = new Bun.Glob('**/*');
+	let copied = 0;
+
+	for await (const entry of glob.scan({ cwd: source, onlyFiles: true, dot: false })) {
+		// `.gitkeep` exists to hold an empty directory open in git. The
+		// packaged tree gets its own from `LAYOUT_DIRECTORIES`.
+		if (entry.endsWith('.gitkeep')) {
+			continue;
+		}
+
+		await Bun.write(join(TREE, 'appdata/resources', entry), Bun.file(join(source, entry)));
+		copied += 1;
+	}
+
+	detail(`${copied} shared resource files`);
 }
 
 // ── WebView2 ─────────────────────────────────────────────────────────────────

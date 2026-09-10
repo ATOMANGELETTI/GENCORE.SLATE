@@ -2,6 +2,9 @@
 # Words specific to GENCORE.SLATE that are not in any standard dictionary —
 # proper nouns, tool/library/format names, and compound technical terms.
 # Keep sorted. One word per line.
+Nord
+Propo
+Terminess
 angeletti
 appdata
 appinfo
@@ -10,7 +13,9 @@ bootstrapper
 bsdtar
 cascadia
 cdylib
+cheatsheet
 chrono
+ciede
 consolas
 deque
 derefs
@@ -21,7 +26,11 @@ deserialising
 devtools
 dismissable
 dpiaware
+filesync
+fira
+firacode
 focusability
+frecency
 gencore
 hexdigit
 idat
@@ -29,6 +38,7 @@ idents
 iend
 ihdr
 installdir
+keyline
 launchable
 launcherctl
 libsqlite
@@ -38,11 +48,13 @@ longpaths
 lossily
 msedgedriver
 msedgewebview
+nerdfonts
 nord
-Nord
+onfig
 portableapps
 portapps
-Propo
+pyftsubset
+redmean
 registrator
 rlib
 rsplit
@@ -55,18 +67,22 @@ slate
 slatepaths
 staticlib
 statusbar
+subsetting
 supersampled
 systemroot
-Terminess
 thiserror
 titlebar
 traylet
+unfocusable
 unlisten
 unlisteners
 unmaximize
 unmigrated
 unminimises
 unminimize
+unparseable
 vite
 wawoff
+wcag
 webviews
+wordmark

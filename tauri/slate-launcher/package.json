@@ -10,12 +10,15 @@
 		"build": "tauri build --no-bundle"
 	},
 	"dependencies": {
+		"@slate/bindings": "0.1.0",
 		"@slate/icons": "0.1.0",
 		"@slate/ipc": "0.1.0",
 		"@slate/tokens": "0.1.0",
 		"@slate/ui-kit": "0.1.0",
+		"@slate/utils": "0.1.0",
 		"react": "19.2.8",
-		"react-dom": "19.2.8"
+		"react-dom": "19.2.8",
+		"zustand": "5.0.15"
 	},
 	"devDependencies": {
 		"@slate/config-typescript": "0.1.0",

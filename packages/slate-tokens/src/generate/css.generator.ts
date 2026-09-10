@@ -12,9 +12,16 @@
  * without existing as a variable, or drift from it.
  */
 
-import { SEMANTIC_COLORS, type ThemeName } from '../tokens/color.tokens.ts';
+import {
+	ACCENT_NAMES,
+	ACCENTS,
+	type AccentName,
+	SEMANTIC_COLORS,
+	type ThemeName,
+} from '../tokens/color.tokens.ts';
 import {
 	CHROME,
+	DENSITY,
 	LAYER,
 	MOTION,
 	RADIUS,
@@ -68,6 +75,75 @@ function themeBlock(theme: ThemeName): string {
 		.join('\n');
 }
 
+/**
+ * The five roles a chosen accent moves, for one theme.
+ *
+ * `bg-selected` and `border-focus` are in here deliberately: a selected row and
+ * a focus ring are the accent doing its job, and leaving either behind on the
+ * default would make a changed accent look like a half-finished setting.
+ */
+function accentBlock(theme: ThemeName, accent: AccentName): string {
+	const { default: base, hover, muted } = ACCENTS[theme][accent];
+
+	return [
+		`\t${TOKEN_PREFIX}-accent-default: ${base};`,
+		`\t${TOKEN_PREFIX}-accent-hover: ${hover};`,
+		`\t${TOKEN_PREFIX}-accent-muted: ${muted};`,
+		`\t${TOKEN_PREFIX}-bg-selected: ${muted};`,
+		`\t${TOKEN_PREFIX}-border-focus: ${base};`,
+	].join('\n');
+}
+
+/**
+ * Every accent, in both themes, as CSS.
+ *
+ * Emitted as selectors rather than applied inline by script. An inline override
+ * would freeze one theme's value onto the root element, and then go wrong the
+ * moment the window followed the system preference into the other theme — the
+ * accent would keep a dark-theme fill on a light background and stop clearing
+ * contrast. Selectors let the cascade resolve theme and accent together.
+ *
+ * Order and specificity matter and are load-bearing. The dark blocks are one
+ * attribute, so they beat `:root`; the light blocks are two, so they beat both;
+ * and the media-query blocks add `:root:not(…)` so they beat the light blocks
+ * they follow.
+ *
+ * Each light rule is written twice — once compound, once as a descendant. The
+ * compound form is the normal case, where the theme and the accent are both on
+ * the root element. The descendant form is what lets `data-accent` be used as a
+ * **scope** further down the tree: the accent picker paints each swatch by
+ * putting `data-accent` on the swatch itself, so a colour is never written in a
+ * component and the picker cannot drift from what it picks. Without the
+ * descendant form that swatch would keep its dark value on a light window,
+ * which is the one place the mistake would be most visible.
+ */
+function accentBlocks(): string[] {
+	return [
+		'/* ── Accent, as a user setting ──────────────────────────────────────── */',
+		...ACCENT_NAMES.flatMap((accent) => [
+			`[data-accent='${accent}'] {`,
+			accentBlock('dark', accent),
+			'}',
+			'',
+		]),
+		...ACCENT_NAMES.flatMap((accent) => [
+			`[data-theme='light'][data-accent='${accent}'],`,
+			`[data-theme='light'] [data-accent='${accent}'] {`,
+			accentBlock('light', accent),
+			'}',
+			'',
+		]),
+		'@media (prefers-color-scheme: light) {',
+		...ACCENT_NAMES.flatMap((accent) => [
+			`\t:root:not([data-theme='dark'])[data-accent='${accent}'],`,
+			`\t:root:not([data-theme='dark']) [data-accent='${accent}'] {`,
+			accentBlock('light', accent).replace(/^\t/gm, '\t\t'),
+			'\t}',
+		]),
+		'}',
+	];
+}
+
 /** Renders the complete stylesheet. */
 export function generateTokensCss(): string {
 	const sections = [
@@ -96,6 +172,8 @@ export function generateTokensCss(): string {
 		'',
 		declarations(CHROME, 'chrome'),
 		declarations(LAYER, 'layer'),
+		'',
+		declarations(DENSITY.comfortable, 'density'),
 		'}',
 		'',
 		'/* An explicit choice wins over the system preference in both directions. */',
@@ -103,11 +181,18 @@ export function generateTokensCss(): string {
 		themeBlock('light'),
 		'}',
 		'',
+		'/* Row density, as a user setting. Only the heights move — see DENSITY. */',
+		"[data-density='compact'] {",
+		declarations(DENSITY.compact, 'density'),
+		'}',
+		'',
 		'@media (prefers-color-scheme: light) {',
 		"\t:root:not([data-theme='dark']) {",
 		themeBlock('light').replace(/^\t/gm, '\t\t'),
 		'\t}',
 		'}',
+		'',
+		...accentBlocks(),
 		'',
 		'/* ── Tailwind v4 utilities, mapped to the variables above ───────────── */',
 		'@theme inline {',
@@ -121,6 +206,21 @@ export function generateTokensCss(): string {
 		),
 		...Object.keys(TYPOGRAPHY.family).map(
 			(key) => `\t--font-${key}: var(${TOKEN_PREFIX}-font-${key});`,
+		),
+		// Weight, tracking and leading were previously declared as custom
+		// properties but never mapped here, so `font-bold` and `tracking-tight`
+		// in a component silently resolved to Tailwind's own defaults rather
+		// than to the token beside them. That was survivable while the scale
+		// happened to agree; it stopped being survivable the moment tracking
+		// became load-bearing for uppercase labels.
+		...Object.keys(TYPOGRAPHY.weight).map(
+			(key) => `\t--font-weight-${key}: var(${TOKEN_PREFIX}-weight-${key});`,
+		),
+		...Object.keys(TYPOGRAPHY.tracking).map(
+			(key) => `\t--tracking-${key}: var(${TOKEN_PREFIX}-tracking-${key});`,
+		),
+		...Object.keys(TYPOGRAPHY.leading).map(
+			(key) => `\t--leading-${key}: var(${TOKEN_PREFIX}-leading-${key});`,
 		),
 		...Object.keys(SHADOW).map((key) => `\t--shadow-${key}: var(${TOKEN_PREFIX}-shadow-${key});`),
 		...Object.keys(MOTION.ease).map((key) => `\t--ease-${key}: var(${TOKEN_PREFIX}-ease-${key});`),

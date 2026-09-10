@@ -90,7 +90,7 @@ export function TitleBar({
 			>
 				<span
 					className={cn(
-						'max-w-[50%] truncate text-base font-bold tracking-tight transition-colors',
+						'max-w-[50%] truncate text-base font-medium tracking-tight transition-colors',
 						'duration-[var(--slate-duration-normal)]',
 						isFocused ? 'text-secondary' : 'text-tertiary',
 					)}

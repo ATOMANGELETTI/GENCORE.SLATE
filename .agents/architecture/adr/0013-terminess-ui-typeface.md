@@ -1,6 +1,6 @@
 # ADR 0013 — Terminess is the interface typeface, not just the code one
 
-**Status:** Accepted · **Date:** 2026-09-07
+**Status:** Superseded by [ADR 0014](0014-fira-sans-and-fira-code.md) · **Date:** 2026-09-07
 
 ## Context
 

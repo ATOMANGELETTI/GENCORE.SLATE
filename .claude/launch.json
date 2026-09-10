@@ -1,0 +1,19 @@
+{
+	"version": "0.0.1",
+	"configurations": [
+		{
+			"name": "gallery",
+			"runtimeExecutable": "bun",
+			"runtimeArgs": ["x", "vite", "--config", "packages/slate-ui-kit/gallery/vite.config.ts"],
+			"port": 1430,
+			"url": "http://localhost:1430"
+		},
+		{
+			"name": "launcher-web",
+			"runtimeExecutable": "tauri/slate-launcher/node_modules/.bin/vite.exe",
+			"runtimeArgs": ["tauri/slate-launcher", "--config", "tauri/slate-launcher/vite.config.ts"],
+			"port": 1420,
+			"url": "http://localhost:1420"
+		}
+	]
+}

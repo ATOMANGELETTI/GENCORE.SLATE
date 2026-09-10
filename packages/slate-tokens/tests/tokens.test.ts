@@ -1,9 +1,15 @@
 import { describe, expect, test } from 'bun:test';
 
 import { generateTokensCss, TOKEN_PREFIX } from '../src/generate/css.generator.ts';
-import { applyTheme } from '../src/index.ts';
-import { SEMANTIC_COLORS } from '../src/tokens/color.tokens.ts';
-import { CHROME, MOTION, RADIUS, SPACE } from '../src/tokens/layout.tokens.ts';
+import { applyAccent, applyDensity, applyTheme } from '../src/index.ts';
+import {
+	ACCENT_DRIVEN_ROLES,
+	ACCENT_NAMES,
+	ACCENTS,
+	DEFAULT_ACCENT,
+	SEMANTIC_COLORS,
+} from '../src/tokens/color.tokens.ts';
+import { CHROME, DENSITY, MOTION, RADIUS, SPACE } from '../src/tokens/layout.tokens.ts';
 
 describe('semantic colours', () => {
 	test('light and dark define exactly the same roles', () => {
@@ -112,10 +118,108 @@ describe('applyTheme', () => {
 	});
 });
 
+describe('applyDensity', () => {
+	test('sets the compact attribute', () => {
+		const root = document.createElement('div');
+
+		applyDensity('compact', root);
+
+		expect(root.getAttribute('data-density')).toBe('compact');
+	});
+
+	test('"comfortable" removes the attribute rather than restating the default', () => {
+		// The default lives in the `:root` block of the stylesheet. Writing it
+		// here as well would be a second place for it to be wrong.
+		const root = document.createElement('div');
+		root.setAttribute('data-density', 'compact');
+
+		applyDensity('comfortable', root);
+
+		expect(root.hasAttribute('data-density')).toBe(false);
+	});
+});
+
+describe('applyAccent', () => {
+	test('sets a non-default accent', () => {
+		const root = document.createElement('div');
+
+		applyAccent('teal', root);
+
+		expect(root.getAttribute('data-accent')).toBe('teal');
+	});
+
+	test('the default accent removes the attribute', () => {
+		const root = document.createElement('div');
+		root.setAttribute('data-accent', 'teal');
+
+		applyAccent(DEFAULT_ACCENT, root);
+
+		expect(root.hasAttribute('data-accent')).toBe(false);
+	});
+});
+
+describe('accent as a setting', () => {
+	const css = generateTokensCss();
+
+	test('the default accent is what the semantic roles already resolve to', () => {
+		// If these drifted, selecting the default accent from the picker would
+		// visibly change the window — which is the one thing it must not do.
+		expect(SEMANTIC_COLORS.dark['accent-default']).toBe(ACCENTS.dark[DEFAULT_ACCENT].default);
+		expect(SEMANTIC_COLORS.light['accent-default']).toBe(ACCENTS.light[DEFAULT_ACCENT].default);
+		expect(SEMANTIC_COLORS.dark['bg-selected']).toBe(ACCENTS.dark[DEFAULT_ACCENT].muted);
+		expect(SEMANTIC_COLORS.light['border-focus']).toBe(ACCENTS.light[DEFAULT_ACCENT].default);
+	});
+
+	for (const accent of ACCENT_NAMES) {
+		test(`${accent} is emitted for both themes`, () => {
+			// The light rule needs the extra attribute or the dark values win
+			// whenever the window is following the system into light.
+			expect(css).toContain(`[data-accent='${accent}'] {`);
+			expect(css).toContain(`[data-theme='light'][data-accent='${accent}'],`);
+			expect(css).toContain(`:root:not([data-theme='dark'])[data-accent='${accent}'],`);
+		});
+
+		test(`${accent} works as a scope, not only on the root`, () => {
+			// The accent picker paints each swatch by putting `data-accent` on
+			// the swatch itself, so a colour is never written in a component.
+			// Without the descendant form, a swatch would keep its dark value
+			// on a light window.
+			expect(css).toContain(`[data-theme='light'] [data-accent='${accent}'] {`);
+			expect(css).toContain(`:root:not([data-theme='dark']) [data-accent='${accent}'] {`);
+		});
+
+		test(`${accent} moves every accent-driven role`, () => {
+			const block = css.slice(css.indexOf(`[data-accent='${accent}'] {`));
+			const declarations = block.slice(0, block.indexOf('}'));
+
+			for (const role of ACCENT_DRIVEN_ROLES) {
+				expect(declarations).toContain(`${TOKEN_PREFIX}-${role}:`);
+			}
+		});
+	}
+
+	test('the accent rules follow the theme rules they have to override', () => {
+		// Both are single-attribute selectors in the dark case, so source order
+		// is what decides — and getting it backwards would silently pin every
+		// window to the default accent.
+		expect(css.indexOf("[data-accent='teal']")).toBeGreaterThan(
+			css.indexOf("[data-theme='light'] {"),
+		);
+	});
+});
+
 describe('layout tokens', () => {
 	test('chrome dimensions match the documented design', () => {
 		expect(CHROME.titlebarHeight).toBe('34px');
 		expect(CHROME.statusbarHeight).toBe('24px');
+	});
+
+	test('compact density is shorter than comfortable in every dimension', () => {
+		for (const key of Object.keys(DENSITY.comfortable) as (keyof typeof DENSITY.comfortable)[]) {
+			expect(Number.parseInt(DENSITY.compact[key], 10)).toBeLessThan(
+				Number.parseInt(DENSITY.comfortable[key], 10),
+			);
+		}
 	});
 
 	test('motion stays within the range the design system specifies', () => {
