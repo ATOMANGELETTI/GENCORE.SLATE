@@ -1,0 +1,19 @@
+.changeset/bureau-launcher-and-fira-typography.md
+  s_9d1cc9bff2ec53::t_a7d9287a5ed896 1-62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.2",
+  "base_commit_sha": "4a1b20f0d0ef1b306aadf1bf63d4b83303182154",
+  "prompts": {},
+  "sessions": {
+    "s_9d1cc9bff2ec53": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "29e826a9-369e-4fc6-a8bc-2c03e98f474f",
+        "model": "claude-sonnet-5"
+      },
+      "human_author": "ATOMANGELETTI <DUSTIN@ANGELETTI.SPACE>"
+    }
+  }
+}
